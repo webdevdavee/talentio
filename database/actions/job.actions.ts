@@ -4,6 +4,18 @@ import { connectToDatabase } from "..";
 import { handleError } from "@/lib/utils";
 import Jobs from "../models/job.model";
 
+export const getJobs = async () => {
+  try {
+    await connectToDatabase();
+
+    const jobs = await Jobs.find({});
+
+    return JSON.parse(JSON.stringify(jobs));
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export const getJobsCategoryCount = async () => {
   try {
     await connectToDatabase();

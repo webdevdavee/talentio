@@ -8,9 +8,25 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-16">
             <Image src="/talentio.svg" width={125} height={125} alt="logo" />
-            <div className="flex items-center gap-4">
-              <Link href="/find-jobs">Find Jobs</Link>
-              <Link href="/browse-companies">Browse Categories</Link>
+            <div className="flex items-center gap-8">
+              <Link
+                href="/find-jobs"
+                className="transition duration-200 hover:text-primary"
+              >
+                Find Jobs
+              </Link>
+              <Link
+                href="/browse-companies"
+                className="transition duration-200 hover:text-primary"
+              >
+                Browse Companies
+              </Link>
+              <Link
+                href="/categories"
+                className="transition duration-200 hover:text-primary"
+              >
+                Categories
+              </Link>
             </div>
           </div>
           <div>

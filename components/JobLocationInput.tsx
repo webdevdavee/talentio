@@ -20,17 +20,17 @@ const JobLocationInput = ({
   setShowCountryList,
 }: JobLocationInputProps) => {
   return (
-    <div className="flex items-start gap-4">
+    <div className="w-fit flex items-start gap-4">
       <Image src="/location.svg" width={18} height={18} alt="search" />
       <button
         type="button"
-        className="w-44 flex items-center justify-between border-b border-b-zinc-300 focus:border-b "
+        className="w-full flex items-center justify-between border-b border-b-zinc-300 focus:border-b overflow-hidden"
       >
         <input
           {...inputRegister}
           type="text"
           placeholder="Search country"
-          className="pb-3 focus:border-b focus:transition focus:outline-none"
+          className="w-fit pb-3 focus:border-b focus:transition focus:outline-none"
           value={countryInputValue}
           onChange={(e) => handleCountryInput(e)}
         />

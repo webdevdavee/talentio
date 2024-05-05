@@ -31,3 +31,34 @@ type Timezone = {
   abbreviation: string;
   tzName: string;
 };
+
+type Job = {
+  _id: string;
+  title: string;
+  description: string;
+  category: {
+    name: string;
+    icon: string;
+  };
+  type: string;
+  location: string;
+  level: string;
+  salary: string;
+  company: string;
+  companylogo: string;
+};
+
+type CategoryCounts = {
+  [key: string]: number;
+};
+
+type Category = {
+  _id: string;
+  category: string;
+  icon: string;
+};
+
+type CategoryCount = {
+  _id: { name: string; icon: string };
+  count: number;
+};

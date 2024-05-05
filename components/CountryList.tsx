@@ -25,6 +25,7 @@ const CountryList = ({
       {countries.length > 0 ? (
         countries.map((country) => (
           <button
+            key={country.id}
             type="button"
             className="w-full text-left text-sm hover:bg-gray-100 transition p-3"
             onClick={(e) => selectCountry(e)}

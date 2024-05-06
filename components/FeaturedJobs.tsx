@@ -4,7 +4,7 @@ import JobList from "./JobList";
 
 const FeaturedJobs = () => {
   return (
-    <section className="w-full px-16 mt-10">
+    <section className="w-full px-16 mt-16">
       <div className="flex items-center justify-between gap-3 mb-10">
         <h1 className="text-3xl font-bold">
           Featured <span className="text-primary">Jobs</span>

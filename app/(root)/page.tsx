@@ -1,6 +1,7 @@
 import FeaturedCategories from "@/components/FeaturedCategories";
 import CompaniesHelped from "@/components/CompaniesHelped";
 import Hero from "@/components/Hero";
+import FeaturedJobs from "@/components/FeaturedJobs";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <CompaniesHelped />
       <FeaturedCategories />
+      <FeaturedJobs />
     </section>
   );
 }

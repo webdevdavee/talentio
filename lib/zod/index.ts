@@ -7,3 +7,10 @@ export const searchJobSchema = z.object({
 });
 
 export type TSearchJobSchema = z.infer<typeof searchJobSchema>;
+
+// FOOTER FORM SCHEMA
+export const footerFormSchema = z.object({
+  email: z.string().email().min(3, "Use 3 characters or more"),
+});
+
+export type TFooterFormSchema = z.infer<typeof footerFormSchema>;

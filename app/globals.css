@@ -29,3 +29,9 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+.latest-jobs {
+  background-image: url("/images/hero.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+}

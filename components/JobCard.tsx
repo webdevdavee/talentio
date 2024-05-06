@@ -7,7 +7,7 @@ type JobCardProps = {
 const JobCard = ({ job }: JobCardProps) => {
   return (
     <div className="border border-zinc-300 p-5 hover:scale-105 duration-200 transition">
-      <div className="flex flex-col items-start justify-start gap-6">
+      <div className="flex flex-col items-start justify-between h-full gap-4">
         <div className="w-full flex items-center justify-between">
           <Image
             src={job.companylogo}
@@ -22,10 +22,10 @@ const JobCard = ({ job }: JobCardProps) => {
         </div>
         <p className="text-lg font-bold text-left">{job.title}</p>
         <p className="text-left font-medium">
-          {job.company}, {job.location}
+          {job.company} - {job.location}
         </p>
         <p className="text-left">
-          {job.description.length > 15
+          {job.description.length > 55
             ? job.description.slice(0, 55) + "..."
             : job.description}
         </p>

@@ -1,3 +1,14 @@
+type FooterList = {
+  about: {
+    title: string;
+    items: string[];
+  };
+  resources: {
+    title: string;
+    items: string[];
+  };
+};
+
 type Country = {
   id: number;
   name: string;

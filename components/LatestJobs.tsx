@@ -2,12 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import JobList from "./JobList";
 
-const FeaturedJobs = () => {
+const LatestJobs = () => {
   return (
-    <section className="w-full px-16 mt-16">
+    <section className="w-full px-16 py-16 mt-10 latest-jobs">
       <div className="flex items-center justify-between gap-3 mb-10">
         <h1 className="text-3xl font-bold">
-          Featured <span className="text-primary">Jobs</span>
+          Latest jobs <span className="text-primary">open</span>
         </h1>
         <Link
           href="/jobs"
@@ -17,9 +17,9 @@ const FeaturedJobs = () => {
           <Image src="/arrow-right.svg" width={25} height={25} alt="arrow" />
         </Link>
       </div>
-      <JobList type="featured" />
+      <JobList type="latest" />
     </section>
   );
 };
 
-export default FeaturedJobs;
+export default LatestJobs;

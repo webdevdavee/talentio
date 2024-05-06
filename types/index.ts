@@ -9,6 +9,10 @@ type FooterList = {
   };
 };
 
+type SearchParamProps = {
+  searchParams: { [key: string]: string | string[] };
+};
+
 type Country = {
   id: number;
   name: string;
@@ -56,6 +60,7 @@ type Job = {
   level: string;
   salary: string;
   company: string;
+  capacity: number;
   companylogo: string;
 };
 

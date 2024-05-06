@@ -12,6 +12,7 @@ const JobSchema = new Schema({
   level: { type: String, required: true },
   salary: { type: String, required: true },
   company: { type: String, required: true },
+  capacity: { type: Number, required: true },
   companylogo: { type: String, required: true },
 });
 

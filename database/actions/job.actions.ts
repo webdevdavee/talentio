@@ -4,11 +4,17 @@ import { connectToDatabase } from "..";
 import { handleError } from "@/lib/utils";
 import Jobs from "../models/job.model";
 
-export const getJobs = async () => {
+export const getJobs = async (page = 1, limit = 10) => {
   try {
     await connectToDatabase();
 
-    const jobs = await Jobs.find({});
+    // Calculate the number of documents to skip
+    const skips = limit * (page - 1);
+
+    const jobs = await Jobs.find({})
+      .find({})
+      .skip(skips >= 0 ? skips : 0)
+      .limit(limit > 0 ? limit : 10);
 
     return JSON.parse(JSON.stringify(jobs));
   } catch (error) {

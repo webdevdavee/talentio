@@ -7,16 +7,18 @@ const Header = () => {
       <nav className="w-full">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-16">
-            <Image src="/talentio.svg" width={125} height={125} alt="logo" />
+            <Link href="/">
+              <Image src="/talentio.svg" width={125} height={125} alt="logo" />
+            </Link>
             <div className="flex items-center gap-8">
               <Link
-                href="/find-jobs"
+                href="/jobs"
                 className="transition duration-200 hover:text-primary"
               >
                 Find Jobs
               </Link>
               <Link
-                href="/browse-companies"
+                href="/companies"
                 className="transition duration-200 hover:text-primary"
               >
                 Browse Companies

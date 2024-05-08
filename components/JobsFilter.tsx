@@ -38,7 +38,7 @@ const JobsFilter = ({ filter, handleFilter }: JobsFilterProps) => {
       </span>
       {filter.showFilter &&
         filter.frequency.map((f, i) => (
-          <span className="flex items-center gap-4">
+          <span key={i} className="flex items-center gap-4">
             <input
               type="checkbox"
               className="w-4 h-4 cursor-pointer"

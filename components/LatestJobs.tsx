@@ -4,7 +4,7 @@ import JobList from "./JobList";
 import { getJobs } from "@/database/actions/job.actions";
 
 const LatestJobs = async () => {
-  const jobs: Job[] | undefined = await getJobs();
+  const jobs: GetJob | undefined = await getJobs();
 
   return (
     <section className="w-full px-16 py-16 mt-10 latest-jobs">
@@ -20,7 +20,7 @@ const LatestJobs = async () => {
           <Image src="/arrow-right.svg" width={25} height={25} alt="arrow" />
         </Link>
       </div>
-      <JobList type="latest" jobs={jobs} />
+      <JobList type="latest" jobs={jobs?.jobs} />
     </section>
   );
 };

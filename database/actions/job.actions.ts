@@ -16,7 +16,14 @@ export const getJobs = async (page = 1, limit = 10) => {
       .skip(skips >= 0 ? skips : 0)
       .limit(limit > 0 ? limit : 10);
 
-    return JSON.parse(JSON.stringify(jobs));
+    // Get the total number of jobs
+    const jobCount = await Jobs.find({}).countDocuments();
+    const totalPages = Math.ceil(jobCount / limit);
+
+    return {
+      jobs: JSON.parse(JSON.stringify(jobs)),
+      totalPages,
+    };
   } catch (error) {
     handleError(error);
   }
@@ -39,6 +46,60 @@ export const getJobsCategoryCount = async () => {
     ]);
 
     return JSON.parse(JSON.stringify(result));
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getJobsWithFrequency = async (field: string) => {
+  try {
+    await connectToDatabase();
+
+    const result = await Jobs.aggregate([
+      {
+        $group: {
+          _id: `$${field}`,
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { count: -1 },
+      },
+    ]);
+
+    return JSON.parse(JSON.stringify(result));
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Define the interface for your document
+interface MyDocument {
+  type: string;
+  category: string;
+  // ... include other properties of the document
+}
+
+// Function to handle the filtering
+export const handleFilter4 = async (
+  typeFilter?: string[],
+  categoryFilter?: string[]
+) => {
+  try {
+    await connectToDatabase();
+    // Build the query object based on the provided filters
+    const query: any = {};
+    if (typeFilter && typeFilter.length > 0) {
+      query.type = { $in: typeFilter };
+    }
+    if (categoryFilter && categoryFilter.length > 0) {
+      query["category.name"] = { $in: categoryFilter };
+    }
+
+    // Perform the query to filter documents
+    const documents = await Jobs.find(query);
+
+    return documents;
   } catch (error) {
     handleError(error);
   }

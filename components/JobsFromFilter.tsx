@@ -1,5 +1,3 @@
-"use client";
-
 import JobList from "./JobList";
 import { useState } from "react";
 import ListLayout from "./ListLayout";
@@ -7,10 +5,11 @@ import Pagination from "./Pagination";
 
 type JobsFromFilterProps = {
   jobs: Job[] | undefined;
+  totalPages: number | undefined;
   page: number;
 };
 
-const JobsFromFilter = ({ jobs, page }: JobsFromFilterProps) => {
+const JobsFromFilter = ({ jobs, totalPages, page }: JobsFromFilterProps) => {
   const [layout, setLayout] = useState<"row" | "column">("row");
 
   return (
@@ -22,7 +21,7 @@ const JobsFromFilter = ({ jobs, page }: JobsFromFilterProps) => {
         </div>
         <span className="flex items-center gap-3">
           <div className="flex items-center gap-3">
-            <input type="checkbox" name="" id="" />
+            <input type="checkbox" className="w-4 h-4 cursor-pointer" />
             <p>Show latest</p>
           </div>
           <div className="border h-[1rem] border-slate-300"></div>
@@ -30,7 +29,7 @@ const JobsFromFilter = ({ jobs, page }: JobsFromFilterProps) => {
         </span>
       </div>
       <JobList type="all" jobs={jobs} layout={layout} />
-      <Pagination page={page} />
+      <Pagination page={page} totalPages={totalPages} />
     </section>
   );
 };

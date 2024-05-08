@@ -64,6 +64,11 @@ type Job = {
   companylogo: string;
 };
 
+type GetJob = {
+  jobs: Job[];
+  totalPages: number;
+};
+
 type CategoryCounts = {
   [key: string]: number;
 };
@@ -76,5 +81,21 @@ type Category = {
 
 type CategoryCount = {
   _id: { name: string; icon: string };
+  count: number;
+};
+
+type IndexSignature = {
+  [key: string]: any;
+};
+
+type JobsFrequencyData = {
+  type: JobsFilterFrequency[];
+  category: JobsFilterFrequency[];
+  level: JobsFilterFrequency[];
+  salary: JobsFilterFrequency[];
+};
+
+type JobsFilterFrequency = {
+  _id: string;
   count: number;
 };

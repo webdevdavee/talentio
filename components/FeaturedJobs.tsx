@@ -4,7 +4,7 @@ import JobList from "./JobList";
 import { getJobs } from "@/database/actions/job.actions";
 
 const FeaturedJobs = async () => {
-  const jobs: Job[] | undefined = await getJobs();
+  const jobs: GetJob | undefined = await getJobs();
 
   return (
     <section className="w-full px-16 mt-16">
@@ -20,7 +20,7 @@ const FeaturedJobs = async () => {
           <Image src="/arrow-right.svg" width={25} height={25} alt="arrow" />
         </Link>
       </div>
-      <JobList type="featured" jobs={jobs} />
+      <JobList type="featured" jobs={jobs?.jobs} />
     </section>
   );
 };

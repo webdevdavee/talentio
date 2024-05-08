@@ -6,9 +6,10 @@ import { FormEvent, useEffect, useState } from "react";
 
 type PaginationProps = {
   page: number;
+  totalPages: number | undefined;
 };
 
-const Pagination = ({ page }: PaginationProps) => {
+const Pagination = ({ page, totalPages }: PaginationProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -31,10 +32,12 @@ const Pagination = ({ page }: PaginationProps) => {
   const nextPage = () => {
     // Increment the page number
     const nextPage = page + 1;
-    // Set the url param to the nextPage value
-    pageParam.set("page", nextPage.toString());
-    const categoryURL = createURL(pathname, pageParam);
-    router.push(`${categoryURL}`);
+    if (totalPages && nextPage <= totalPages) {
+      // Set the url param to the nextPage value
+      pageParam.set("page", nextPage.toString());
+      const categoryURL = createURL(pathname, pageParam);
+      router.push(`${categoryURL}`);
+    }
   };
 
   // Paginate through pages from input
@@ -46,6 +49,7 @@ const Pagination = ({ page }: PaginationProps) => {
     router.push(`${categoryURL}`);
   };
 
+  // Set inputValue to page value when ever page changes
   useEffect(() => {
     setInputValue(page);
   }, [page]);
@@ -53,7 +57,13 @@ const Pagination = ({ page }: PaginationProps) => {
   return (
     <section className="w-full flex justify-end">
       <div className="flex items-center gap-3 mt-4">
-        <button type="button" onClick={prevPage}>
+        <button
+          type="button"
+          onClick={prevPage}
+          style={{
+            display: page === 1 ? "none" : "block",
+          }}
+        >
           Prev
         </button>
         <form onSubmit={(e) => paginateOnInput(e, inputValue as string)}>
@@ -65,7 +75,13 @@ const Pagination = ({ page }: PaginationProps) => {
             onChange={(e) => setInputValue(e.target.value)}
           />
         </form>
-        <button type="button" onClick={nextPage}>
+        <button
+          type="button"
+          onClick={nextPage}
+          style={{
+            display: totalPages && page === totalPages ? "none" : "block",
+          }}
+        >
           Next
         </button>
       </div>

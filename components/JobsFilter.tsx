@@ -14,9 +14,14 @@ type JobsFilterProps = {
     type: string,
     filter: string
   ) => Promise<void>;
+  updatedParams: URLSearchParams;
 };
 
-const JobsFilter = ({ filter, handleFilter }: JobsFilterProps) => {
+const JobsFilter = ({
+  filter,
+  handleFilter,
+  updatedParams,
+}: JobsFilterProps) => {
   return (
     <div className="flex flex-col gap-4">
       <span
@@ -41,7 +46,10 @@ const JobsFilter = ({ filter, handleFilter }: JobsFilterProps) => {
           <label key={index} className="flex items-center gap-4">
             <input
               type="checkbox"
+              name={f._id}
+              id={f._id}
               className="w-4 h-4 cursor-pointer"
+              checked={updatedParams.get(f._id) === "true" || false}
               onChange={(e) => handleFilter(e, filter.type, f._id)}
             />
             <p>

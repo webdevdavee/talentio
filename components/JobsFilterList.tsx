@@ -31,6 +31,8 @@ const JobsFilterList = ({
   const pathname = usePathname();
   const router = useRouter();
 
+  const updatedParams = new URLSearchParams(searchParams.toString());
+
   const [filterVisibility, setFilterVisibility] = useState<FilterVisibility>({
     type: true,
     category: true,
@@ -88,7 +90,6 @@ const JobsFilterList = ({
     filterValue: string
   ) => {
     const { checked, name } = e.target;
-    const updatedParams = new URLSearchParams(searchParams.toString());
 
     if (checked) {
       updatedParams.append(filterType, filterValue);
@@ -143,6 +144,7 @@ const JobsFilterList = ({
             key={index}
             filter={filter}
             handleFilter={handleFilterChange}
+            updatedParams={updatedParams}
           />
         ))}
       </div>

@@ -50,7 +50,7 @@ const Jobs = ({
       };
       fetchJobs();
     } else {
-      const handleFilters = async () => {
+      const fetchFilteredJobs = async () => {
         const filteredJobs: GetJob | undefined = await handleFilter(
           type,
           category,
@@ -63,7 +63,7 @@ const Jobs = ({
           totalPages: filteredJobs?.totalPages,
         });
       };
-      handleFilters();
+      fetchFilteredJobs();
     }
   }, [page]);
 
@@ -75,6 +75,7 @@ const Jobs = ({
         categoryFrequency={categoryFrequency}
         levelFrequency={levelFrequency}
         salaryFrequency={salaryFrequency}
+        page={page}
       />
       <JobsFromFilter
         jobs={jobsData.jobs}

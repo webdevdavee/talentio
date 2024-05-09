@@ -4,7 +4,7 @@ import { connectToDatabase } from "..";
 import { handleError } from "@/lib/utils";
 import Jobs from "../models/job.model";
 
-export const getJobs = async (page: number, limit = 10) => {
+export const getJobs = async (page = 1, limit = 10) => {
   try {
     await connectToDatabase();
 

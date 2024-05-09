@@ -13,6 +13,7 @@ type JobsFilterListProps = {
     }>
   >;
   setJobsFrequency: React.Dispatch<React.SetStateAction<JobsFrequencyData>>;
+  page: number;
 };
 
 type FilterVisibility = Record<string, boolean> & {
@@ -26,6 +27,7 @@ const JobsFilterList = ({
   jobsFrequency,
   setJobsData,
   setJobsFrequency,
+  page,
 }: JobsFilterListProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -107,6 +109,10 @@ const JobsFilterList = ({
       updatedParams.delete(filterType, filterValue);
       updatedParams.delete(name);
     }
+
+    // Take user to first page
+    const pageToFirst = 1;
+    updatedParams.set("page", pageToFirst.toString());
 
     // Call the updateFilters function and pass the updated URL keys and values
     await updateFilters(updatedParams);

@@ -6,7 +6,7 @@ type JobsFilterProps = {
     title: string;
     frequency: JobsFilterFrequency[];
     toggleShowFilter: () => void;
-    showFilter: boolean;
+    showFilter: boolean | JobsFilterFrequency[];
     type: string;
   };
   handleFilter: (
@@ -21,7 +21,7 @@ const JobsFilter = ({ filter, handleFilter }: JobsFilterProps) => {
     <div className="flex flex-col gap-4">
       <span
         className="flex items-center justify-between cursor-pointer"
-        onClick={() => filter.toggleShowFilter()}
+        onClick={filter.toggleShowFilter}
       >
         <h2 className="text-lg font-semibold">{filter.title}</h2>
         <Image
@@ -37,17 +37,17 @@ const JobsFilter = ({ filter, handleFilter }: JobsFilterProps) => {
         />
       </span>
       {filter.showFilter &&
-        filter.frequency.map((f, i) => (
-          <span key={i} className="flex items-center gap-4">
+        filter.frequency.map((f, index) => (
+          <label key={index} className="flex items-center gap-4">
             <input
               type="checkbox"
               className="w-4 h-4 cursor-pointer"
               onChange={(e) => handleFilter(e, filter.type, f._id)}
             />
-            <p key={i}>
+            <p>
               {f._id} ({f.count})
             </p>
-          </span>
+          </label>
         ))}
     </div>
   );

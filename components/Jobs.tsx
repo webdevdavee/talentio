@@ -27,7 +27,7 @@ const Jobs = ({ page }: JobsProps) => {
 
   return (
     <div className="w-full flex items-start justify-start gap-8 p-16">
-      <JobsFilterBar />
+      <JobsFilterBar setJobsData={setJobsData} />
       <JobsFromFilter
         jobs={jobsData.jobs}
         totalPages={jobsData.totalPages}

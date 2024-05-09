@@ -83,7 +83,9 @@ interface MyDocument {
 // Function to handle the filtering
 export const handleFilter4 = async (
   typeFilter?: string[],
-  categoryFilter?: string[]
+  categoryFilter?: string[],
+  levelFilter?: string[],
+  salaryFilter?: string[]
 ) => {
   try {
     await connectToDatabase();
@@ -94,6 +96,12 @@ export const handleFilter4 = async (
     }
     if (categoryFilter && categoryFilter.length > 0) {
       query["category.name"] = { $in: categoryFilter };
+    }
+    if (levelFilter && levelFilter.length > 0) {
+      query.level = { $in: levelFilter };
+    }
+    if (salaryFilter && salaryFilter.length > 0) {
+      query.salary = { $in: salaryFilter };
     }
 
     // Perform the query to filter documents

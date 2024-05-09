@@ -89,13 +89,15 @@ type IndexSignature = {
 };
 
 type JobsFrequencyData = {
-  type: JobsFilterFrequency[];
-  category: JobsFilterFrequency[];
-  level: JobsFilterFrequency[];
-  salary: JobsFilterFrequency[];
+  typeFrequency: JobsFilterFrequency[];
+  categoryFrequency: JobsFilterFrequency[];
+  levelFrequency: JobsFilterFrequency[];
+  salaryFrequency: JobsFilterFrequency[];
 };
 
 type JobsFilterFrequency = {
   _id: string;
   count: number;
 };
+
+type FrequencyCount = { value: string; count: number };

@@ -103,15 +103,17 @@ export const handleFilter = async (
     const skips = limit * (page - 1);
 
     // Perform the query to filter documents
-    const documents = await Jobs.find(query)
+    const jobs = await Jobs.find(query)
       .skip(skips >= 0 ? skips : 0)
       .limit(limit > 0 ? limit : 10);
+
+    const jobsNoLimit = await Jobs.find({});
 
     // Get the total number of jobs
     const jobCount = await Jobs.find(query).countDocuments();
     const totalPages = Math.ceil(jobCount / limit);
 
-    return { jobs: JSON.parse(JSON.stringify(documents)), totalPages };
+    return { jobs: JSON.parse(JSON.stringify(jobs)), totalPages, jobsNoLimit };
   } catch (error) {
     handleError(error);
   }

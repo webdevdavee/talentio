@@ -65,7 +65,7 @@ const JobsFilterList = ({
     ].map((key) => updatedParams.getAll(key));
 
     // Depending on which key data was fetched, send the data to the server action "handleFilter" to filter the database collection
-    const filteredJobs: GetJob | undefined = await handleFilter(
+    const filteredJobs: GetJob2 | undefined = await handleFilter(
       type,
       category,
       level,
@@ -78,16 +78,28 @@ const JobsFilterList = ({
       totalPages: filteredJobs?.totalPages,
     });
 
-    // From the filteredJobs data, count the number of times the properties (type, category.name, level, salary) values appeared in the new jobs data
-    const newFrequency = {
-      typeFrequency: countPropertyValues(filteredJobs?.jobs, "type"),
-      categoryFrequency: countPropertyValues(filteredJobs?.jobs, "name"),
-      levelFrequency: countPropertyValues(filteredJobs?.jobs, "level"),
-      salaryFrequency: countPropertyValues(filteredJobs?.jobs, "salary"),
-    };
+    // Get the property value count or frequency based on the type of job array passed
+    function createFrequencyObject(jobs: Job[] | undefined): JobsFrequencyData {
+      return {
+        typeFrequency: countPropertyValues(jobs, "type"),
+        categoryFrequency: countPropertyValues(jobs, "name"),
+        levelFrequency: countPropertyValues(jobs, "level"),
+        salaryFrequency: countPropertyValues(jobs, "salary"),
+      };
+    }
 
-    // Send the newFrequency data to the jobsFrequency object
-    setJobsFrequency(newFrequency);
+    const newFrequency = createFrequencyObject(filteredJobs?.jobs);
+    const newFrequencyNoLimit = createFrequencyObject(
+      filteredJobs?.jobsNoLimit
+    );
+
+    // Determine if all filters are empty
+    const areFiltersEmpty = [type, category, level, salary].every(
+      (filter) => filter.length <= 0
+    );
+
+    // Set the appropriate jobsFrequency based on whether filters are empty
+    setJobsFrequency(areFiltersEmpty ? newFrequencyNoLimit : newFrequency);
   };
 
   // Function to set the URL params keys and values

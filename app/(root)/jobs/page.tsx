@@ -24,7 +24,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
   ];
 
   // Using Promise.all to wait for all promises to resolve
-  const [
+  let [
     typeFrequency,
     categoryFrequency,
     levelFrequency,

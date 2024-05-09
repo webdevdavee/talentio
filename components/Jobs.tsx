@@ -3,7 +3,11 @@
 import React, { useEffect, useState } from "react";
 import JobsFromFilter from "./JobsFromFilter";
 import JobsFilterBar from "./JobsFilterBar";
-import { getJobs, handleFilter } from "@/database/actions/job.actions";
+import {
+  getJobs,
+  getJobsWithFrequency,
+  handleFilter,
+} from "@/database/actions/job.actions";
 import { useSearchParams } from "next/navigation";
 
 type JobsProps = {

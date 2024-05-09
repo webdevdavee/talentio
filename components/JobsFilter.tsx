@@ -4,10 +4,10 @@ import { ChangeEvent } from "react";
 type JobsFilterProps = {
   filter: {
     title: string;
+    type: string;
     frequency: JobsFilterFrequency[];
     toggleShowFilter: () => void;
-    showFilter: boolean | JobsFilterFrequency[];
-    type: string;
+    showFilter: boolean;
   };
   handleFilter: (
     e: ChangeEvent<HTMLInputElement>,

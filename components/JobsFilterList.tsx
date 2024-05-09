@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import JobsFilter from "./JobsFilter";
 import { countPropertyValues, createURL } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { handleFilter4 } from "@/database/actions/job.actions";
+import { handleFilter } from "@/database/actions/job.actions";
 
 type JobsFilterListProps = {
   jobsFrequency: JobsFrequencyData;
@@ -40,13 +40,7 @@ const JobsFilterList = ({
     salary: true,
   });
 
-  const [newFrequencyCount, setNewFrequencyCount] = useState({
-    typeFrequency: [] as JobsFilterFrequency[],
-    categoryFrequency: [] as JobsFilterFrequency[],
-    levelFrequency: [] as JobsFilterFrequency[],
-    salaryFrequency: [] as JobsFilterFrequency[],
-  });
-
+  // Toggle the visibility of specific filters
   const toggleFilterVisibility = (filterName: keyof FilterVisibility) => {
     setFilterVisibility((prev) => ({
       ...prev,
@@ -55,9 +49,12 @@ const JobsFilterList = ({
   };
 
   const updateFilters = async (updatedParams: URLSearchParams) => {
+    // Create a URL query
     const url = createURL(pathname, updatedParams);
+    // Send the created query to the URL
     router.push(url);
 
+    // Fetch the updated URL keys and values from the URL and save the data in the respective variables
     const [type, category, level, salary] = [
       "type",
       "category",
@@ -65,74 +62,85 @@ const JobsFilterList = ({
       "salary",
     ].map((key) => updatedParams.getAll(key));
 
-    const filteredJobs: Job[] | undefined = await handleFilter4(
+    // Depending on which key data was fetched, send the data to the server action "handleFilter" to filter the database collection
+    const filteredJobs: GetJob | undefined = await handleFilter(
       type,
       category,
       level,
       salary
     );
-    setJobsData({ jobs: filteredJobs, totalPages: undefined });
 
+    // Once result is returned, update the jobs array to the filteredJobs data
+    setJobsData({
+      jobs: filteredJobs?.jobs,
+      totalPages: filteredJobs?.totalPages,
+    });
+
+    // From the filteredJobs data, count the number of times the properties (type, category.name, level, salary) values appeared in the new jobs data
     const newFrequency = {
-      typeFrequency: countPropertyValues(filteredJobs, "type"),
-      categoryFrequency: countPropertyValues(filteredJobs, "name"),
-      levelFrequency: countPropertyValues(filteredJobs, "level"),
-      salaryFrequency: countPropertyValues(filteredJobs, "salary"),
+      typeFrequency: countPropertyValues(filteredJobs?.jobs, "type"),
+      categoryFrequency: countPropertyValues(filteredJobs?.jobs, "name"),
+      levelFrequency: countPropertyValues(filteredJobs?.jobs, "level"),
+      salaryFrequency: countPropertyValues(filteredJobs?.jobs, "salary"),
     };
 
-    setNewFrequencyCount(newFrequency);
+    // Send the newFrequency data to the jobsFrequency object
     setJobsFrequency(newFrequency);
   };
 
+  // Function to set the URL params keys and values
   const handleFilterChange = async (
     e: ChangeEvent<HTMLInputElement>,
     filterType: string,
     filterValue: string
   ) => {
+    // Extract the checked and name variables from the e.target object
     const { checked, name } = e.target;
 
     if (checked) {
+      // Create a key that holds an array of filterValues in the URL
       updatedParams.append(filterType, filterValue);
+      // Save the checked state of the filterValue to the URL
+      updatedParams.set(name, checked.toString());
     } else {
+      // If checked is false, delete URL keys
       updatedParams.delete(filterType, filterValue);
+      updatedParams.delete(name);
     }
-    updatedParams.set(name, checked.toString());
 
+    // Call the updateFilters function and pass the updated URL keys and values
     await updateFilters(updatedParams);
   };
 
-  useEffect(() => {
-    console.log(newFrequencyCount);
-  }, [newFrequencyCount]);
-
+  // Filters' data and actions
   const filtersConfig = [
     {
       title: "Type of Employment",
       type: "type",
       frequency: jobsFrequency.typeFrequency,
       toggleShowFilter: () => toggleFilterVisibility("type"),
-      showFilter: newFrequencyCount.typeFrequency,
+      showFilter: filterVisibility.type,
     },
     {
       title: "Category",
       type: "category",
       frequency: jobsFrequency.categoryFrequency,
       toggleShowFilter: () => toggleFilterVisibility("category"),
-      showFilter: newFrequencyCount.categoryFrequency,
+      showFilter: filterVisibility.category,
     },
     {
       title: "Level",
       type: "level",
       frequency: jobsFrequency.levelFrequency,
       toggleShowFilter: () => toggleFilterVisibility("level"),
-      showFilter: newFrequencyCount.levelFrequency,
+      showFilter: filterVisibility.level,
     },
     {
       title: "Salary (per annum)",
       type: "salary",
       frequency: jobsFrequency.salaryFrequency,
       toggleShowFilter: () => toggleFilterVisibility("salary"),
-      showFilter: newFrequencyCount.salaryFrequency,
+      showFilter: filterVisibility.salary,
     },
   ];
 

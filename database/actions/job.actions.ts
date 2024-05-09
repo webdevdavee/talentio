@@ -4,7 +4,7 @@ import { connectToDatabase } from "..";
 import { handleError } from "@/lib/utils";
 import Jobs from "../models/job.model";
 
-export const getJobs = async (page = 1, limit = 10) => {
+export const getJobs = async (page: number, limit = 10) => {
   try {
     await connectToDatabase();
 
@@ -73,19 +73,14 @@ export const getJobsWithFrequency = async (field: string) => {
   }
 };
 
-// Define the interface for your document
-interface MyDocument {
-  type: string;
-  category: string;
-  // ... include other properties of the document
-}
-
 // Function to handle the filtering
-export const handleFilter4 = async (
+export const handleFilter = async (
   typeFilter?: string[],
   categoryFilter?: string[],
   levelFilter?: string[],
-  salaryFilter?: string[]
+  salaryFilter?: string[],
+  page = 1,
+  limit = 10
 ) => {
   try {
     await connectToDatabase();
@@ -104,10 +99,19 @@ export const handleFilter4 = async (
       query.salary = { $in: salaryFilter };
     }
 
-    // Perform the query to filter documents
-    const documents = await Jobs.find(query);
+    // Calculate the number of documents to skip
+    const skips = limit * (page - 1);
 
-    return documents;
+    // Perform the query to filter documents
+    const documents = await Jobs.find(query)
+      .skip(skips >= 0 ? skips : 0)
+      .limit(limit > 0 ? limit : 10);
+
+    // Get the total number of jobs
+    const jobCount = await Jobs.find(query).countDocuments();
+    const totalPages = Math.ceil(jobCount / limit);
+
+    return { jobs: JSON.parse(JSON.stringify(documents)), totalPages };
   } catch (error) {
     handleError(error);
   }

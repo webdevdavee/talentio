@@ -64,6 +64,20 @@ type Job = {
   companylogo: string;
 };
 
+type Category = {
+  _id: string;
+  category: string;
+  icon: string;
+};
+
+type Company = {
+  _id: string;
+  company: string;
+  about: string;
+  logo: string;
+  category: string[];
+};
+
 type GetJob = {
   jobs: Job[];
   totalPages: number;
@@ -77,12 +91,6 @@ type GetJob2 = {
 
 type CategoryCounts = {
   [key: string]: number;
-};
-
-type Category = {
-  _id: string;
-  category: string;
-  icon: string;
 };
 
 type CategoryCount = {

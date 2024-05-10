@@ -20,7 +20,9 @@ export default async function Home() {
         <Hero />
         <CompaniesHelped />
         <FeaturedCategories />
-        <SignUpBanner />
+        <div className="px-16">
+          <SignUpBanner />
+        </div>
         <FeaturedJobs />
         <LatestJobs />
       </section>

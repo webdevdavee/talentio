@@ -1,6 +1,6 @@
 const SignUpBanner = () => {
   return (
-    <section className="px-16 mt-10">
+    <section className="mt-10">
       <div className="w-full h-[30rem] bg-primary items-center justify-center p-12 flex flex-col gap-12">
         <h2 className="text-5xl font-bold text-center text-white">
           Start posting <br />

@@ -1,7 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathname = usePathname();
+
   return (
     <header className="w-full bg-white px-16 py-4">
       <nav className="w-full">
@@ -13,19 +18,26 @@ const Header = () => {
             <div className="flex items-center gap-8">
               <Link
                 href="/jobs"
-                className="transition duration-200 hover:text-primary"
+                className={`transition duration-200 hover:text-primary ${
+                  pathname === "/jobs" && "border-b-[2px] border-b-primary"
+                }`}
               >
                 Find Jobs
               </Link>
               <Link
                 href="/companies"
-                className="transition duration-200 hover:text-primary"
+                className={`transition duration-200 hover:text-primary ${
+                  pathname === "/companies" && "border-b-[2px] border-b-primary"
+                }`}
               >
                 Browse Companies
               </Link>
               <Link
                 href="/categories"
-                className="transition duration-200 hover:text-primary"
+                className={`transition duration-200 hover:text-primary ${
+                  pathname === "/categories" &&
+                  "border-b-[2px] border-b-primary"
+                }`}
               >
                 Categories
               </Link>

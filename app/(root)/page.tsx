@@ -9,7 +9,13 @@ import Loader from "@/components/Loader";
 
 export default async function Home() {
   return (
-    <Suspense fallback={<Loader className="loader" />}>
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <Loader className="loader" />
+        </div>
+      }
+    >
       <section className="w-full">
         <Hero />
         <CompaniesHelped />

@@ -13,6 +13,7 @@ type JobsFilterBarProps = {
   levelFrequency: JobsFilterFrequency[];
   salaryFrequency: JobsFilterFrequency[];
   newJobsPropertyCount: JobsFrequencyData | undefined;
+  setShowLoader: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const JobsFilterBar = ({
@@ -22,6 +23,7 @@ const JobsFilterBar = ({
   levelFrequency,
   salaryFrequency,
   newJobsPropertyCount,
+  setShowLoader,
 }: JobsFilterBarProps) => {
   const [jobsFrequency, setJobsFrequency] = useState<JobsFrequencyData>({
     typeFrequency: typeFrequency,
@@ -38,6 +40,7 @@ const JobsFilterBar = ({
         }
         setJobsData={setJobsData}
         setJobsFrequency={setJobsFrequency}
+        setShowLoader={setShowLoader}
       />
     </section>
   );

@@ -31,7 +31,7 @@ const page = async () => {
       <section>
         <SubHero
           data={listOfCompaniesFromJobs}
-          title="Find you"
+          title="Find your"
           breakTitle="dream companies"
           subText="Find the company you dream to work for"
           tagText="Popular: Tesla, Google, Samsung"

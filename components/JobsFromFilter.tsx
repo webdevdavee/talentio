@@ -2,14 +2,21 @@ import JobList from "./JobList";
 import { useState } from "react";
 import ListLayout from "./ListLayout";
 import Pagination from "./Pagination";
+import Loader from "./Loader";
 
 type JobsFromFilterProps = {
   jobs: Job[] | undefined;
   totalPages: number | undefined;
   page: number;
+  showLoader: boolean;
 };
 
-const JobsFromFilter = ({ jobs, totalPages, page }: JobsFromFilterProps) => {
+const JobsFromFilter = ({
+  jobs,
+  totalPages,
+  page,
+  showLoader,
+}: JobsFromFilterProps) => {
   const [layout, setLayout] = useState<"row" | "column">("row");
 
   return (
@@ -23,8 +30,16 @@ const JobsFromFilter = ({ jobs, totalPages, page }: JobsFromFilterProps) => {
           <ListLayout layout={layout} setLayout={setLayout} />
         </span>
       </div>
-      <JobList type="all" jobs={jobs} layout={layout} />
-      <Pagination page={page} totalPages={totalPages} />
+      {showLoader ? (
+        <div className="flex items-center justify-center mt-16">
+          <Loader className="loader" />
+        </div>
+      ) : (
+        <>
+          <JobList type="all" jobs={jobs} layout={layout} />
+          <Pagination page={page} totalPages={totalPages} />
+        </>
+      )}
     </section>
   );
 };

@@ -13,6 +13,7 @@ type JobsFilterListProps = {
     }>
   >;
   setJobsFrequency: React.Dispatch<React.SetStateAction<JobsFrequencyData>>;
+  setShowLoader: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type FilterVisibility = Record<string, boolean> & {
@@ -26,6 +27,7 @@ const JobsFilterList = ({
   jobsFrequency,
   setJobsData,
   setJobsFrequency,
+  setShowLoader,
 }: JobsFilterListProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -54,6 +56,7 @@ const JobsFilterList = ({
     // Send the created query to the URL
     router.push(url);
 
+    setShowLoader(true);
     // Fetch the updated URL keys and values from the URL and save the data in the respective variables
     const [type, category, level, salary, search] = [
       "type",
@@ -100,6 +103,7 @@ const JobsFilterList = ({
 
     // Set the appropriate jobsFrequency based on whether filters are empty
     setJobsFrequency(areFiltersEmpty ? newFrequencyNoLimit : newFrequency);
+    setShowLoader(false);
   };
 
   // Function to set the URL params keys and values

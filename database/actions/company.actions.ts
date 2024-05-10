@@ -22,8 +22,6 @@ export const getCompaniesByCategory = async (category: string) => {
 
     const companies = await Companies.find({ category: { $in: [category] } });
 
-    console.log(companies);
-
     return JSON.parse(JSON.stringify(companies));
   } catch (error) {
     handleError(error);

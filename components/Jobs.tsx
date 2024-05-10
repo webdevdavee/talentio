@@ -27,6 +27,8 @@ const Jobs = ({
   const searchParams = useSearchParams();
   const jobsParams = new URLSearchParams(searchParams.toString());
 
+  const [showLoader, setShowLoader] = useState(false);
+
   const [jobsData, setJobsData] = useState({
     jobs: fetchedJobs?.jobs,
     totalPages: fetchedJobs?.totalPages,
@@ -44,11 +46,15 @@ const Jobs = ({
   ].map((key) => jobsParams.getAll(key));
 
   const fetchJobs = async () => {
+    setShowLoader(true);
     const jobs = await getJobs(page);
     setJobsData({ jobs: jobs?.jobs, totalPages: jobs?.totalPages });
+    setShowLoader(false);
   };
 
   const fetchFilteredJobs = async () => {
+    setShowLoader(true);
+
     const filteredJobs: GetJob2 | undefined = await handleJobFilter(
       type,
       category,
@@ -88,6 +94,7 @@ const Jobs = ({
     setNewJobsPropertyCount(
       areFiltersEmpty ? newFrequencyNoLimit : newFrequency
     );
+    setShowLoader(false);
   };
 
   // const getJobSearch = async () => {
@@ -141,11 +148,13 @@ const Jobs = ({
         levelFrequency={levelFrequency}
         salaryFrequency={salaryFrequency}
         newJobsPropertyCount={newJobsPropertyCount}
+        setShowLoader={setShowLoader}
       />
       <JobsFromFilter
         jobs={jobsData.jobs}
         totalPages={jobsData.totalPages}
         page={page}
+        showLoader={showLoader}
       />
     </div>
   );

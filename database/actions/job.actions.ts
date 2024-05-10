@@ -79,6 +79,7 @@ export const handleFilter = async (
   categoryFilter?: string[],
   levelFilter?: string[],
   salaryFilter?: string[],
+  search?: string[],
   page = 1,
   limit = 10
 ) => {
@@ -97,6 +98,32 @@ export const handleFilter = async (
     }
     if (salaryFilter && salaryFilter.length > 0) {
       query.salary = { $in: salaryFilter };
+    }
+    if (search && search.length > 0) {
+      const [value1, value2] = search;
+      // Make a search pattern using special rules that ensure each word you’re looking for is included in the text.
+      let jobTitleString = value1.split(/\s+/);
+      let pattern = jobTitleString.map((string) => `(?=.*${string})`).join("");
+
+      let jobLocationString = value2.split(/\s+/);
+      let pattern2 = jobLocationString
+        .map((string) => `(?=.*${string})`)
+        .join("");
+
+      query.$or = [
+        {
+          title: {
+            $regex: pattern,
+            $options: "i",
+          },
+        },
+        {
+          location: {
+            $regex: pattern2,
+            $options: "i",
+          },
+        },
+      ];
     }
 
     // Calculate the number of documents to skip
@@ -118,3 +145,83 @@ export const handleFilter = async (
     handleError(error);
   }
 };
+
+export const getLocation = async () => {
+  try {
+    await connectToDatabase();
+
+    const locations = await Jobs.aggregate([
+      {
+        $group: {
+          _id: "$location",
+          document: { $first: "$$ROOT" },
+        },
+      },
+      {
+        $replaceRoot: { newRoot: "$document" },
+      },
+      {
+        $project: {
+          location: 1,
+          _id: 0,
+        },
+      },
+    ]);
+
+    return JSON.parse(JSON.stringify(locations));
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// export const searchJobFromInput = async (
+//   jobTitle: string,
+//   jobLocation: string,
+//   page = 1,
+//   limit = 10
+// ) => {
+//   try {
+//     await connectToDatabase();
+
+//     // Make a search pattern using special rules that ensure each word you’re looking for is included in the text.
+//     let jobTitleString = jobTitle.split(/\s+/);
+//     let pattern = jobTitleString.map((string) => `(?=.*${string})`).join("");
+
+//     let jobLocationString = jobLocation.split(/\s+/);
+//     let pattern2 = jobLocationString
+//       .map((string) => `(?=.*${string})`)
+//       .join("");
+
+//     // Calculate the number of documents to skip
+//     const skips = limit * (page - 1);
+
+//     const query = {
+//       $or: [
+//         {
+//           title: {
+//             $regex: pattern,
+//             $options: "i",
+//           },
+//         },
+//         {
+//           location: {
+//             $regex: pattern2,
+//             $options: "i",
+//           },
+//         },
+//       ],
+//     };
+
+//     const jobs = await Jobs.find(query)
+//       .skip(skips >= 0 ? skips : 0)
+//       .limit(limit > 0 ? limit : 10);
+
+//     // Get the total number of jobs
+//     const jobCount = await Jobs.find(query).countDocuments();
+//     const totalPages = Math.ceil(jobCount / limit);
+
+//     return { jobs: JSON.parse(JSON.stringify(jobs)), totalPages };
+//   } catch (error) {
+//     handleError(error);
+//   }
+// };

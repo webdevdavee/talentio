@@ -1,33 +1,48 @@
 "use client";
 
-import CountryList from "./CountryList";
-import { ChangeEvent, useState } from "react";
-import countries from "@/constants/countries";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TSearchJobSchema, searchJobSchema } from "@/lib/zod";
 import JobTitleInput from "./JobTitleInput";
 import JobLocationInput from "./JobLocationInput";
+import LocationList from "./LocationList";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createURL } from "@/lib/utils";
 
-const SearchForm = () => {
+type SearchFormProps = {
+  listOfLocationsFromJobs: Locations[];
+};
+
+const SearchForm = ({ listOfLocationsFromJobs }: SearchFormProps) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [jobInputValue, setJobInputValue] = useState("");
   const [countryInputValue, setCountryInputValue] = useState("Germany");
   const [showCountryList, setShowCountryList] = useState(false);
+
+  const jobsSearchParams = new URLSearchParams(searchParams.toString());
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<TSearchJobSchema>({ resolver: zodResolver(searchJobSchema) });
 
   const onSubmit = async (data: TSearchJobSchema) => {
+    jobsSearchParams.append("search", data.title);
+    jobsSearchParams.append("search", data.location);
+    const url = createURL("/jobs", jobsSearchParams);
+    router.push(url);
     reset();
   };
 
   // Create an array based on the search input and if no input, return the original array
-  const filteredCountriesSearch = countries?.filter((country) =>
-    country.name.toLowerCase().includes(countryInputValue.toLowerCase())
+  const filteredLocationSearch = listOfLocationsFromJobs?.filter((location) =>
+    location.location.toLowerCase().includes(countryInputValue.toLowerCase())
   );
 
   const handleCountryInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +50,10 @@ const SearchForm = () => {
     const value = e.target.value;
     setCountryInputValue(value);
   };
+
+  useEffect(() => {
+    setValue("location", countryInputValue);
+  }, []);
 
   return (
     <form
@@ -65,10 +84,11 @@ const SearchForm = () => {
           setShowCountryList={setShowCountryList}
         />
         {showCountryList && (
-          <CountryList
-            countries={filteredCountriesSearch}
+          <LocationList
+            locations={filteredLocationSearch}
             setCountryInputValue={setCountryInputValue}
             setShowCountryList={setShowCountryList}
+            setValue={setValue}
           />
         )}
       </div>

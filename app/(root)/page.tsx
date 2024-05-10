@@ -5,7 +5,7 @@ import FeaturedJobs from "@/components/FeaturedJobs";
 import SignUpBanner from "@/components/SignUpBanner";
 import LatestJobs from "@/components/LatestJobs";
 
-export default function Home() {
+export default async function Home() {
   return (
     <section className="w-full">
       <Hero />

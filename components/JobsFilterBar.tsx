@@ -13,6 +13,8 @@ type JobsFilterBarProps = {
   levelFrequency: JobsFilterFrequency[];
   salaryFrequency: JobsFilterFrequency[];
   page: number;
+  newJobsPropertyCount: JobsFrequencyData | undefined;
+  search: string[];
 };
 
 const JobsFilterBar = ({
@@ -22,6 +24,8 @@ const JobsFilterBar = ({
   levelFrequency,
   salaryFrequency,
   page,
+  newJobsPropertyCount,
+  search,
 }: JobsFilterBarProps) => {
   const [jobsFrequency, setJobsFrequency] = useState<JobsFrequencyData>({
     typeFrequency: typeFrequency,
@@ -33,10 +37,13 @@ const JobsFilterBar = ({
   return (
     <section className="w-[20%]">
       <JobsFilterList
-        jobsFrequency={jobsFrequency}
+        jobsFrequency={
+          newJobsPropertyCount ? newJobsPropertyCount : jobsFrequency
+        }
         setJobsData={setJobsData}
         setJobsFrequency={setJobsFrequency}
         page={page}
+        search={search}
       />
     </section>
   );

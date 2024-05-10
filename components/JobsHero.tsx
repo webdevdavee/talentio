@@ -1,6 +1,10 @@
 import SearchForm from "./SearchForm";
 
-const JobsHero = () => {
+type JobsHeroProps = {
+  listOfLocationsFromJobs: Locations[];
+};
+
+const JobsHero = ({ listOfLocationsFromJobs }: JobsHeroProps) => {
   return (
     <section className="relative w-full max-h-[37rem] py-20 px-16 flex items-center justify-center hero overflow-hidden">
       <div className="w-full flex flex-col items-center gap-12">
@@ -11,7 +15,7 @@ const JobsHero = () => {
           Find your next career at opportunities like Tesla, Apple and Microsoft
         </p>
         <div>
-          <SearchForm />
+          <SearchForm listOfLocationsFromJobs={listOfLocationsFromJobs} />
           <p className="mt-4 text-sm text-gray-500">
             Popular: Data Analyst, Sales Specialist, Product manager
           </p>

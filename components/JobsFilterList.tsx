@@ -14,6 +14,7 @@ type JobsFilterListProps = {
   >;
   setJobsFrequency: React.Dispatch<React.SetStateAction<JobsFrequencyData>>;
   page: number;
+  search: string[];
 };
 
 type FilterVisibility = Record<string, boolean> & {
@@ -27,7 +28,7 @@ const JobsFilterList = ({
   jobsFrequency,
   setJobsData,
   setJobsFrequency,
-  page,
+  search,
 }: JobsFilterListProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -57,11 +58,12 @@ const JobsFilterList = ({
     router.push(url);
 
     // Fetch the updated URL keys and values from the URL and save the data in the respective variables
-    const [type, category, level, salary] = [
+    const [type, category, level, salary, search] = [
       "type",
       "category",
       "level",
       "salary",
+      "search",
     ].map((key) => updatedParams.getAll(key));
 
     // Depending on which key data was fetched, send the data to the server action "handleFilter" to filter the database collection
@@ -69,7 +71,8 @@ const JobsFilterList = ({
       type,
       category,
       level,
-      salary
+      salary,
+      search
     );
 
     // Once result is returned, update the jobs array to the filteredJobs data

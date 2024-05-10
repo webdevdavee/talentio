@@ -3,12 +3,9 @@
 import React, { useEffect, useState } from "react";
 import JobsFromFilter from "./JobsFromFilter";
 import JobsFilterBar from "./JobsFilterBar";
-import {
-  getJobs,
-  getJobsWithFrequency,
-  handleFilter,
-} from "@/database/actions/job.actions";
+import { getJobs, handleFilter } from "@/database/actions/job.actions";
 import { useSearchParams } from "next/navigation";
+import { countPropertyValues } from "@/lib/utils";
 
 type JobsProps = {
   fetchedJobs: GetJob | undefined;
@@ -27,49 +24,113 @@ const Jobs = ({
   levelFrequency,
   salaryFrequency,
 }: JobsProps) => {
+  const searchParams = useSearchParams();
+  const jobsParams = new URLSearchParams(searchParams.toString());
+
   const [jobsData, setJobsData] = useState({
     jobs: fetchedJobs?.jobs,
     totalPages: fetchedJobs?.totalPages,
   });
-  const searchParams = useSearchParams();
-  const jobsParams = new URLSearchParams(searchParams.toString());
+
+  const [newJobsPropertyCount, setNewJobsPropertyCount] =
+    useState<JobsFrequencyData>();
+
+  const [type, category, level, salary, search] = [
+    "type",
+    "category",
+    "level",
+    "salary",
+    "search",
+  ].map((key) => jobsParams.getAll(key));
+
+  const fetchJobs = async () => {
+    const jobs = await getJobs(page);
+    setJobsData({ jobs: jobs?.jobs, totalPages: jobs?.totalPages });
+  };
+
+  const fetchFilteredJobs = async () => {
+    const filteredJobs: GetJob2 | undefined = await handleFilter(
+      type,
+      category,
+      level,
+      salary,
+      search,
+      page
+    );
+    setJobsData({
+      jobs: filteredJobs?.jobs,
+      totalPages: filteredJobs?.totalPages,
+    });
+
+    // Get the property value count or frequency based on the type of job array passed
+    const createFrequencyObject = (
+      jobs: Job[] | undefined
+    ): JobsFrequencyData => {
+      return {
+        typeFrequency: countPropertyValues(jobs, "type"),
+        categoryFrequency: countPropertyValues(jobs, "name"),
+        levelFrequency: countPropertyValues(jobs, "level"),
+        salaryFrequency: countPropertyValues(jobs, "salary"),
+      };
+    };
+
+    const newFrequency = createFrequencyObject(filteredJobs?.jobs);
+    const newFrequencyNoLimit = createFrequencyObject(
+      filteredJobs?.jobsNoLimit
+    );
+
+    // Determine if all filters are empty
+    const areFiltersEmpty = [type, category, level, salary, search].every(
+      (filter) => filter.length <= 0
+    );
+
+    // Set the appropriate jobsFrequency based on whether filters are empty
+    setNewJobsPropertyCount(
+      areFiltersEmpty ? newFrequencyNoLimit : newFrequency
+    );
+  };
+
+  // const getJobSearch = async () => {
+  //   const [value1, value2] = search;
+  //   // Fetch jobs from search
+  //   const jobs: GetJob | undefined = await searchJobFromInput(value1, value2);
+  //   // Set the jobs data to the response from the search
+  //   setJobsData({ jobs: jobs?.jobs, totalPages: jobs?.totalPages });
+  //   // Fetch jobs property count or frequency
+  //   const fetchJobsPropertyCount = (
+  //     jobs: Job[] | undefined
+  //   ): JobsFrequencyData => {
+  //     return {
+  //       typeFrequency: countPropertyValues(jobs, "type"),
+  //       categoryFrequency: countPropertyValues(jobs, "name"),
+  //       levelFrequency: countPropertyValues(jobs, "level"),
+  //       salaryFrequency: countPropertyValues(jobs, "salary"),
+  //     };
+  //   };
+  //   setNewJobsPropertyCount(fetchJobsPropertyCount(jobs?.jobs));
+  // };
+
+  // Determine if all filters are empty
+  const areFiltersEmpty = [type, category, level, salary, search].every(
+    (filter) => filter.length <= 0
+  );
 
   useEffect(() => {
-    const [type, category, level, salary] = [
-      "type",
-      "category",
-      "level",
-      "salary",
-    ].map((key) => jobsParams.getAll(key));
-
-    if (
-      type.length <= 0 &&
-      category.length <= 0 &&
-      level.length <= 0 &&
-      salary.length <= 0
-    ) {
-      const fetchJobs = async () => {
-        const jobs = await getJobs(page);
-        setJobsData({ jobs: jobs?.jobs, totalPages: jobs?.totalPages });
-      };
+    if (areFiltersEmpty) {
       fetchJobs();
     } else {
-      const fetchFilteredJobs = async () => {
-        const filteredJobs: GetJob | undefined = await handleFilter(
-          type,
-          category,
-          level,
-          salary,
-          page
-        );
-        setJobsData({
-          jobs: filteredJobs?.jobs,
-          totalPages: filteredJobs?.totalPages,
-        });
-      };
       fetchFilteredJobs();
     }
-  }, [page]);
+  }, [page, areFiltersEmpty]);
+
+  // useEffect(() => {
+  //   if (search.length > 0) {
+  //     const handleSearch = async () => {
+  //       getJobSearch();
+  //     };
+  //     handleSearch();
+  //   }
+  // }, [search]);
 
   return (
     <div className="w-full flex items-start justify-start gap-8 p-16">
@@ -80,6 +141,8 @@ const Jobs = ({
         levelFrequency={levelFrequency}
         salaryFrequency={salaryFrequency}
         page={page}
+        newJobsPropertyCount={newJobsPropertyCount}
+        search={search}
       />
       <JobsFromFilter
         jobs={jobsData.jobs}

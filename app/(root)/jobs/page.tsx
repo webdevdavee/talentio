@@ -1,6 +1,10 @@
 import Jobs from "@/components/Jobs";
 import JobsHero from "@/components/JobsHero";
-import { getJobs, getJobsWithFrequency } from "@/database/actions/job.actions";
+import {
+  getJobs,
+  getJobsWithFrequency,
+  getLocation,
+} from "@/database/actions/job.actions";
 
 export async function generateMetadata() {
   return {
@@ -31,9 +35,11 @@ const page = async ({ searchParams }: SearchParamProps) => {
     salaryFrequency,
   ]: JobsFilterFrequency[][] = await Promise.all(promises);
 
+  const listOfLocationsFromJobs: Locations[] = await getLocation();
+
   return (
     <section>
-      <JobsHero />
+      <JobsHero listOfLocationsFromJobs={listOfLocationsFromJobs} />
       <Jobs
         fetchedJobs={fetchedJobs}
         page={page}

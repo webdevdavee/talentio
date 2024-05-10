@@ -105,3 +105,11 @@ type JobsFrequencyData = {
   levelFrequency: JobsFilterFrequency[];
   salaryFrequency: JobsFilterFrequency[];
 };
+
+type IndexSignatureJobsFrequency = {
+  [key: string]: JobsFilterFrequency[];
+};
+
+type Locations = {
+  location: string;
+};

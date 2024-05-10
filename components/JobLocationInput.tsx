@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { UseFormRegisterReturn, UseFormSetValue } from "react-hook-form";
 
 type JobLocationInputProps = {
   inputRegister?: UseFormRegisterReturn<"location">;

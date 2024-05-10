@@ -7,7 +7,7 @@ type JobCard3Props = {
 
 const JobCard3 = ({ job, layout }: JobCard3Props) => {
   return (
-    <section className="bg-white p-8 border border-primary">
+    <section className="bg-white p-8 border border-gray-400">
       <div
         className={`w-full flex justify-between ${
           layout === "column" && "flex-col gap-6"

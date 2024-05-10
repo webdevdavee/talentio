@@ -110,6 +110,6 @@ type IndexSignatureJobsFrequency = {
   [key: string]: JobsFilterFrequency[];
 };
 
-type Locations = {
+type SearchDataList = {
   location: string;
 };

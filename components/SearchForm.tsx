@@ -3,26 +3,28 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TSearchJobSchema, searchJobSchema } from "@/lib/zod";
-import JobTitleInput from "./JobTitleInput";
-import JobLocationInput from "./JobLocationInput";
-import LocationList from "./LocationList";
+import { TSearchSchema, searchSchema } from "@/lib/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createURL } from "@/lib/utils";
+import SearchList from "./SearchList";
+import SearchTitleInput from "./SearchTitleInput";
+import SearchListInput from "./SearchListInput";
 
 type SearchFormProps = {
-  listOfLocationsFromJobs: Locations[];
+  data: SearchDataList[];
+  placeholderText: string;
+  buttonText: string;
 };
 
-const SearchForm = ({ listOfLocationsFromJobs }: SearchFormProps) => {
+const SearchForm = ({ data, placeholderText, buttonText }: SearchFormProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [jobInputValue, setJobInputValue] = useState("");
-  const [countryInputValue, setCountryInputValue] = useState("Germany");
-  const [showCountryList, setShowCountryList] = useState(false);
+  const [keywordInputValue, setKeywordInputValue] = useState("");
+  const [listInputValue, setListInputValue] = useState("Germany");
+  const [showList, setShowList] = useState(false);
 
-  const jobsSearchParams = new URLSearchParams(searchParams.toString());
+  const searchSearchParams = new URLSearchParams(searchParams.toString());
 
   const {
     register,
@@ -30,29 +32,29 @@ const SearchForm = ({ listOfLocationsFromJobs }: SearchFormProps) => {
     formState: { errors },
     reset,
     setValue,
-  } = useForm<TSearchJobSchema>({ resolver: zodResolver(searchJobSchema) });
+  } = useForm<TSearchSchema>({ resolver: zodResolver(searchSchema) });
 
-  const onSubmit = async (data: TSearchJobSchema) => {
-    jobsSearchParams.append("search", data.title);
-    jobsSearchParams.append("search", data.location);
-    const url = createURL("/jobs", jobsSearchParams);
+  const onSubmit = async (data: TSearchSchema) => {
+    searchSearchParams.append("search", data.title);
+    searchSearchParams.append("search", data.list);
+    const url = createURL("/jobs", searchSearchParams);
     router.push(url);
     reset();
   };
 
   // Create an array based on the search input and if no input, return the original array
-  const filteredLocationSearch = listOfLocationsFromJobs?.filter((location) =>
-    location.location.toLowerCase().includes(countryInputValue.toLowerCase())
+  const filteredDataSearch = data?.filter((d) =>
+    d.location.toLowerCase().includes(listInputValue.toLowerCase())
   );
 
-  const handleCountryInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setShowCountryList(true);
+  const handleListInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setShowList(true);
     const value = e.target.value;
-    setCountryInputValue(value);
+    setListInputValue(value);
   };
 
   useEffect(() => {
-    setValue("location", countryInputValue);
+    setValue("list", listInputValue);
   }, []);
 
   return (
@@ -60,40 +62,41 @@ const SearchForm = ({ listOfLocationsFromJobs }: SearchFormProps) => {
       onSubmit={handleSubmit(onSubmit)}
       className="bg-white w-fit p-4 flex items-center gap-4 drop-shadow"
     >
-      <JobTitleInput
+      <SearchTitleInput
         inputRegister={register("title")}
         error={
           errors.title && (
             <p className="text-red-500">{`${errors.title.message}`}</p>
           )
         }
-        jobInputValue={jobInputValue}
-        setJobInputValue={setJobInputValue}
+        keywordInputValue={keywordInputValue}
+        setKeywordInputValue={setKeywordInputValue}
+        placeholderText={placeholderText}
       />
       <div className="relative">
-        <JobLocationInput
-          inputRegister={register("location")}
+        <SearchListInput
+          inputRegister={register("list")}
           error={
-            errors.location && (
-              <p className="text-red-500">{`${errors.location.message}`}</p>
+            errors.list && (
+              <p className="text-red-500">{`${errors.list.message}`}</p>
             )
           }
-          handleCountryInput={handleCountryInput}
-          countryInputValue={countryInputValue}
-          showCountryList={showCountryList}
-          setShowCountryList={setShowCountryList}
+          handleListInput={handleListInput}
+          listInputValue={listInputValue}
+          showList={showList}
+          setShowList={setShowList}
         />
-        {showCountryList && (
-          <LocationList
-            locations={filteredLocationSearch}
-            setCountryInputValue={setCountryInputValue}
-            setShowCountryList={setShowCountryList}
+        {showList && (
+          <SearchList
+            data={filteredDataSearch}
+            setListInputValue={setListInputValue}
+            setShowList={setShowList}
             setValue={setValue}
           />
         )}
       </div>
       <button type="submit" className="bg-primary text-white px-4 py-2">
-        Search my job
+        {buttonText}
       </button>
     </form>
   );

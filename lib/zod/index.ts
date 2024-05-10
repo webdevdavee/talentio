@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-// SEARCH JOB SCHEMA
-export const searchJobSchema = z.object({
+// SEARCH SCHEMA
+export const searchSchema = z.object({
   title: z.string().min(3, "Use 3 characters or more"),
-  location: z.string().min(3, "Use 3 characters or more"),
+  list: z.string().min(3, "Use 3 characters or more"),
 });
 
-export type TSearchJobSchema = z.infer<typeof searchJobSchema>;
+export type TSearchSchema = z.infer<typeof searchSchema>;
 
 // FOOTER FORM SCHEMA
 export const footerFormSchema = z.object({

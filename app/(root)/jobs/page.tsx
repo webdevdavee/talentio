@@ -1,9 +1,9 @@
 import Jobs from "@/components/Jobs";
-import JobsHero from "@/components/JobsHero";
+import SubHero from "@/components/SubHero";
 import {
   getJobs,
-  getJobsWithFrequency,
-  getLocation,
+  getJobsPropertyValueCount,
+  getUniquePropertyValue,
 } from "@/database/actions/job.actions";
 
 export async function generateMetadata() {
@@ -21,10 +21,10 @@ const page = async ({ searchParams }: SearchParamProps) => {
 
   // Create an array of promises
   const promises = [
-    getJobsWithFrequency("type"),
-    getJobsWithFrequency("category.name"),
-    getJobsWithFrequency("level"),
-    getJobsWithFrequency("salary"),
+    getJobsPropertyValueCount("type"),
+    getJobsPropertyValueCount("category.name"),
+    getJobsPropertyValueCount("level"),
+    getJobsPropertyValueCount("salary"),
   ];
 
   // Using Promise.all to wait for all promises to resolve
@@ -35,11 +35,20 @@ const page = async ({ searchParams }: SearchParamProps) => {
     salaryFrequency,
   ]: JobsFilterFrequency[][] = await Promise.all(promises);
 
-  const listOfLocationsFromJobs: Locations[] = await getLocation();
+  const listOfLocationsFromJobs: SearchDataList[] =
+    await getUniquePropertyValue("location");
 
   return (
     <section>
-      <JobsHero listOfLocationsFromJobs={listOfLocationsFromJobs} />
+      <SubHero
+        data={listOfLocationsFromJobs}
+        title="Find your"
+        breakTitle="dream job."
+        subText="Find your next career at opportunities like Tesla, Apple and Microsoft"
+        tagText=" Popular: Data Analyst, Sales Specialist, Product manager"
+        placeholderText="job title or keyword"
+        buttonText="Search my job"
+      />
       <Jobs
         fetchedJobs={fetchedJobs}
         page={page}

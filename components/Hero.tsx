@@ -1,16 +1,20 @@
 import SearchForm from "./SearchForm";
 import HeroTitle from "./HeroTitle";
 import Image from "next/image";
-import { getLocation } from "@/database/actions/job.actions";
+import { getUniquePropertyValue } from "@/database/actions/job.actions";
 
 const Hero = async () => {
-  const listOfLocationsFromJobs = await getLocation();
+  const listOfLocationsFromJobs = await getUniquePropertyValue("location");
 
   return (
     <section className="relative flex items-start w-full max-h-[37rem] py-20 px-16 hero overflow-hidden">
       <div className="w-[60%] flex flex-col gap-8 items-start">
         <HeroTitle />
-        <SearchForm listOfLocationsFromJobs={listOfLocationsFromJobs} />
+        <SearchForm
+          data={listOfLocationsFromJobs}
+          placeholderText="job title or keyword"
+          buttonText="Search my job"
+        />
         <p className="text-sm text-gray-500">
           Popular: Data Analyst, Sales Specialist, Product manager
         </p>

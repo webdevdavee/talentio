@@ -51,7 +51,7 @@ export const getJobsCategoryCount = async () => {
   }
 };
 
-export const getJobsWithFrequency = async (field: string) => {
+export const getJobsPropertyValueCount = async (field: string) => {
   try {
     await connectToDatabase();
 
@@ -74,7 +74,7 @@ export const getJobsWithFrequency = async (field: string) => {
 };
 
 // Function to handle the filtering
-export const handleFilter = async (
+export const handleJobFilter = async (
   typeFilter?: string[],
   categoryFilter?: string[],
   levelFilter?: string[],
@@ -146,14 +146,14 @@ export const handleFilter = async (
   }
 };
 
-export const getLocation = async () => {
+export const getUniquePropertyValue = async (field: string) => {
   try {
     await connectToDatabase();
 
-    const locations = await Jobs.aggregate([
+    const data = await Jobs.aggregate([
       {
         $group: {
-          _id: "$location",
+          _id: `$${field}`,
           document: { $first: "$$ROOT" },
         },
       },
@@ -168,7 +168,7 @@ export const getLocation = async () => {
       },
     ]);
 
-    return JSON.parse(JSON.stringify(locations));
+    return JSON.parse(JSON.stringify(data));
   } catch (error) {
     handleError(error);
   }

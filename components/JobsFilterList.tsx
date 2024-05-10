@@ -1,8 +1,8 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import JobsFilter from "./JobsFilter";
 import { countPropertyValues, createURL } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { handleFilter } from "@/database/actions/job.actions";
+import { handleJobFilter } from "@/database/actions/job.actions";
 
 type JobsFilterListProps = {
   jobsFrequency: JobsFrequencyData;
@@ -13,8 +13,6 @@ type JobsFilterListProps = {
     }>
   >;
   setJobsFrequency: React.Dispatch<React.SetStateAction<JobsFrequencyData>>;
-  page: number;
-  search: string[];
 };
 
 type FilterVisibility = Record<string, boolean> & {
@@ -28,7 +26,6 @@ const JobsFilterList = ({
   jobsFrequency,
   setJobsData,
   setJobsFrequency,
-  search,
 }: JobsFilterListProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -66,8 +63,8 @@ const JobsFilterList = ({
       "search",
     ].map((key) => updatedParams.getAll(key));
 
-    // Depending on which key data was fetched, send the data to the server action "handleFilter" to filter the database collection
-    const filteredJobs: GetJob2 | undefined = await handleFilter(
+    // Depending on which key data was fetched, send the data to the server action "handleJobFilter" to filter the database collection
+    const filteredJobs: GetJob2 | undefined = await handleJobFilter(
       type,
       category,
       level,

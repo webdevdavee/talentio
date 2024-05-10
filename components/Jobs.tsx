@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import JobsFromFilter from "./JobsFromFilter";
 import JobsFilterBar from "./JobsFilterBar";
-import { getJobs, handleFilter } from "@/database/actions/job.actions";
+import { getJobs, handleJobFilter } from "@/database/actions/job.actions";
 import { useSearchParams } from "next/navigation";
 import { countPropertyValues } from "@/lib/utils";
 
@@ -49,7 +49,7 @@ const Jobs = ({
   };
 
   const fetchFilteredJobs = async () => {
-    const filteredJobs: GetJob2 | undefined = await handleFilter(
+    const filteredJobs: GetJob2 | undefined = await handleJobFilter(
       type,
       category,
       level,
@@ -140,9 +140,7 @@ const Jobs = ({
         categoryFrequency={categoryFrequency}
         levelFrequency={levelFrequency}
         salaryFrequency={salaryFrequency}
-        page={page}
         newJobsPropertyCount={newJobsPropertyCount}
-        search={search}
       />
       <JobsFromFilter
         jobs={jobsData.jobs}

@@ -20,11 +20,6 @@ const JobsFromFilter = ({ jobs, totalPages, page }: JobsFromFilterProps) => {
           <p className="text-sm">Showing {jobs?.length} results</p>
         </div>
         <span className="flex items-center gap-3">
-          <div className="flex items-center gap-3">
-            <input type="checkbox" className="w-4 h-4 cursor-pointer" />
-            <p>Show latest</p>
-          </div>
-          <div className="border h-[1rem] border-slate-300"></div>
           <ListLayout layout={layout} setLayout={setLayout} />
         </span>
       </div>

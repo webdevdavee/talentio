@@ -25,7 +25,11 @@ const CompaniesList = ({
       {companies && companies.length > 0 && type === "recommended" && (
         <section className="w-full grid grid-cols-4 gap-6">
           {companies.slice(0, 8).map((company) => (
-            <CompanyCard key={company._id} company={company} />
+            <CompanyCard
+              key={company._id}
+              company={company}
+              type="recommended"
+            />
           ))}
         </section>
       )}
@@ -43,6 +47,24 @@ const CompaniesList = ({
             ))}
           </div>
         )}
+      {companies && companies.length > 0 && type === "search" && (
+        <section
+          className={`${
+            layout === "row"
+              ? "w-full flex flex-col gap-6"
+              : "w-full grid grid-cols-2 gap-6"
+          }`}
+        >
+          {companies.slice(0, 8).map((company) => (
+            <CompanyCard
+              key={company._id}
+              company={company}
+              layout={layout}
+              type="search"
+            />
+          ))}
+        </section>
+      )}
     </>
   );
 };

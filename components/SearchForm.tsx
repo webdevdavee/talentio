@@ -26,7 +26,6 @@ const SearchForm = ({
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [keywordInputValue, setKeywordInputValue] = useState("");
   const [listInputValue, setListInputValue] = useState("Germany");
   const [showList, setShowList] = useState(false);
 
@@ -41,12 +40,14 @@ const SearchForm = ({
   } = useForm<TSearchSchema>({ resolver: zodResolver(searchSchema) });
 
   const onSubmit = async (data: TSearchSchema) => {
-    searchSearchParams.append("search", data.title);
-    searchSearchParams.append("search", data.list);
+    searchSearchParams.delete("search");
     let url: string;
     if (type === "companies") {
+      searchSearchParams.append("search", data.title);
       url = createURL("/companies", searchSearchParams);
     } else {
+      searchSearchParams.append("search", data.title);
+      searchSearchParams.append("search", data.list as string);
       url = createURL("/jobs", searchSearchParams);
     }
     router.push(url);
@@ -71,7 +72,7 @@ const SearchForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white w-fit p-4 flex items-center gap-4 drop-shadow"
+      className="bg-white w-fit p-4 flex items-start gap-4 drop-shadow"
     >
       <SearchTitleInput
         inputRegister={register("title")}
@@ -80,23 +81,24 @@ const SearchForm = ({
             <p className="text-red-500">{`${errors.title.message}`}</p>
           )
         }
-        keywordInputValue={keywordInputValue}
-        setKeywordInputValue={setKeywordInputValue}
         placeholderText={placeholderText}
+        type={type}
       />
       <div className="relative">
-        <SearchListInput
-          inputRegister={register("list")}
-          error={
-            errors.list && (
-              <p className="text-red-500">{`${errors.list.message}`}</p>
-            )
-          }
-          handleListInput={handleListInput}
-          listInputValue={listInputValue}
-          showList={showList}
-          setShowList={setShowList}
-        />
+        {type !== "companies" && (
+          <SearchListInput
+            inputRegister={register("list")}
+            error={
+              errors.list && (
+                <p className="text-red-500">{`${errors.list.message}`}</p>
+              )
+            }
+            handleListInput={handleListInput}
+            listInputValue={listInputValue}
+            showList={showList}
+            setShowList={setShowList}
+          />
+        )}
         {showList && (
           <SearchList
             data={filteredDataSearch}

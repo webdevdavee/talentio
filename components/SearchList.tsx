@@ -7,7 +7,7 @@ type SearchListProps = {
   setShowList: Dispatch<SetStateAction<boolean>>;
   setValue: UseFormSetValue<{
     title: string;
-    list: string;
+    list?: string | undefined;
   }>;
 };
 

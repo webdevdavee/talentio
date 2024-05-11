@@ -120,13 +120,16 @@ const Jobs = ({
   //   setNewJobsPropertyCount(fetchJobsPropertyCount(jobs?.jobs));
   // };
 
+  // If areFiltersEmpty is true run the fetchJobs() function, if not, run the fetchFilteredJobs(). This useEffect only runs when either of page, areFiltersEmpty, value1 or value2 changes
+  const [value1, value2] = search;
+
   useEffect(() => {
     if (areFiltersEmpty) {
       fetchJobs();
     } else {
       fetchFilteredJobs();
     }
-  }, [page, areFiltersEmpty]);
+  }, [page, areFiltersEmpty, value1, value2]);
 
   return (
     <div className="w-full flex items-start justify-start gap-8 p-16">

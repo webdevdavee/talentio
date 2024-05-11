@@ -2,11 +2,17 @@ import Image from "next/image";
 
 type CompanyCard = {
   company: Company;
+  type?: string;
+  layout?: string;
 };
 
-const CompanyCard = ({ company }: CompanyCard) => {
+const CompanyCard = ({ company, type, layout }: CompanyCard) => {
   return (
-    <section className="border border-zinc-300 p-5 hover:scale-105 duration-200 transition cursor-pointer">
+    <section
+      className={`border border-zinc-300 p-5 duration-200 transition cursor-pointer ${
+        !type && "hover:scale-105"
+      }`}
+    >
       <div className="flex flex-col items-start justify-between h-full gap-3">
         <div className="w-full h-[4.2rem] overflow-hidden">
           <Image
@@ -19,7 +25,8 @@ const CompanyCard = ({ company }: CompanyCard) => {
         </div>
         <p className="text-lg font-bold text-left">{company.company}</p>
         <p className="text-left">
-          {company.about.length > 55
+          {(company.about.length > 55 && type === "recommended") ||
+          layout === "column"
             ? company.about.slice(0, 55) + "..."
             : company.about}
         </p>

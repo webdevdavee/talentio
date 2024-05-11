@@ -79,7 +79,7 @@ export const handleCompanyFilter = async (
     }
 
     if (search && search.length > 0) {
-      const [value1, value2] = search;
+      const [value1] = search;
 
       // Make a search pattern using special rules that ensure each word is included in the text.
       let companyNameString = value1.split(/\s+/);
@@ -87,25 +87,10 @@ export const handleCompanyFilter = async (
         .map((string) => `(?=.*${string})`)
         .join("");
 
-      let companyLocationString = value2.split(/\s+/);
-      let pattern2 = companyLocationString
-        .map((string) => `(?=.*${string})`)
-        .join("");
-
-      query.$or = [
-        {
-          company: {
-            $regex: pattern,
-            $options: "i",
-          },
-        },
-        {
-          location: {
-            $regex: pattern2,
-            $options: "i",
-          },
-        },
-      ];
+      query.company = {
+        $regex: new RegExp(pattern),
+        $options: "i",
+      };
     }
 
     // Calculate the number of documents to skip

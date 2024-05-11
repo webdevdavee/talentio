@@ -94,13 +94,16 @@ const Companies = ({
     setShowLoader(false);
   };
 
+  // If areFiltersEmpty is true run the fetchJobs() function, if not, run the fetchFilteredJobs(). This useEffect only runs when either of page, areFiltersEmpty or value changes
+  const [value] = search;
+
   useEffect(() => {
     if (areFiltersEmpty) {
       fetchCompanies();
     } else {
       fetchFilteredCompanies();
     }
-  }, [page, areFiltersEmpty]);
+  }, [page, areFiltersEmpty, value]);
 
   return (
     <>

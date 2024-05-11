@@ -36,7 +36,7 @@ const CompaniesFromFilter = ({
         </div>
       ) : (
         <>
-          <CompaniesList type="all" companies={companies} layout={layout} />
+          <CompaniesList type="search" companies={companies} layout={layout} />
           <Pagination page={page} totalPages={totalPages} />
         </>
       )}

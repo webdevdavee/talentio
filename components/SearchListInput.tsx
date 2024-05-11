@@ -24,17 +24,19 @@ const SearchListInput = ({
       <Image src="/location.svg" width={18} height={18} alt="search" />
       <button
         type="button"
-        className="w-full flex items-center justify-between border-b border-b-zinc-300 focus:border-b overflow-hidden"
+        className="w-full flex items-start justify-between border-b border-b-zinc-300 focus:border-b overflow-hidden"
       >
-        <input
-          {...inputRegister}
-          type="text"
-          placeholder="Search country"
-          className="w-fit pb-3 focus:border-b focus:transition focus:outline-none"
-          value={listInputValue}
-          onChange={(e) => handleListInput(e)}
-        />
-        <p className="text-sm">{error}</p>
+        <div className="flex flex-col gap-2">
+          <input
+            {...inputRegister}
+            type="text"
+            placeholder="Search country"
+            className="w-fit pb-1 focus:border-b focus:transition focus:outline-none"
+            value={listInputValue}
+            onChange={(e) => handleListInput(e)}
+          />
+          <p className="text-sm">{error}</p>
+        </div>
         <Image
           src="/arrow-down.svg"
           width={18}

@@ -37,6 +37,7 @@ const Jobs = ({
   const [newJobsPropertyCount, setNewJobsPropertyCount] =
     useState<JobsFrequencyData>();
 
+  // Get the url keys
   const [type, category, level, salary, search] = [
     "type",
     "category",
@@ -45,6 +46,12 @@ const Jobs = ({
     "search",
   ].map((key) => jobsParams.getAll(key));
 
+  // Determine if all filters are empty
+  const areFiltersEmpty = [type, category, level, salary, search].every(
+    (filter) => filter.length <= 0
+  );
+
+  // Function to fetch jobs
   const fetchJobs = async () => {
     setShowLoader(true);
     const jobs = await getJobs(page);
@@ -52,6 +59,7 @@ const Jobs = ({
     setShowLoader(false);
   };
 
+  // Function to fetch jobs based on filters that have been applied
   const fetchFilteredJobs = async () => {
     setShowLoader(true);
 
@@ -85,11 +93,6 @@ const Jobs = ({
       filteredJobs?.jobsNoLimit
     );
 
-    // Determine if all filters are empty
-    const areFiltersEmpty = [type, category, level, salary, search].every(
-      (filter) => filter.length <= 0
-    );
-
     // Set the appropriate jobsFrequency based on whether filters are empty
     setNewJobsPropertyCount(
       areFiltersEmpty ? newFrequencyNoLimit : newFrequency
@@ -117,11 +120,6 @@ const Jobs = ({
   //   setNewJobsPropertyCount(fetchJobsPropertyCount(jobs?.jobs));
   // };
 
-  // Determine if all filters are empty
-  const areFiltersEmpty = [type, category, level, salary, search].every(
-    (filter) => filter.length <= 0
-  );
-
   useEffect(() => {
     if (areFiltersEmpty) {
       fetchJobs();
@@ -129,15 +127,6 @@ const Jobs = ({
       fetchFilteredJobs();
     }
   }, [page, areFiltersEmpty]);
-
-  // useEffect(() => {
-  //   if (search.length > 0) {
-  //     const handleSearch = async () => {
-  //       getJobSearch();
-  //     };
-  //     handleSearch();
-  //   }
-  // }, [search]);
 
   return (
     <div className="w-full flex items-start justify-start gap-8 p-16">

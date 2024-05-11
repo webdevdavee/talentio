@@ -101,7 +101,7 @@ export const handleJobFilter = async (
     }
     if (search && search.length > 0) {
       const [value1, value2] = search;
-      // Make a search pattern using special rules that ensure each word you’re looking for is included in the text.
+      // Make a search pattern using special rules that ensure each word is included in the text.
       let jobTitleString = value1.split(/\s+/);
       let pattern = jobTitleString.map((string) => `(?=.*${string})`).join("");
 

@@ -1,9 +1,10 @@
-import { getCompanies } from "@/database/actions/company.actions";
 import CompaniesList from "./CompaniesList";
 
-const RecommendedCompanies = async () => {
-  const fetchCompanies: Company[] = await getCompanies();
+type RecommendedCompaniesProps = {
+  companies: Company[] | undefined;
+};
 
+const RecommendedCompanies = ({ companies }: RecommendedCompaniesProps) => {
   return (
     <section className="w-full px-16 mt-16">
       <div className="flex flex-col items-start gap-1 mb-10">
@@ -14,7 +15,7 @@ const RecommendedCompanies = async () => {
           Based on your profile, company preference and recent activity
         </p>
       </div>
-      <CompaniesList type="recommended" companies={fetchCompanies} />
+      <CompaniesList type="recommended" companies={companies} />
     </section>
   );
 };

@@ -24,8 +24,8 @@ const Pagination = ({ page, totalPages }: PaginationProps) => {
     const prevPage = page - 1;
     // Set the url param to the prevPage value
     pageParam.set("page", prevPage.toString());
-    const categoryURL = createURL(pathname, pageParam);
-    router.push(`${categoryURL}`);
+    const url = createURL(pathname, pageParam);
+    router.push(url);
   };
 
   // Go to next page
@@ -35,8 +35,8 @@ const Pagination = ({ page, totalPages }: PaginationProps) => {
     if (totalPages && nextPage <= totalPages) {
       // Set the url param to the nextPage value
       pageParam.set("page", nextPage.toString());
-      const categoryURL = createURL(pathname, pageParam);
-      router.push(`${categoryURL}`);
+      const url = createURL(pathname, pageParam);
+      router.push(url);
     }
   };
 
@@ -45,8 +45,8 @@ const Pagination = ({ page, totalPages }: PaginationProps) => {
     e.preventDefault();
     // Set the url param to the value param
     pageParam.set("page", value);
-    const categoryURL = createURL(pathname, pageParam);
-    router.push(`${categoryURL}`);
+    const url = createURL(pathname, pageParam);
+    router.push(url);
   };
 
   // Set inputValue to page value when ever page changes

@@ -14,9 +14,15 @@ type SearchFormProps = {
   data: SearchDataList[];
   placeholderText: string;
   buttonText: string;
+  type: string;
 };
 
-const SearchForm = ({ data, placeholderText, buttonText }: SearchFormProps) => {
+const SearchForm = ({
+  data,
+  placeholderText,
+  buttonText,
+  type,
+}: SearchFormProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -37,7 +43,12 @@ const SearchForm = ({ data, placeholderText, buttonText }: SearchFormProps) => {
   const onSubmit = async (data: TSearchSchema) => {
     searchSearchParams.append("search", data.title);
     searchSearchParams.append("search", data.list);
-    const url = createURL("/jobs", searchSearchParams);
+    let url: string;
+    if (type === "companies") {
+      url = createURL("/companies", searchSearchParams);
+    } else {
+      url = createURL("/jobs", searchSearchParams);
+    }
     router.push(url);
     reset();
   };

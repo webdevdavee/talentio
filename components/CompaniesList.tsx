@@ -1,11 +1,25 @@
+import CategoryCard2 from "./CategoryCard2";
 import CompanyCard from "./CompanyCard";
 
 type CompaniesList = {
   type: string;
-  companies: Company[];
+  companies?: Company[] | undefined;
+  categories?: Category[] | undefined;
+  sliceStart?: number;
+  sliceEnd?: number;
+  fetchCompanies?: (category: string) => Promise<void>;
+  layout?: "row" | "column";
 };
 
-const CompaniesList = ({ type, companies }: CompaniesList) => {
+const CompaniesList = ({
+  type,
+  companies,
+  categories,
+  sliceStart,
+  sliceEnd,
+  fetchCompanies,
+  layout,
+}: CompaniesList) => {
   return (
     <>
       {companies && companies.length > 0 && type === "recommended" && (
@@ -15,6 +29,20 @@ const CompaniesList = ({ type, companies }: CompaniesList) => {
           ))}
         </section>
       )}
+      {fetchCompanies &&
+        categories &&
+        categories.length > 0 &&
+        type === "from_category" && (
+          <div className="w-full grid grid-cols-4 items-center gap-6 mt-16">
+            {categories.slice(sliceStart, sliceEnd).map((category) => (
+              <CategoryCard2
+                key={category._id}
+                category={category}
+                fetchCompanies={fetchCompanies}
+              />
+            ))}
+          </div>
+        )}
     </>
   );
 };

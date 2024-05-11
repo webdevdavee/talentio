@@ -81,7 +81,7 @@ const JobsFilterList = ({
       totalPages: filteredJobs?.totalPages,
     });
 
-    // Get the property value count or frequency based on the type of job array passed
+    // Get the property value count or frequency based on the job array and element property passed
     function createFrequencyObject(jobs: Job[] | undefined): JobsFrequencyData {
       return {
         typeFrequency: countPropertyValues(jobs, "type"),

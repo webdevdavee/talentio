@@ -48,6 +48,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
         tagText=" Popular: Data Analyst, Sales Specialist, Product manager"
         placeholderText="job title or keyword"
         buttonText="Search my job"
+        type="jobs"
       />
       <Jobs
         fetchedJobs={fetchedJobs}

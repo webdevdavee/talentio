@@ -89,6 +89,17 @@ type GetJob2 = {
   jobsNoLimit: Job[];
 };
 
+type GetCompanies = {
+  companies: Company[] | undefined;
+  totalPages: number | undefined;
+};
+
+type GetCompanies2 = {
+  companies: Company[] | undefined;
+  totalPages: number | undefined;
+  companiesNoLimit: Company[] | undefined;
+};
+
 type CategoryCounts = {
   [key: string]: number;
 };
@@ -120,4 +131,13 @@ type IndexSignatureJobsFrequency = {
 
 type SearchDataList = {
   location: string;
+};
+
+type PropertyValueFrequencyData = {
+  industryFrequency: PropertyValueFrequency[];
+};
+
+type PropertyValueFrequency = {
+  _id: string;
+  count: number;
 };

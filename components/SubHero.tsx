@@ -8,6 +8,7 @@ type SubHeroProps = {
   tagText: string;
   placeholderText: string;
   buttonText: string;
+  type: string;
 };
 
 const SubHero = ({
@@ -18,6 +19,7 @@ const SubHero = ({
   tagText,
   placeholderText,
   buttonText,
+  type,
 }: SubHeroProps) => {
   return (
     <section className="relative w-full max-h-[37rem] py-20 px-16 flex items-center justify-center hero overflow-hidden">
@@ -31,6 +33,7 @@ const SubHero = ({
             data={data}
             placeholderText={placeholderText}
             buttonText={buttonText}
+            type={type}
           />
           <p className="mt-4 text-sm text-gray-500">{tagText}</p>
         </div>

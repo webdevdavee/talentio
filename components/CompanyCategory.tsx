@@ -1,10 +1,8 @@
-"use client";
-
 import { useEffect, useState } from "react";
-import CategoryCard2 from "./CategoryCard2";
 import CompaniesFromCategoryInput from "./CompaniesFromCategoryInput";
 import { getCompaniesByCategory } from "@/database/actions/company.actions";
 import Loader from "./Loader";
+import CompaniesList from "./CompaniesList";
 
 type CompanyCategoryProps = {
   categories: Category[];
@@ -62,15 +60,13 @@ const CompanyCategory = ({ categories }: CompanyCategoryProps) => {
   return (
     <section className="w-full px-16 mt-8 py-8 bg-slate-50">
       <h1 className="text-3xl font-bold">Companies by Category</h1>
-      <div className="w-full grid grid-cols-4 items-center gap-6 mt-16">
-        {categories.slice(sliceStart, sliceEnd).map((category) => (
-          <CategoryCard2
-            key={category._id}
-            category={category}
-            fetchCompanies={fetchCompanies}
-          />
-        ))}
-      </div>
+      <CompaniesList
+        type="from_category"
+        categories={categories}
+        sliceStart={sliceStart}
+        sliceEnd={sliceEnd}
+        fetchCompanies={fetchCompanies}
+      />
       <div className="flex items-center justify-center gap-4 mt-10">
         <button
           type="button"

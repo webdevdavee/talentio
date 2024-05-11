@@ -14,6 +14,7 @@ const Hero = async () => {
           data={listOfLocationsFromJobs}
           placeholderText="job title or keyword"
           buttonText="Search my job"
+          type="jobs"
         />
         <p className="text-sm text-gray-500">
           Popular: Data Analyst, Sales Specialist, Product manager

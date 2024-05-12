@@ -10,10 +10,10 @@ const FeaturedCategories = () => {
           Explore by <span className="text-primary">category</span>
         </h1>
         <Link
-          href="/categories"
+          href="/jobs"
           className="flex items-center gap-2 text-primary font-semibold"
         >
-          <p>Show all categories</p>
+          <p>Show all jobs</p>
           <Image src="/arrow-right.svg" width={25} height={25} alt="arrow" />
         </Link>
       </div>

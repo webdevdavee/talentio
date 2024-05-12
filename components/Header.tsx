@@ -32,15 +32,6 @@ const Header = () => {
               >
                 Browse Companies
               </Link>
-              <Link
-                href="/categories"
-                className={`transition duration-200 hover:text-primary ${
-                  pathname === "/categories" &&
-                  "border-b-[2px] border-b-primary"
-                }`}
-              >
-                Categories
-              </Link>
             </div>
           </div>
           <div>

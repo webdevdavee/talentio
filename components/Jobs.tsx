@@ -5,7 +5,7 @@ import JobsFromFilter from "./JobsFromFilter";
 import JobsFilterBar from "./JobsFilterBar";
 import { getJobs, handleJobFilter } from "@/database/actions/job.actions";
 import { useSearchParams } from "next/navigation";
-import { countPropertyValues } from "@/lib/utils";
+import { countPropertyValues, handleError } from "@/lib/utils";
 
 type JobsProps = {
   fetchedJobs: GetJob | undefined;
@@ -53,51 +53,59 @@ const Jobs = ({
 
   // Function to fetch jobs
   const fetchJobs = async () => {
-    setShowLoader(true);
-    const jobs = await getJobs(page);
-    setJobsData({ jobs: jobs?.jobs, totalPages: jobs?.totalPages });
-    setShowLoader(false);
+    try {
+      setShowLoader(true);
+      const jobs = await getJobs(page);
+      setJobsData({ jobs: jobs?.jobs, totalPages: jobs?.totalPages });
+      setShowLoader(false);
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   // Function to fetch jobs based on filters that have been applied
   const fetchFilteredJobs = async () => {
-    setShowLoader(true);
+    try {
+      setShowLoader(true);
 
-    const filteredJobs: GetJob2 | undefined = await handleJobFilter(
-      type,
-      category,
-      level,
-      salary,
-      search,
-      page
-    );
-    setJobsData({
-      jobs: filteredJobs?.jobs,
-      totalPages: filteredJobs?.totalPages,
-    });
+      const filteredJobs: GetJob2 | undefined = await handleJobFilter(
+        type,
+        category,
+        level,
+        salary,
+        search,
+        page
+      );
+      setJobsData({
+        jobs: filteredJobs?.jobs,
+        totalPages: filteredJobs?.totalPages,
+      });
 
-    // Get the property value count or frequency based on the type of job array passed
-    const createFrequencyObject = (
-      jobs: Job[] | undefined
-    ): JobsFrequencyData => {
-      return {
-        typeFrequency: countPropertyValues(jobs, "type"),
-        categoryFrequency: countPropertyValues(jobs, "name"),
-        levelFrequency: countPropertyValues(jobs, "level"),
-        salaryFrequency: countPropertyValues(jobs, "salary"),
+      // Get the property value count or frequency based on the type of job array passed
+      const createFrequencyObject = (
+        jobs: Job[] | undefined
+      ): JobsFrequencyData => {
+        return {
+          typeFrequency: countPropertyValues(jobs, "type"),
+          categoryFrequency: countPropertyValues(jobs, "name"),
+          levelFrequency: countPropertyValues(jobs, "level"),
+          salaryFrequency: countPropertyValues(jobs, "salary"),
+        };
       };
-    };
 
-    const newFrequency = createFrequencyObject(filteredJobs?.jobs);
-    const newFrequencyNoLimit = createFrequencyObject(
-      filteredJobs?.jobsNoLimit
-    );
+      const newFrequency = createFrequencyObject(filteredJobs?.jobs);
+      const newFrequencyNoLimit = createFrequencyObject(
+        filteredJobs?.jobsNoLimit
+      );
 
-    // Set the appropriate jobsFrequency based on whether filters are empty
-    setNewJobsPropertyCount(
-      areFiltersEmpty ? newFrequencyNoLimit : newFrequency
-    );
-    setShowLoader(false);
+      // Set the appropriate jobsFrequency based on whether filters are empty
+      setNewJobsPropertyCount(
+        areFiltersEmpty ? newFrequencyNoLimit : newFrequency
+      );
+      setShowLoader(false);
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   // const getJobSearch = async () => {

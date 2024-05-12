@@ -87,10 +87,20 @@ export const handleCompanyFilter = async (
         .map((string) => `(?=.*${string})`)
         .join("");
 
-      query.company = {
-        $regex: new RegExp(pattern),
-        $options: "i",
-      };
+      query.$or = [
+        {
+          company: {
+            $regex: pattern,
+            $options: "i",
+          },
+        },
+        {
+          industry: {
+            $regex: pattern,
+            $options: "i",
+          },
+        },
+      ];
     }
 
     // Calculate the number of documents to skip

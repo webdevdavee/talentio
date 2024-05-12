@@ -9,7 +9,7 @@ import {
   getCompanies,
   handleCompanyFilter,
 } from "@/database/actions/company.actions";
-import { countPropertyValues } from "@/lib/utils";
+import { countPropertyValues, handleError } from "@/lib/utils";
 import CompaniesFilterBar from "./CompaniesFilterBar";
 import CompaniesFromFilter from "./CompaniesFromFilter";
 
@@ -50,48 +50,56 @@ const Companies = ({
 
   // Function to fetch companies
   const fetchCompanies = async () => {
-    setShowLoader(true);
+    try {
+      setShowLoader(true);
 
-    const companies: GetCompanies | undefined = await getCompanies(page);
+      const companies: GetCompanies | undefined = await getCompanies(page);
 
-    setCompaniesData({
-      companies: companies?.companies,
-      totalPages: companies?.totalPages,
-    });
-    setShowLoader(false);
+      setCompaniesData({
+        companies: companies?.companies,
+        totalPages: companies?.totalPages,
+      });
+      setShowLoader(false);
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   // Function to fetch companies based on filters that have been applied
   const fetchFilteredCompanies = async () => {
-    setShowLoader(true);
+    try {
+      setShowLoader(true);
 
-    const filteredCompanies: GetCompanies2 | undefined =
-      await handleCompanyFilter(industry, search, page);
+      const filteredCompanies: GetCompanies2 | undefined =
+        await handleCompanyFilter(industry, search, page);
 
-    setCompaniesData({
-      companies: filteredCompanies?.companies,
-      totalPages: filteredCompanies?.totalPages,
-    });
+      setCompaniesData({
+        companies: filteredCompanies?.companies,
+        totalPages: filteredCompanies?.totalPages,
+      });
 
-    // Get the property value count or frequency based on the type of job array passed
-    const createFrequencyObject = (
-      companies: Company[] | undefined
-    ): PropertyValueFrequencyData => {
-      return {
-        industryFrequency: countPropertyValues(companies, "industry"),
+      // Get the property value count or frequency based on the type of job array passed
+      const createFrequencyObject = (
+        companies: Company[] | undefined
+      ): PropertyValueFrequencyData => {
+        return {
+          industryFrequency: countPropertyValues(companies, "industry"),
+        };
       };
-    };
 
-    const newFrequency = createFrequencyObject(filteredCompanies?.companies);
-    const newFrequencyNoLimit = createFrequencyObject(
-      filteredCompanies?.companiesNoLimit
-    );
+      const newFrequency = createFrequencyObject(filteredCompanies?.companies);
+      const newFrequencyNoLimit = createFrequencyObject(
+        filteredCompanies?.companiesNoLimit
+      );
 
-    // Set the appropriate jobsFrequency based on whether filters are empty
-    setNewPropertyValueCount(
-      areFiltersEmpty ? newFrequencyNoLimit : newFrequency
-    );
-    setShowLoader(false);
+      // Set the appropriate jobsFrequency based on whether filters are empty
+      setNewPropertyValueCount(
+        areFiltersEmpty ? newFrequencyNoLimit : newFrequency
+      );
+      setShowLoader(false);
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   // If areFiltersEmpty is true run the fetchJobs() function, if not, run the fetchFilteredJobs(). This useEffect only runs when either of page, areFiltersEmpty or value changes

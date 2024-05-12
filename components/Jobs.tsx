@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import JobsFromFilter from "./JobsFromFilter";
 import JobsFilterBar from "./JobsFilterBar";
-import { getJobs, handleJobFilter } from "@/database/actions/job.actions";
+import { handleJobFilter } from "@/database/actions/job.actions";
 import { useSearchParams } from "next/navigation";
 import { countPropertyValues, handleError } from "@/lib/utils";
 
@@ -51,24 +51,13 @@ const Jobs = ({
     (filter) => filter.length <= 0
   );
 
-  // Function to fetch jobs
+  // Function to fetch jobs based on if filters are applied or not
   const fetchJobs = async () => {
     try {
       setShowLoader(true);
-      const jobs = await getJobs(page);
-      setJobsData({ jobs: jobs?.jobs, totalPages: jobs?.totalPages });
-      setShowLoader(false);
-    } catch (error) {
-      handleError(error);
-    }
-  };
 
-  // Function to fetch jobs based on filters that have been applied
-  const fetchFilteredJobs = async () => {
-    try {
-      setShowLoader(true);
-
-      const filteredJobs: GetJob2 | undefined = await handleJobFilter(
+      // Function to fetch jobs from filters and if no filters fetch jobs regardless of filter
+      const jobs: GetJob2 | undefined = await handleJobFilter(
         type,
         category,
         level,
@@ -76,12 +65,13 @@ const Jobs = ({
         search,
         page
       );
+
       setJobsData({
-        jobs: filteredJobs?.jobs,
-        totalPages: filteredJobs?.totalPages,
+        jobs: jobs?.jobs,
+        totalPages: jobs?.totalPages,
       });
 
-      // Get the property value count or frequency based on the type of job array passed
+      // Get the property value count or frequency based on the type of job array and element property passed
       const createFrequencyObject = (
         jobs: Job[] | undefined
       ): JobsFrequencyData => {
@@ -93,50 +83,27 @@ const Jobs = ({
         };
       };
 
-      const newFrequency = createFrequencyObject(filteredJobs?.jobs);
-      const newFrequencyNoLimit = createFrequencyObject(
-        filteredJobs?.jobsNoLimit
-      );
+      const newFrequency = createFrequencyObject(jobs?.jobs);
+      const newFrequencyNoLimit = createFrequencyObject(jobs?.jobsNoLimit);
 
       // Set the appropriate jobsFrequency based on whether filters are empty
       setNewJobsPropertyCount(
         areFiltersEmpty ? newFrequencyNoLimit : newFrequency
       );
+
+      console.log("newFrequencyNoLimit:", newFrequencyNoLimit);
+
       setShowLoader(false);
     } catch (error) {
       handleError(error);
     }
   };
 
-  // const getJobSearch = async () => {
-  //   const [value1, value2] = search;
-  //   // Fetch jobs from search
-  //   const jobs: GetJob | undefined = await searchJobFromInput(value1, value2);
-  //   // Set the jobs data to the response from the search
-  //   setJobsData({ jobs: jobs?.jobs, totalPages: jobs?.totalPages });
-  //   // Fetch jobs property count or frequency
-  //   const fetchJobsPropertyCount = (
-  //     jobs: Job[] | undefined
-  //   ): JobsFrequencyData => {
-  //     return {
-  //       typeFrequency: countPropertyValues(jobs, "type"),
-  //       categoryFrequency: countPropertyValues(jobs, "name"),
-  //       levelFrequency: countPropertyValues(jobs, "level"),
-  //       salaryFrequency: countPropertyValues(jobs, "salary"),
-  //     };
-  //   };
-  //   setNewJobsPropertyCount(fetchJobsPropertyCount(jobs?.jobs));
-  // };
-
-  // If areFiltersEmpty is true run the fetchJobs() function, if not, run the fetchFilteredJobs(). This useEffect only runs when either of page, areFiltersEmpty, value1 or value2 changes
+  // If areFiltersEmpty is true run the fetchJobs() function, if not, run the fetchjobs(). This useEffect only runs when either of page, value1 or value2 changes
   const [value1, value2] = search;
 
   useEffect(() => {
-    if (areFiltersEmpty) {
-      fetchJobs();
-    } else {
-      fetchFilteredJobs();
-    }
+    fetchJobs();
   }, [page, areFiltersEmpty, value1, value2]);
 
   return (

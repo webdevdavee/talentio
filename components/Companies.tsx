@@ -5,10 +5,7 @@ import CompanyCategory from "./CompanyCategory";
 import RecommendedCompanies from "./RecommendedCompanies";
 import SignUpBanner from "./SignUpBanner";
 import { useEffect, useState } from "react";
-import {
-  getCompanies,
-  handleCompanyFilter,
-} from "@/database/actions/company.actions";
+import { handleCompanyFilter } from "@/database/actions/company.actions";
 import { countPropertyValues, handleError } from "@/lib/utils";
 import CompaniesFilterBar from "./CompaniesFilterBar";
 import CompaniesFromFilter from "./CompaniesFromFilter";
@@ -48,28 +45,12 @@ const Companies = ({
     (filter) => filter.length <= 0
   );
 
-  // Function to fetch companies
+  // Function to fetch companies based on if filters are applied or not
   const fetchCompanies = async () => {
     try {
       setShowLoader(true);
 
-      const companies: GetCompanies | undefined = await getCompanies(page);
-
-      setCompaniesData({
-        companies: companies?.companies,
-        totalPages: companies?.totalPages,
-      });
-      setShowLoader(false);
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  // Function to fetch companies based on filters that have been applied
-  const fetchFilteredCompanies = async () => {
-    try {
-      setShowLoader(true);
-
+      // Function to fetch companies from filters and if no filters fetch companies regardless of filter
       const filteredCompanies: GetCompanies2 | undefined =
         await handleCompanyFilter(industry, search, page);
 
@@ -102,15 +83,11 @@ const Companies = ({
     }
   };
 
-  // If areFiltersEmpty is true run the fetchJobs() function, if not, run the fetchFilteredJobs(). This useEffect only runs when either of page, areFiltersEmpty or value changes
+  // When either of page, areFiltersEmpty or value changes, run fetchCompanies() function
   const [value] = search;
 
   useEffect(() => {
-    if (areFiltersEmpty) {
-      fetchCompanies();
-    } else {
-      fetchFilteredCompanies();
-    }
+    fetchCompanies();
   }, [page, areFiltersEmpty, value]);
 
   return (

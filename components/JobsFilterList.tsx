@@ -82,14 +82,16 @@ const JobsFilterList = ({
     });
 
     // Get the property value count or frequency based on the job array and element property passed
-    function createFrequencyObject(jobs: Job[] | undefined): JobsFrequencyData {
+    const createFrequencyObject = (
+      jobs: Job[] | undefined
+    ): JobsFrequencyData => {
       return {
         typeFrequency: countPropertyValues(jobs, "type"),
         categoryFrequency: countPropertyValues(jobs, "name"),
         levelFrequency: countPropertyValues(jobs, "level"),
         salaryFrequency: countPropertyValues(jobs, "salary"),
       };
-    }
+    };
 
     const newFrequency = createFrequencyObject(filteredJobs?.jobs);
     const newFrequencyNoLimit = createFrequencyObject(
@@ -97,7 +99,7 @@ const JobsFilterList = ({
     );
 
     // Determine if all filters are empty
-    const areFiltersEmpty = [type, category, level, salary].every(
+    const areFiltersEmpty = [type, category, level, salary, search].every(
       (filter) => filter.length <= 0
     );
 
@@ -105,6 +107,8 @@ const JobsFilterList = ({
     setJobsFrequency(areFiltersEmpty ? newFrequencyNoLimit : newFrequency);
     setShowLoader(false);
   };
+
+  // console.log("jobsFrequency:", jobsFrequency);
 
   // Function to set the URL params keys and values
   const handleFilterChange = async (

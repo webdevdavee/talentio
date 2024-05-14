@@ -59,7 +59,7 @@ const CompaniesFilterList = ({
     );
 
     // Depending on which key data was fetched, send the data to the server action "handleCompanyFilter" to filter the database collection
-    const filteredCompanies: GetCompanies2 | undefined =
+    const filteredCompanies: GetCompanies | undefined =
       await handleCompanyFilter(industry, search);
 
     // Once result is returned, update the jobs array to the filteredCompanies data

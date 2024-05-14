@@ -51,7 +51,7 @@ const Companies = ({
       setShowLoader(true);
 
       // Function to fetch companies from filters and if no filters fetch companies regardless of filter
-      const filteredCompanies: GetCompanies2 | undefined =
+      const filteredCompanies: GetCompanies | undefined =
         await handleCompanyFilter(industry, search, page);
 
       setCompaniesData({

@@ -62,6 +62,7 @@ type Job = {
   company: string;
   capacity: number;
   companylogo: string;
+  long_description: string;
 };
 
 type Category = {
@@ -76,25 +77,17 @@ type Company = {
   about: string;
   logo: string;
   category: string[];
+  industry: string[];
+  company_size: string;
 };
 
 type GetJob = {
-  jobs: Job[];
-  totalPages: number;
-};
-
-type GetJob2 = {
   jobs: Job[];
   totalPages: number;
   jobsNoLimit: Job[];
 };
 
 type GetCompanies = {
-  companies: Company[] | undefined;
-  totalPages: number | undefined;
-};
-
-type GetCompanies2 = {
   companies: Company[] | undefined;
   totalPages: number | undefined;
   companiesNoLimit: Company[] | undefined;

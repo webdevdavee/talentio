@@ -20,10 +20,26 @@ export const getJobs = async (page = 1, limit = 10) => {
     const jobCount = await Jobs.find({}).countDocuments();
     const totalPages = Math.ceil(jobCount / limit);
 
+    const jobsNoLimit = await Jobs.find({});
+
     return {
       jobs: JSON.parse(JSON.stringify(jobs)),
       totalPages,
+      jobsNoLimit,
     };
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getJobById = async (jobId: string) => {
+  try {
+    await connectToDatabase();
+    const job = await Jobs.findById(jobId);
+    if (!job) {
+      throw new Error("Job not found");
+    }
+    return JSON.parse(JSON.stringify(job));
   } catch (error) {
     handleError(error);
   }

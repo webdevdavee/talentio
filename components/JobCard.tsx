@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type JobCardProps = {
   job: Job;
@@ -6,7 +7,10 @@ type JobCardProps = {
 
 const JobCard = ({ job }: JobCardProps) => {
   return (
-    <div className="border border-zinc-300 p-5 hover:scale-105 duration-200 transition">
+    <Link
+      href={`/job/${job._id}`}
+      className="border border-zinc-300 p-5 hover:scale-105 duration-200 transition"
+    >
       <div className="flex flex-col items-start justify-between h-full gap-4">
         <div className="w-full flex items-center justify-between">
           <Image
@@ -33,7 +37,7 @@ const JobCard = ({ job }: JobCardProps) => {
           {job.category.name}
         </span>
       </div>
-    </div>
+    </Link>
   );
 };
 

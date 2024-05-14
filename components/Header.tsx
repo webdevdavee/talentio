@@ -8,7 +8,7 @@ const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header className="w-full bg-white px-16 py-4">
+    <header className="w-full bg-white px-16 py-4 border-b border-b-gray-200">
       <nav className="w-full">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-16">

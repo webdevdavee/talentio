@@ -57,7 +57,7 @@ const Jobs = ({
       setShowLoader(true);
 
       // Function to fetch jobs from filters and if no filters fetch jobs regardless of filter
-      const jobs: GetJob2 | undefined = await handleJobFilter(
+      const jobs: GetJob | undefined = await handleJobFilter(
         type,
         category,
         level,
@@ -90,8 +90,6 @@ const Jobs = ({
       setNewJobsPropertyCount(
         areFiltersEmpty ? newFrequencyNoLimit : newFrequency
       );
-
-      console.log("newFrequencyNoLimit:", newFrequencyNoLimit);
 
       setShowLoader(false);
     } catch (error) {

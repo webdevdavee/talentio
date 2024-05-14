@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type JobCard3Props = {
   job: Job;
@@ -7,7 +8,10 @@ type JobCard3Props = {
 
 const JobCard3 = ({ job, layout }: JobCard3Props) => {
   return (
-    <section className="bg-white p-8 border border-gray-400">
+    <Link
+      href={`/job/${job._id}`}
+      className="bg-white p-8 border border-gray-400 cursor-pointer"
+    >
       <div
         className={`w-full flex justify-between ${
           layout === "column" && "flex-col gap-6"
@@ -44,7 +48,7 @@ const JobCard3 = ({ job, layout }: JobCard3Props) => {
           </p>
         </div>
       </div>
-    </section>
+    </Link>
   );
 };
 

@@ -67,7 +67,7 @@ const JobsFilterList = ({
     ].map((key) => updatedParams.getAll(key));
 
     // Depending on which key data was fetched, send the data to the server action "handleJobFilter" to filter the database collection
-    const filteredJobs: GetJob2 | undefined = await handleJobFilter(
+    const filteredJobs: GetJob | undefined = await handleJobFilter(
       type,
       category,
       level,

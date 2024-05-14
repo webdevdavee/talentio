@@ -20,10 +20,39 @@ export const getCompanies = async (page = 1, limit = 10) => {
     const companiesCount = await Companies.find({}).countDocuments();
     const totalPages = Math.ceil(companiesCount / limit);
 
+    const companiesNoLimit = await Companies.find({});
+
     return {
       companies: JSON.parse(JSON.stringify(companies)),
       totalPages,
+      companiesNoLimit,
     };
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getCompanyById = async (companyId: string) => {
+  try {
+    await connectToDatabase();
+    const company = await Companies.findById(companyId);
+    if (!company) {
+      throw new Error("Company not found");
+    }
+    return JSON.parse(JSON.stringify(company));
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getCompanyByName = async (companyName: string) => {
+  try {
+    await connectToDatabase();
+    const company = await Companies.find({ company: companyName });
+    if (!company) {
+      throw new Error("Company not found");
+    }
+    return JSON.parse(JSON.stringify(company));
   } catch (error) {
     handleError(error);
   }

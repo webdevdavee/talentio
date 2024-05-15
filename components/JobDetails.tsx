@@ -31,7 +31,7 @@ const JobDetails = ({ job, company }: JobProps) => {
             <JobApplicationForm />
           ) : (
             <>
-              <p
+              <div
                 className="mt-4"
                 dangerouslySetInnerHTML={{
                   __html: cleanLongDescription,

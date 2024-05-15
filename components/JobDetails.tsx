@@ -5,7 +5,6 @@ import DOMPurify from "isomorphic-dompurify";
 import JobDetailsCompany from "./JobDetailsCompany";
 import JobApplicationForm from "./JobApplicationForm";
 import { useState } from "react";
-import FileUploader from "./FileUploader";
 
 type JobProps = {
   job: Job;
@@ -32,12 +31,7 @@ const JobDetails = ({ job, company }: JobProps) => {
             <JobApplicationForm />
           ) : (
             <>
-              <p
-                className="mt-4"
-                dangerouslySetInnerHTML={{
-                  __html: cleanLongDescription,
-                }}
-              />
+              <p>{job.long_description}</p>
               <button
                 type="button"
                 className="bg-primary text-white px-6 py-2 mt-12"

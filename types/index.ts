@@ -71,6 +71,12 @@ type Category = {
   icon: string;
 };
 
+type Industry = {
+  _id: string;
+  industry: string;
+  icon: string;
+};
+
 type Company = {
   _id: string;
   company: string;
@@ -128,7 +134,6 @@ type SearchDataList = {
 
 type PropertyValueFrequencyData = {
   industryFrequency: PropertyValueFrequency[];
-  categoryFrequency: PropertyValueFrequency[];
 };
 
 type PropertyValueFrequency = {

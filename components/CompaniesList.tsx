@@ -1,20 +1,20 @@
-import CategoryCard2 from "./CategoryCard2";
 import CompanyCard from "./CompanyCard";
+import IndustryCard from "./IndustryCard";
 
 type CompaniesList = {
   type: string;
   companies?: Company[] | undefined;
-  categories?: Category[] | undefined;
+  industries?: Industry[] | undefined;
   sliceStart?: number;
   sliceEnd?: number;
-  fetchCompanies?: (category: string) => Promise<void>;
+  fetchCompanies?: (industry: string) => Promise<void>;
   layout?: "row" | "column";
 };
 
 const CompaniesList = ({
   type,
   companies,
-  categories,
+  industries,
   sliceStart,
   sliceEnd,
   fetchCompanies,
@@ -34,14 +34,14 @@ const CompaniesList = ({
         </section>
       )}
       {fetchCompanies &&
-        categories &&
-        categories.length > 0 &&
-        type === "from_category" && (
+        industries &&
+        industries.length > 0 &&
+        type === "from_industry" && (
           <div className="w-full grid grid-cols-4 items-center gap-6 mt-16">
-            {categories.slice(sliceStart, sliceEnd).map((category) => (
-              <CategoryCard2
-                key={category._id}
-                category={category}
+            {industries.slice(sliceStart, sliceEnd).map((industry) => (
+              <IndustryCard
+                key={industry._id}
+                industry={industry}
                 fetchCompanies={fetchCompanies}
               />
             ))}

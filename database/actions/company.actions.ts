@@ -3,6 +3,7 @@
 import { connectToDatabase } from "..";
 import { handleError } from "@/lib/utils";
 import Companies from "../models/company.model";
+import Industries from "../models/industry.model";
 
 export const getCompanies = async (page = 1, limit = 10) => {
   try {
@@ -58,11 +59,13 @@ export const getCompanyByName = async (companyName: string) => {
   }
 };
 
-export const getCompaniesByCategory = async (category: string) => {
+export const getCompaniesByIndustry = async (industry: string) => {
   try {
     await connectToDatabase();
 
-    const companies = await Companies.find({ category: { $in: [category] } });
+    const companies = await Companies.find({ industry: { $in: [industry] } });
+
+    console.log(companies);
 
     return JSON.parse(JSON.stringify(companies));
   } catch (error) {
@@ -93,7 +96,6 @@ export const getArrayPropertyValuesFrequency = async (arrayField: string) => {
 
 export const handleCompanyFilter = async (
   industryFilter: string[],
-  categoryFilter: string[],
   search?: string[],
   page = 1,
   limit = 10
@@ -106,10 +108,6 @@ export const handleCompanyFilter = async (
 
     if (industryFilter && industryFilter.length > 0) {
       query.industry = { $in: industryFilter };
-    }
-
-    if (categoryFilter && categoryFilter.length > 0) {
-      query.category = { $in: categoryFilter };
     }
 
     if (search && search.length > 0) {

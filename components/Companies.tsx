@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import CompanyCategory from "./CompanyCategory";
+import CompanyIndustry from "./CompanyIndustry";
 import RecommendedCompanies from "./RecommendedCompanies";
 import SignUpBanner from "./SignUpBanner";
 import { useEffect, useState } from "react";
@@ -12,14 +12,14 @@ import CompaniesFromFilter from "./CompaniesFromFilter";
 
 type CompaniesProps = {
   companies: GetCompanies | undefined;
-  categories: Category[];
+  industries: Industry[];
   page: number;
   industryFrequency: PropertyValueFrequency[];
 };
 
 const Companies = ({
   companies,
-  categories,
+  industries,
   page,
   industryFrequency,
 }: CompaniesProps) => {
@@ -36,12 +36,12 @@ const Companies = ({
 
   const [showLoader, setShowLoader] = useState(false);
 
-  const [industry, category, search] = ["industry", "category", "search"].map(
-    (key) => companiesParams.getAll(key)
+  const [industry, search] = ["industry", "search"].map((key) =>
+    companiesParams.getAll(key)
   );
 
   // Determine if all filters are empty
-  const areFiltersEmpty = [industry, category, search].every(
+  const areFiltersEmpty = [industry, search].every(
     (filter) => filter.length <= 0
   );
 
@@ -52,7 +52,7 @@ const Companies = ({
 
       // Function to fetch companies from filters and if no filters fetch companies regardless of filter
       const filteredCompanies: GetCompanies | undefined =
-        await handleCompanyFilter(industry, category, search, page);
+        await handleCompanyFilter(industry, search, page);
 
       setCompaniesData({
         companies: filteredCompanies?.companies,
@@ -65,7 +65,6 @@ const Companies = ({
       ): PropertyValueFrequencyData => {
         return {
           industryFrequency: countPropertyValues(companies, "industry"),
-          categoryFrequency: countPropertyValues(companies, "category"),
         };
       };
 
@@ -114,8 +113,8 @@ const Companies = ({
           <div className="px-16">
             <SignUpBanner />
           </div>
-          <CompanyCategory
-            categories={categories}
+          <CompanyIndustry
+            industries={industries}
             companiesParams={companiesParams}
           />
         </div>

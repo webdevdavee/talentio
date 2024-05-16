@@ -1,11 +1,11 @@
 import Companies from "@/components/Companies";
 import Loader from "@/components/Loader";
 import SubHero from "@/components/SubHero";
-import { getCategories } from "@/database/actions/category.actions";
 import {
   getCompanies,
   getArrayPropertyValuesFrequency,
 } from "@/database/actions/company.actions";
+import { getIndustries } from "@/database/actions/industry.actions";
 import { getUniquePropertyValue } from "@/database/actions/job.actions";
 import { Suspense } from "react";
 
@@ -21,7 +21,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
   page = !page || page < 1 ? 1 : page;
 
   const companies: GetCompanies | undefined = await getCompanies(page);
-  const categories: Category[] = await getCategories();
+  const industries: Industry[] = await getIndustries();
 
   // Create an array of promises
   const industryFrequency = await getArrayPropertyValuesFrequency("industry");
@@ -50,7 +50,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
         />
         <Companies
           companies={companies}
-          categories={categories}
+          industries={industries}
           page={page}
           industryFrequency={industryFrequency}
         />

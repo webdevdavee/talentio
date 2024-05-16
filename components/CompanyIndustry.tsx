@@ -1,42 +1,42 @@
 import { useEffect, useState } from "react";
-import CompaniesFromCategoryInput from "./CompaniesFromCategoryInput";
-import { getCompaniesByCategory } from "@/database/actions/company.actions";
+import CompaniesFromIndustryInput from "./CompaniesFromIndustryInput";
+import { getCompaniesByIndustry } from "@/database/actions/company.actions";
 import Loader from "./Loader";
 import CompaniesList from "./CompaniesList";
 
-type CompanyCategoryProps = {
-  categories: Category[];
+type CompanyIndustryProps = {
+  industries: Industry[];
   companiesParams: URLSearchParams;
 };
 
-const CompanyCategory = ({
-  categories,
+const CompanyIndustry = ({
+  industries,
   companiesParams,
-}: CompanyCategoryProps) => {
+}: CompanyIndustryProps) => {
   const [showLoader, setShowLoader] = useState(false);
 
-  // Array to hold the companies gotten from the specific or selected category
-  const [companiesFromCategory, setCompaniesFromCategory] = useState<Company[]>(
+  // Array to hold the companies gotten from the specific or selected industry
+  const [companiesFromIndustry, setCompaniesFromIndustry] = useState<Company[]>(
     []
   );
 
-  // Selected category to fetch companies from
-  const [selectedCategory, setSelectedCategory] = useState(
-    categories[0].category
+  // Selected industry to fetch companies from
+  const [selectedIndustry, setSelectedIndustry] = useState(
+    industries[0].industry
   );
 
   // Function to fetch companies
-  const fetchCompanies = async (category: string) => {
+  const fetchCompanies = async (industry: string) => {
     setShowLoader(true);
-    const fetchedCompanies = await getCompaniesByCategory(category);
-    setCompaniesFromCategory(fetchedCompanies);
+    const fetchedCompanies = await getCompaniesByIndustry(industry);
+    setCompaniesFromIndustry(fetchedCompanies);
     setShowLoader(false);
-    setSelectedCategory(category);
+    setSelectedIndustry(industry);
   };
 
   // Fetch companies on initial page load
   useEffect(() => {
-    fetchCompanies(selectedCategory);
+    fetchCompanies(selectedIndustry);
   }, []);
 
   // Define the category array slice values
@@ -44,29 +44,29 @@ const CompanyCategory = ({
   const [sliceEnd, setSliceEnd] = useState(4);
   const sliceSize = 4;
 
-  // Move to the next set of categories
-  const nextCategories = () => {
-    if (sliceEnd < categories.length) {
-      const newEnd = Math.min(sliceEnd + sliceSize, categories.length);
+  // Move to the next set of industries
+  const nextIndustries = () => {
+    if (sliceEnd < industries.length) {
+      const newEnd = Math.min(sliceEnd + sliceSize, industries.length);
       setSliceStart(sliceEnd);
       setSliceEnd(newEnd);
     }
   };
 
-  // Move to the previous set of categories
-  const prevCategories = async () => {
+  // Move to the previous set of industries
+  const prevIndustries = async () => {
     if (sliceStart >= sliceSize) {
       setSliceStart(sliceStart - sliceSize);
-      setSliceEnd(Math.min(sliceStart, categories.length));
+      setSliceEnd(Math.min(sliceStart, industries.length));
     }
   };
 
   return (
     <section className="w-full px-16 mt-8 py-8 bg-slate-50">
-      <h1 className="text-3xl font-bold">Companies by Category</h1>
+      <h1 className="text-3xl font-bold">Companies by Industry</h1>
       <CompaniesList
-        type="from_category"
-        categories={categories}
+        type="from_industry"
+        industries={industries}
         sliceStart={sliceStart}
         sliceEnd={sliceEnd}
         fetchCompanies={fetchCompanies}
@@ -75,14 +75,14 @@ const CompanyCategory = ({
         <button
           type="button"
           className="px-3 py-2 bg-primary text-white"
-          onClick={prevCategories}
+          onClick={prevIndustries}
         >
           Prev
         </button>
         <button
           type="button"
           className="px-3 py-2 bg-primary text-white"
-          onClick={nextCategories}
+          onClick={nextIndustries}
         >
           Next
         </button>
@@ -92,9 +92,9 @@ const CompanyCategory = ({
           <Loader className="loader" />
         </div>
       ) : (
-        <CompaniesFromCategoryInput
-          companiesFromCategory={companiesFromCategory}
-          selectedCategory={selectedCategory}
+        <CompaniesFromIndustryInput
+          companiesFromIndustry={companiesFromIndustry}
+          selectedIndustry={selectedIndustry}
           companiesParams={companiesParams}
         />
       )}
@@ -102,4 +102,4 @@ const CompanyCategory = ({
   );
 };
 
-export default CompanyCategory;
+export default CompanyIndustry;

@@ -36,12 +36,12 @@ const Companies = ({
 
   const [showLoader, setShowLoader] = useState(false);
 
-  const [industry, search] = ["industry", "search"].map((key) =>
-    companiesParams.getAll(key)
+  const [industry, category, search] = ["industry", "category", "search"].map(
+    (key) => companiesParams.getAll(key)
   );
 
   // Determine if all filters are empty
-  const areFiltersEmpty = [industry, search].every(
+  const areFiltersEmpty = [industry, category, search].every(
     (filter) => filter.length <= 0
   );
 
@@ -52,7 +52,7 @@ const Companies = ({
 
       // Function to fetch companies from filters and if no filters fetch companies regardless of filter
       const filteredCompanies: GetCompanies | undefined =
-        await handleCompanyFilter(industry, search, page);
+        await handleCompanyFilter(industry, category, search, page);
 
       setCompaniesData({
         companies: filteredCompanies?.companies,
@@ -65,6 +65,7 @@ const Companies = ({
       ): PropertyValueFrequencyData => {
         return {
           industryFrequency: countPropertyValues(companies, "industry"),
+          categoryFrequency: countPropertyValues(companies, "category"),
         };
       };
 
@@ -113,7 +114,10 @@ const Companies = ({
           <div className="px-16">
             <SignUpBanner />
           </div>
-          <CompanyCategory categories={categories} />
+          <CompanyCategory
+            categories={categories}
+            companiesParams={companiesParams}
+          />
         </div>
       )}
     </>

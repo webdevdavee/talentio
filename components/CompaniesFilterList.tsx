@@ -20,6 +20,7 @@ type CompaniesFilterListProps = {
 
 type FilterVisibility = Record<string, boolean> & {
   industry: boolean;
+  category: boolean;
 };
 
 const CompaniesFilterList = ({
@@ -36,6 +37,7 @@ const CompaniesFilterList = ({
 
   const [filterVisibility, setFilterVisibility] = useState<FilterVisibility>({
     industry: true,
+    category: true,
   });
 
   // Toggle the visibility of specific filters
@@ -54,13 +56,13 @@ const CompaniesFilterList = ({
 
     setShowLoader(true);
     // Fetch the updated URL keys and values from the URL and save the data in the respective variables
-    const [industry, search] = ["industry", "search"].map((key) =>
-      updatedParams.getAll(key)
+    const [industry, category, search] = ["industry", "category", "search"].map(
+      (key) => updatedParams.getAll(key)
     );
 
     // Depending on which key data was fetched, send the data to the server action "handleCompanyFilter" to filter the database collection
     const filteredCompanies: GetCompanies | undefined =
-      await handleCompanyFilter(industry, search);
+      await handleCompanyFilter(industry, category, search);
 
     // Once result is returned, update the jobs array to the filteredCompanies data
     setCompaniesData({
@@ -74,6 +76,7 @@ const CompaniesFilterList = ({
     ): PropertyValueFrequencyData {
       return {
         industryFrequency: countPropertyValues(companies, "industry"),
+        categoryFrequency: countPropertyValues(companies, "category"),
       };
     }
 
@@ -83,7 +86,7 @@ const CompaniesFilterList = ({
     );
 
     // Determine if all filters are empty
-    const areFiltersEmpty = [industry, search].every(
+    const areFiltersEmpty = [industry, category, search].every(
       (filter) => filter.length <= 0
     );
 
@@ -130,6 +133,13 @@ const CompaniesFilterList = ({
       frequency: propertyValueFrequency.industryFrequency,
       toggleShowFilter: () => toggleFilterVisibility("industry"),
       showFilter: filterVisibility.industry,
+    },
+    {
+      title: "Category",
+      type: "category",
+      frequency: propertyValueFrequency.categoryFrequency,
+      toggleShowFilter: () => toggleFilterVisibility("category"),
+      showFilter: filterVisibility.category,
     },
   ];
 

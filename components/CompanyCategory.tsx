@@ -6,9 +6,13 @@ import CompaniesList from "./CompaniesList";
 
 type CompanyCategoryProps = {
   categories: Category[];
+  companiesParams: URLSearchParams;
 };
 
-const CompanyCategory = ({ categories }: CompanyCategoryProps) => {
+const CompanyCategory = ({
+  categories,
+  companiesParams,
+}: CompanyCategoryProps) => {
   const [showLoader, setShowLoader] = useState(false);
 
   // Array to hold the companies gotten from the specific or selected category
@@ -91,6 +95,7 @@ const CompanyCategory = ({ categories }: CompanyCategoryProps) => {
         <CompaniesFromCategoryInput
           companiesFromCategory={companiesFromCategory}
           selectedCategory={selectedCategory}
+          companiesParams={companiesParams}
         />
       )}
     </section>

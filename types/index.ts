@@ -128,6 +128,7 @@ type SearchDataList = {
 
 type PropertyValueFrequencyData = {
   industryFrequency: PropertyValueFrequency[];
+  categoryFrequency: PropertyValueFrequency[];
 };
 
 type PropertyValueFrequency = {

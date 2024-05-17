@@ -3,6 +3,7 @@ import {
   getCompanyById,
 } from "@/database/actions/company.actions";
 import { Metadata } from "next";
+import CompanyDetails from "@/components/CompanyDetails";
 
 type Params = {
   params: {
@@ -22,7 +23,11 @@ export async function generateMetadata({
 
 const page = async ({ params: { id } }: Params) => {
   const company = await getCompanyById(id);
-  return <section>page</section>;
+  return (
+    <section>
+      <CompanyDetails company={company} />
+    </section>
+  );
 };
 
 export async function generateStaticParams() {

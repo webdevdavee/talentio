@@ -82,9 +82,9 @@ type Company = {
   company: string;
   about: string;
   logo: string;
-  category: string[];
   industry: string[];
   company_size: string;
+  contact: { link: string; logo: string }[];
 };
 
 type GetJob = {

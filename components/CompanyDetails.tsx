@@ -11,7 +11,7 @@ const CompanyDetails = ({ company }: CompanyDetailsProps) => {
   return (
     <section className="w-full">
       <CompanyDetailsHeader company={company} />
-      <div className="flex gap-3 mt-4">
+      <div className="flex gap-8 mt-4">
         <div className="w-[60%]">
           <p>{company.about}</p>
         </div>
@@ -22,7 +22,7 @@ const CompanyDetails = ({ company }: CompanyDetailsProps) => {
               <button
                 key={index}
                 type="button"
-                className="flex items-center gap-3 p-3 border border-primary"
+                className="flex items-center gap-3 p-2 border border-primary"
               >
                 <Image src={contact.logo} width={20} height={20} alt="icon" />
                 <p>{contact.link}</p>

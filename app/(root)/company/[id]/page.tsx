@@ -24,7 +24,7 @@ export async function generateMetadata({
 const page = async ({ params: { id } }: Params) => {
   const company = await getCompanyById(id);
   return (
-    <section>
+    <section className="px-16 my-8">
       <CompanyDetails company={company} />
     </section>
   );

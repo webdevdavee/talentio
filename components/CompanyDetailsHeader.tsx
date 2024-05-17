@@ -20,7 +20,7 @@ const CompanyDetailsHeader = ({ company }: CompanyDetailsHeaderProps) => {
             <span className="flex gap-3 items-start justify-start">
               <Image src="/people.svg" width={20} height={20} alt="people" />
               <span className="flex flex-col gap-2">
-                <p>Employee size</p>
+                <p>Employees</p>
                 <p className="font-medium">{company.company_size}</p>
               </span>
             </span>

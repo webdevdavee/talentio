@@ -31,7 +31,7 @@ const CompanyCard = ({ company, type, layout }: CompanyCard) => {
             : company.about}
         </p>
         <span className="flex flex-wrap items-center gap-3">
-          {company.category.map((data, index) => (
+          {company.industry.map((data, index) => (
             <p
               key={index}
               className="border border-[#272829] px-2 py-1 rounded-xl text-sm"

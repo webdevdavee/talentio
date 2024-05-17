@@ -3,7 +3,6 @@
 import { connectToDatabase } from "..";
 import { handleError } from "@/lib/utils";
 import Companies from "../models/company.model";
-import Industries from "../models/industry.model";
 
 export const getCompanies = async (page = 1, limit = 10) => {
   try {

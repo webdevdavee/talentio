@@ -16,7 +16,7 @@ const CompanyDetails = ({ company }: CompanyDetailsProps) => {
           <p>{company.about}</p>
         </div>
         <div className="flex flex-col gap-3">
-          <h3 className="text-xl font-medium">Contact</h3>
+          <h3 className="text-2xl font-medium">Contact</h3>
           <span className="flex gap-4 flex-wrap">
             {company.contact.map((contact, index) => (
               <button

@@ -4,18 +4,9 @@ import Hero from "@/components/Hero";
 import FeaturedJobs from "@/components/FeaturedJobs";
 import SignUpBanner from "@/components/SignUpBanner";
 import LatestJobs from "@/components/LatestJobs";
-import { Suspense } from "react";
-import Loader from "@/components/Loader";
 
 export default async function Home() {
   return (
-    // <Suspense
-    //   fallback={
-    //     <div className="w-full h-screen flex items-center justify-center">
-    //       <Loader className="loader" />
-    //     </div>
-    //   }
-    // >
     <section className="w-full">
       <Hero />
       <CompaniesHelped />
@@ -26,6 +17,5 @@ export default async function Home() {
       <FeaturedJobs />
       <LatestJobs />
     </section>
-    // </Suspense>
   );
 }

@@ -1,5 +1,4 @@
 import Companies from "@/components/Companies";
-import Loader from "@/components/Loader";
 import SubHero from "@/components/SubHero";
 import {
   getCompanies,
@@ -7,7 +6,6 @@ import {
 } from "@/database/actions/company.actions";
 import { getIndustries } from "@/database/actions/industry.actions";
 import { getUniquePropertyValue } from "@/database/actions/job.actions";
-import { Suspense } from "react";
 
 export async function generateMetadata() {
   return {
@@ -30,31 +28,24 @@ const page = async ({ searchParams }: SearchParamProps) => {
     await getUniquePropertyValue("location");
 
   return (
-    // <Suspense
-    //   fallback={
-    //     <div className="w-full h-screen flex items-center justify-center">
-    //       <Loader className="loader" />
-    //     </div>
-    //   }
-    // >
-      <section>
-        <SubHero
-          data={listOfCompaniesFromJobs}
-          title="Find your"
-          breakTitle="dream companies"
-          subText="Find the company you dream to work for"
-          tagText="Popular: Tesla, Google, Samsung"
-          placeholderText="company name"
-          buttonText="Search"
-          type="companies"
-        />
-        <Companies
-          companies={companies}
-          industries={industries}
-          page={page}
-          industryFrequency={industryFrequency}
-        />
-      </section>
+    <section>
+      <SubHero
+        data={listOfCompaniesFromJobs}
+        title="Find your"
+        breakTitle="dream companies"
+        subText="Find the company you dream to work for"
+        tagText="Popular: Tesla, Google, Samsung"
+        placeholderText="company name"
+        buttonText="Search"
+        type="companies"
+      />
+      <Companies
+        companies={companies}
+        industries={industries}
+        page={page}
+        industryFrequency={industryFrequency}
+      />
+    </section>
   );
 };
 

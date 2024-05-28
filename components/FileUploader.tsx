@@ -62,7 +62,7 @@ export default function FileUploader({
       ) : (
         <div className="flex flex-col items-center gap-4 justify-center py-5 text-grey-500">
           <img src="/upload.svg" width={50} height={50} alt="file upload" />
-          <p>Only PDFs allowed.</p>
+          <p>Only PDF files allowed.</p>
           <button type="button" className="bg-primary text-white py-2 px-3">
             Select from device
           </button>

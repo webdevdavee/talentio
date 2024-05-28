@@ -30,13 +30,13 @@ const page = async ({ searchParams }: SearchParamProps) => {
     await getUniquePropertyValue("location");
 
   return (
-    <Suspense
-      fallback={
-        <div className="w-full h-screen flex items-center justify-center">
-          <Loader className="loader" />
-        </div>
-      }
-    >
+    // <Suspense
+    //   fallback={
+    //     <div className="w-full h-screen flex items-center justify-center">
+    //       <Loader className="loader" />
+    //     </div>
+    //   }
+    // >
       <section>
         <SubHero
           data={listOfCompaniesFromJobs}
@@ -55,7 +55,6 @@ const page = async ({ searchParams }: SearchParamProps) => {
           industryFrequency={industryFrequency}
         />
       </section>
-    </Suspense>
   );
 };
 

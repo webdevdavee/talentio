@@ -8,7 +8,7 @@ export const getIndustries = async () => {
   try {
     await connectToDatabase();
 
-    const industries = await Industries.find({});
+    const industries = await Industries.find({}).lean();
 
     return JSON.parse(JSON.stringify(industries));
   } catch (error) {

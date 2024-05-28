@@ -46,8 +46,13 @@ const SearchForm = ({
       searchSearchParams.append("search", data.title);
       url = createURL("/companies", searchSearchParams);
     } else {
-      searchSearchParams.append("search", data.title);
-      searchSearchParams.append("search", data.list as string);
+      if (!data.list) {
+        searchSearchParams.append("search", data.title);
+      } else {
+        searchSearchParams.append("search", data.title);
+        searchSearchParams.append("search", data.list as string);
+      }
+
       url = createURL("/jobs", searchSearchParams);
     }
     router.push(url);

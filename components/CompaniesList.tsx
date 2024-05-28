@@ -1,7 +1,7 @@
 import CompanyCard from "./CompanyCard";
 import IndustryCard from "./IndustryCard";
 
-type CompaniesList = {
+type CompaniesListProps = {
   type: string;
   companies?: Company[] | undefined;
   industries?: Industry[] | undefined;
@@ -19,7 +19,7 @@ const CompaniesList = ({
   sliceEnd,
   fetchCompanies,
   layout,
-}: CompaniesList) => {
+}: CompaniesListProps) => {
   return (
     <>
       {companies && companies.length > 0 && type === "recommended" && (

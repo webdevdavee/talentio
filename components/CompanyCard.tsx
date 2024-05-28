@@ -1,17 +1,16 @@
 import Image from "next/image";
+import Link from "next/link";
 
-type CompanyCard = {
+type CompanyCardProps = {
   company: Company;
   type?: string;
   layout?: string;
 };
 
-const CompanyCard = ({ company, type, layout }: CompanyCard) => {
+const CompanyCard = ({ company, type, layout }: CompanyCardProps) => {
   return (
-    <section
-      className={`border border-zinc-300 p-5 duration-200 transition cursor-pointer ${
-        !type && "hover:scale-105"
-      }`}
+    <Link href={`/company/${company._id}`}
+      className="border border-zinc-300 p-5 duration-200 transition cursor-pointer hover:scale-105 duration-200 transition"
     >
       <div className="flex flex-col items-start justify-between h-full gap-3">
         <div className="w-full h-[4.2rem] overflow-hidden">
@@ -41,7 +40,7 @@ const CompanyCard = ({ company, type, layout }: CompanyCard) => {
           ))}
         </span>
       </div>
-    </section>
+    </Link>
   );
 };
 

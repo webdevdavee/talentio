@@ -12,7 +12,6 @@ export const getCompanies = async (page = 1, limit = 10) => {
     const skips = limit * (page - 1);
 
     const companies = await Companies.find({})
-      .find({})
       .skip(skips >= 0 ? skips : 0)
       .limit(limit > 0 ? limit : 10);
 
@@ -25,7 +24,7 @@ export const getCompanies = async (page = 1, limit = 10) => {
     return {
       companies: JSON.parse(JSON.stringify(companies)),
       totalPages,
-      companiesNoLimit,
+      companiesNoLimit: JSON.parse(JSON.stringify(companiesNoLimit)),
     };
   } catch (error) {
     handleError(error);
@@ -63,8 +62,6 @@ export const getCompaniesByIndustry = async (industry: string) => {
     await connectToDatabase();
 
     const companies = await Companies.find({ industry: { $in: [industry] } });
-
-    console.log(companies);
 
     return JSON.parse(JSON.stringify(companies));
   } catch (error) {
@@ -151,7 +148,7 @@ export const handleCompanyFilter = async (
     return {
       companies: JSON.parse(JSON.stringify(companies)),
       totalPages,
-      companiesNoLimit,
+      companiesNoLimit: JSON.parse(JSON.stringify(companiesNoLimit)),
     };
   } catch (error) {
     handleError(error);

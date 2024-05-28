@@ -25,7 +25,7 @@ export const getJobs = async (page = 1, limit = 10) => {
     return {
       jobs: JSON.parse(JSON.stringify(jobs)),
       totalPages,
-      jobsNoLimit,
+      jobsNoLimit: JSON.parse(JSON.stringify(jobsNoLimit)),
     };
   } catch (error) {
     handleError(error);
@@ -103,6 +103,7 @@ export const handleJobFilter = async (
     await connectToDatabase();
     // Build the query object based on the provided filters
     const query: any = {};
+
     if (typeFilter && typeFilter.length > 0) {
       query.type = { $in: typeFilter };
     }
@@ -121,25 +122,32 @@ export const handleJobFilter = async (
       let jobTitleString = value1.split(/\s+/);
       let pattern = jobTitleString.map((string) => `(?=.*${string})`).join("");
 
-      let jobLocationString = value2.split(/\s+/);
-      let pattern2 = jobLocationString
-        .map((string) => `(?=.*${string})`)
-        .join("");
+      if (value2) {
+        let jobLocationString = value2.split(/\s+/);
+        let pattern2 = jobLocationString
+          .map((string) => `(?=.*${string})`)
+          .join("");
 
-      query.$or = [
-        {
-          title: {
-            $regex: pattern,
-            $options: "i",
+        query.$or = [
+          {
+            title: {
+              $regex: pattern,
+              $options: "i",
+            },
           },
-        },
-        {
-          location: {
-            $regex: pattern2,
-            $options: "i",
+          {
+            location: {
+              $regex: pattern2,
+              $options: "i",
+            },
           },
-        },
-      ];
+        ];
+      } else {
+        query.title = {
+          $regex: pattern,
+          $options: "i",
+        };
+      }
     }
 
     // Calculate the number of documents to skip
@@ -156,7 +164,11 @@ export const handleJobFilter = async (
     const jobCount = await Jobs.find(query).countDocuments();
     const totalPages = Math.ceil(jobCount / limit);
 
-    return { jobs: JSON.parse(JSON.stringify(jobs)), totalPages, jobsNoLimit };
+    return {
+      jobs: JSON.parse(JSON.stringify(jobs)),
+      totalPages,
+      jobsNoLimit: JSON.parse(JSON.stringify(jobsNoLimit)),
+    };
   } catch (error) {
     handleError(error);
   }
@@ -185,6 +197,18 @@ export const getUniquePropertyValue = async (field: string) => {
     ]);
 
     return JSON.parse(JSON.stringify(data));
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getJobsByCompany = async (company: string) => {
+  try {
+    await connectToDatabase();
+
+    const job = await Jobs.find({ company: company });
+
+    return JSON.parse(JSON.stringify(job));
   } catch (error) {
     handleError(error);
   }

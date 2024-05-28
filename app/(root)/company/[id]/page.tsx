@@ -16,7 +16,7 @@ export async function generateMetadata({
 }: Params): Promise<Metadata> {
   const company = await getCompanyById(id);
   return {
-    title: company.company,
+    title: `${company.company} - Talentio`,
     description: company.about,
   };
 }
@@ -36,7 +36,7 @@ export async function generateStaticParams() {
   if (fetchedCompanies && fetchedCompanies.companiesNoLimit) {
     companies = fetchedCompanies.companiesNoLimit;
   }
-  return companies.map((company) => ({
+  return companies.map((company: Company) => ({
     params: { id: company._id },
   }));
 }

@@ -30,14 +30,14 @@ const CompanyIndustry = ({
     setShowLoader(true);
     const fetchedCompanies = await getCompaniesByIndustry(industry);
     setCompaniesFromIndustry(fetchedCompanies);
-    setShowLoader(false);
     setSelectedIndustry(industry);
+    setShowLoader(false);
   };
 
   // Fetch companies on initial page load
   useEffect(() => {
     fetchCompanies(selectedIndustry);
-  }, []);
+  }, [selectedIndustry]);
 
   // Define the category array slice values
   const [sliceStart, setSliceStart] = useState(0);

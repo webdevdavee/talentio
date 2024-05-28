@@ -31,7 +31,7 @@ const SearchListInput = ({
             {...inputRegister}
             type="text"
             placeholder="Search country"
-            className="w-fit pb-1 focus:border-b focus:transition focus:outline-none"
+            className="w-fit pb-1 focus:transition focus:outline-none"
             value={listInputValue}
             onChange={(e) => handleListInput(e)}
           />

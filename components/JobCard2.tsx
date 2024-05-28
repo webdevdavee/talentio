@@ -3,13 +3,16 @@ import Link from "next/link";
 
 type JobCard2Props = {
   job: Job;
+  type?: string;
 };
 
-const JobCard2 = ({ job }: JobCard2Props) => {
+const JobCard2 = ({ job, type }: JobCard2Props) => {
   return (
     <Link
       href={`/job/${job._id}`}
-      className="bg-white p-6 duration-200 transition hover:drop-shadow-lg"
+      className={`bg-white p-6 duration-200 transition hover:drop-shadow-lg ${
+        type && "border border-gray-300"
+      }`}
     >
       <div className="flex items-start justify-start gap-10">
         <Image

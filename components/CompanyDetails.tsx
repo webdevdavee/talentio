@@ -53,7 +53,9 @@ const CompanyDetails = ({ company }: CompanyDetailsProps) => {
             <h3 className="text-2xl font-semibold">Open Positions</h3>
             <div className="flex flex-col gap-4">
               {jobs.length > 0 ? (
-                jobs.map((job) => <JobCard2 job={job} type="company-profile" />)
+                jobs.map((job) => (
+                  <JobCard2 key={job._id} job={job} type="company-profile" />
+                ))
               ) : (
                 <p>No open jobs from {company.company}.</p>
               )}

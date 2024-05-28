@@ -35,7 +35,7 @@ export async function generateStaticParams() {
   if (fetchedJobs && fetchedJobs.jobsNoLimit) {
     jobs = fetchedJobs.jobsNoLimit;
   }
-  return jobs.map((job) => ({
+  return jobs.map((job: Job) => ({
     params: { id: job._id },
   }));
 }

@@ -10,6 +10,7 @@ import { AuthFormSchema, TAuthFormSchema } from "@/lib/zod";
 import { signIn, signOut } from "next-auth/react";
 import { handleError } from "@/lib/utils";
 import PasswordInput from "./PasswordInput";
+import Loader2 from "./Loader2";
 
 type AuthFormProps = {
   type: "signup" | "signin";
@@ -19,21 +20,18 @@ const AuthForm = ({ type }: AuthFormProps) => {
   const router = useRouter();
 
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm<TAuthFormSchema>({ resolver: zodResolver(AuthFormSchema) });
 
   const onSubmit = async (data: TAuthFormSchema) => {
     if (type === "signup") {
       try {
-        setIsLoading(true);
         await createUser({ ...data, role: "user", status: "Unverified" });
-        setIsLoading(false);
         setError("");
         reset();
         router.refresh();
@@ -43,13 +41,11 @@ const AuthForm = ({ type }: AuthFormProps) => {
       }
     } else {
       try {
-        setIsLoading(true);
         const response = await signIn("credentials", {
           ...data,
           redirect: false,
         });
         if (response?.ok) {
-          setIsLoading(false);
           setError("");
           reset();
           router.refresh();
@@ -114,8 +110,20 @@ const AuthForm = ({ type }: AuthFormProps) => {
           }
         />
       </div>
-      <button type="submit" className="w-full p-3 bg-primary text-white">
-        {type === "signup" ? "Create account" : "Sign in"}
+      <button
+        type="submit"
+        className={`w-full p-3 text-white transition duration-150 ${
+          isSubmitting ? "bg-gray-200" : "bg-primary transition duration-150"
+        }`}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? (
+          <Loader2 className="second-loader" />
+        ) : type === "signup" ? (
+          "Create account"
+        ) : (
+          "Sign in"
+        )}
       </button>
       <button
         type="button"
@@ -132,28 +140,19 @@ const AuthForm = ({ type }: AuthFormProps) => {
         </p>
       </button>
       {type === "signup" ? (
-        <p>
-          Already have an account?{" "}
+        <div>
+          <p>Already have an account? </p>
           <Link href="/sign-in" className="text-primary font-bold underline">
             Sign in
           </Link>
-        </p>
+        </div>
       ) : (
-        <p>
-          Don't have an account?{" "}
+        <div>
+          <p>Don't have an account? </p>
           <Link href="/sign-up" className="text-primary font-bold underline">
             Sign up
           </Link>
-        </p>
-      )}
-      {type === "signin" && (
-        <button
-          type="submit"
-          onClick={() => signOut()}
-          className="w-fit rounded-xl p-3 bg-primary text-white"
-        >
-          Sign out
-        </button>
+        </div>
       )}
     </form>
   );

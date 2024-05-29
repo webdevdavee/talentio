@@ -29,3 +29,42 @@ export const jobApplicationFormSchema = z.object({
 export type TJobApplicationFormSchema = z.infer<
   typeof jobApplicationFormSchema
 >;
+
+// SIGN UP FORM SCHEMA
+
+// Custom password validation function
+const validatePassword = (password: string) => {
+  // Define your password validation rules here
+  const minLength = 8;
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-\\/]/.test(password);
+
+  // Check if all conditions are met
+  return (
+    password.length >= minLength &&
+    hasUppercase &&
+    hasLowercase &&
+    hasNumber &&
+    hasSpecialChar
+  );
+};
+
+export const AuthFormSchema = z.object({
+  username: z.string().min(3, "Use 3 characters or more").trim().optional(),
+  email: z.string().email().toLowerCase().trim(),
+  password: z.string().trim().refine(validatePassword, {
+    message:
+      "Invalid password. Password must include at least 8 characters, have an uppercase character, have a lowercase character, have a number, and have a special character.",
+  }),
+  // password: z
+  //   .string()
+  //   .min(8, "Should be at least 8 characters long.")
+  //   .regex(/[a-zA-Z]/, "Should have at least one letter")
+  //   .regex(/[0-9]/, "Should have at least one number")
+  //   .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
+  //   .trim(),
+});
+
+export type TAuthFormSchema = z.infer<typeof AuthFormSchema>;

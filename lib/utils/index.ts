@@ -1,8 +1,7 @@
 // Handle error
-export const handleError = (error: unknown) => {
-  // console.log(error);
+export const handleError = (error: any) => {
   console.error(error);
-  throw new Error(typeof error === "string" ? error : JSON.stringify(error));
+  throw new Error(error.message);
 };
 
 // Create URL

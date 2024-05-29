@@ -21,12 +21,16 @@ export const getCompanies = async (page = 1, limit = 10) => {
 
     const companiesNoLimit = await Companies.find({});
 
+    if (!companies) {
+      throw new Error("Could not fetch companies.");
+    }
+
     return {
       companies: JSON.parse(JSON.stringify(companies)),
       totalPages,
       companiesNoLimit: JSON.parse(JSON.stringify(companiesNoLimit)),
     };
-  } catch (error) {
+  } catch (error: any) {
     handleError(error);
   }
 };
@@ -36,7 +40,7 @@ export const getCompanyById = async (companyId: string) => {
     await connectToDatabase();
     const company = await Companies.findById(companyId);
     if (!company) {
-      throw new Error("Company not found");
+      throw new Error("Company not found.");
     }
     return JSON.parse(JSON.stringify(company));
   } catch (error) {
@@ -49,7 +53,7 @@ export const getCompanyByName = async (companyName: string) => {
     await connectToDatabase();
     const company = await Companies.find({ company: companyName });
     if (!company) {
-      throw new Error("Company not found");
+      throw new Error("Company not found.");
     }
     return JSON.parse(JSON.stringify(company));
   } catch (error) {
@@ -62,6 +66,10 @@ export const getCompaniesByIndustry = async (industry: string) => {
     await connectToDatabase();
 
     const companies = await Companies.find({ industry: { $in: [industry] } });
+
+    if (!companies) {
+      throw new Error("Companies not found.");
+    }
 
     return JSON.parse(JSON.stringify(companies));
   } catch (error) {
@@ -83,6 +91,10 @@ export const getArrayPropertyValuesFrequency = async (arrayField: string) => {
       },
       { $sort: { count: -1 } },
     ]);
+
+    if (!result) {
+      throw new Error("Could not get property values frequency.");
+    }
 
     return JSON.parse(JSON.stringify(result));
   } catch (error) {
@@ -144,6 +156,10 @@ export const handleCompanyFilter = async (
     // Get the total number of companies
     const companiesCount = await Companies.find(query).countDocuments();
     const totalPages = Math.ceil(companiesCount / limit);
+
+    if (!companies) {
+      throw new Error("Could not filter companies.");
+    }
 
     return {
       companies: JSON.parse(JSON.stringify(companies)),

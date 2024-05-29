@@ -140,3 +140,45 @@ type PropertyValueFrequency = {
   _id: string;
   count: number;
 };
+
+type User = {
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  photo: string;
+  applications: {
+    title: string;
+    type: string;
+    location: string;
+    level: string;
+    salary: string;
+    company: string;
+  }[];
+  savedJobs: {
+    title: string;
+    type: string;
+    location: string;
+    level: string;
+    salary: string;
+    company: string;
+  }[];
+  role: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type CreateUserParam = {
+  username?: string;
+  email: string;
+  password: string;
+  photo?: string;
+  role: string;
+  status: string;
+};
+
+type FindUserParam = {
+  username?: string;
+  email?: string;
+};

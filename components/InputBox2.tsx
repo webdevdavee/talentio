@@ -10,7 +10,7 @@ type InputType = {
   style?: string;
 };
 
-const InputBox = ({
+const InputBox2 = ({
   inputRegister,
   label,
   htmlFor,
@@ -31,7 +31,7 @@ const InputBox = ({
       </label>
       <input
         {...inputRegister}
-        className={`p-3 transition border-[1px] border-gray-400 text-sm focus:border-[#272829] focus:transition focus:outline-none ${style}`}
+        className={`py-3 transition border-b-[1px] border-b-gray-400 text-sm focus:border-b-[#272829] focus:transition focus:outline-none ${style}`}
         type={inputType}
         id={htmlFor}
         placeholder={placeholder}
@@ -42,4 +42,4 @@ const InputBox = ({
   );
 };
 
-export default InputBox;
+export default InputBox2;

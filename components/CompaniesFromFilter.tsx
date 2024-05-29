@@ -23,7 +23,7 @@ const CompaniesFromFilter = ({
     <section className="w-[80%]">
       <div className="flex items-center justify-between mb-12">
         <div className="flex flex-col gap-2">
-          <h2 className="text-3xl font-bold">All jobs</h2>
+          <h2 className="text-3xl font-bold">All companies</h2>
           <p className="text-sm">Showing {companies?.length} results</p>
         </div>
         <span className="flex items-center gap-3">

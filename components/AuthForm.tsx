@@ -140,14 +140,14 @@ const AuthForm = ({ type }: AuthFormProps) => {
         </p>
       </button>
       {type === "signup" ? (
-        <div>
+        <div className="flex items-center gap-2">
           <p>Already have an account? </p>
           <Link href="/sign-in" className="text-primary font-bold underline">
             Sign in
           </Link>
         </div>
       ) : (
-        <div>
+        <div className="flex items-center gap-2">
           <p>Don't have an account? </p>
           <Link href="/sign-up" className="text-primary font-bold underline">
             Sign up

@@ -16,50 +16,6 @@ export const createURL = (
 };
 
 // This function counts the occurrences of each value for a given property in an array of data.
-// export const countPropertyValues = (
-//   data: Job[] | Company[] | undefined,
-//   property: string
-// ) => {
-//   // Create a map to keep track of the count of each property value.
-//   const countMap: Record<string, number> = {};
-
-//   // This function increases the count for a given value in the countMap.
-//   const incrementCount = (value: string) => {
-//     if (countMap[value]) {
-//       // If the value already exists, increment its count.
-//       countMap[value]++;
-//     } else {
-//       // If the value doesn't exist, initialize it with a count of 1.
-//       countMap[value] = 1;
-//     }
-//   };
-
-//   // This function recursively goes through each property of an object.
-//   // If the property matches the one we're looking for, it calls incrementCount.
-//   const countValueOccurrences = (obj: any, propName: string) => {
-//     for (const key in obj) {
-//       if (
-//         typeof obj[key] === "object" &&
-//         obj[key] !== null &&
-//         !(obj[key] instanceof Array)
-//       ) {
-//         // If the property is an object (not an array), recursively count its properties.
-//         countValueOccurrences(obj[key], propName);
-//       } else if (key === propName) {
-//         // If the property is the one we're looking for, increment its count.
-//         incrementCount(obj[key]);
-//       }
-//     }
-//   };
-
-//   // Iterate over each data and count the occurrences of the property value.
-//   data?.forEach((d) => countValueOccurrences(d, property));
-
-//   // Convert the countMap to an array of CountResult objects.
-//   return Object.entries(countMap).map(([_id, count]) => ({ _id, count }));
-// };
-
-// This function counts the occurrences of each value for a given property in an array of data.
 export const countPropertyValues = (
   data: Job[] | Company[] | undefined,
   property: string
@@ -109,4 +65,23 @@ export const formatFileSize = (bytes: number) => {
   else if (bytes < 1024 * 1024 * 1024)
     return (bytes / 1024 / 1024).toFixed(2) + " MB";
   return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB";
+};
+
+// Custom password validation function
+export const validatePassword = (password: string) => {
+  // Define your password validation rules here
+  const minLength = 8;
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-\\/]/.test(password);
+
+  // Check if all conditions are met
+  return (
+    password.length >= minLength &&
+    hasUppercase &&
+    hasLowercase &&
+    hasNumber &&
+    hasSpecialChar
+  );
 };

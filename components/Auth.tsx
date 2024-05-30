@@ -1,6 +1,6 @@
 "use client";
 
-import AuthForm from "./AuthForm";
+import AuthForm from "./AuthSignUpForm";
 
 type AuthProps = {
   type: "signup" | "signin";

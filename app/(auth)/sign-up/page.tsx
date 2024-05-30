@@ -1,4 +1,4 @@
-import Auth from "@/components/Auth";
+import AuthSignUpForm from "@/components/AuthSignUpForm";
 
 export async function generateMetadata() {
   return {
@@ -10,7 +10,7 @@ export async function generateMetadata() {
 const page = () => {
   return (
     <section>
-      <Auth type="signup" />
+      <AuthSignUpForm />
     </section>
   );
 };

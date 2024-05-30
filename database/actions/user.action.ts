@@ -9,6 +9,10 @@ export const createUser = async (user: CreateUserParam) => {
   try {
     await connectToDatabase();
 
+    if (!user) {
+      throw new Error("User does not exists.");
+    }
+
     // Check for duplicate email or username
     const existingUser = await Users.findOne({
       $or: [{ email: user.email }, { username: user.username }],
@@ -18,8 +22,10 @@ export const createUser = async (user: CreateUserParam) => {
       throw new Error("Username or email already in use.");
     }
 
-    const hashedPassword = await bcrypt.hash(user.password, 11);
-    user.password = hashedPassword;
+    if (user.password) {
+      const hashedPassword = await bcrypt.hash(user.password, 11);
+      user.password = hashedPassword;
+    }
 
     const newUser = await Users.create(user);
 

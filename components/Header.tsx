@@ -1,11 +1,22 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
+import ProfileDialogBox from "./ProfileDialogBox";
+import { useState } from "react";
 
 const Header = () => {
   const pathname = usePathname();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/sign-in");
+    },
+  });
+
+  const [showProfileDialogBox, setShowProfileDialogBox] = useState(false);
 
   return (
     <header className="w-full bg-white px-16 py-4 border-b border-b-gray-200">
@@ -34,17 +45,34 @@ const Header = () => {
               </Link>
             </div>
           </div>
-          <div>
-            <Link href="/sign-in" className="px-4 py-3">
-              Login
-            </Link>
-            <Link
-              href="/sign-up"
-              className="px-4 py-2 rounded bg-primary text-white"
+          {!session ? (
+            <div>
+              <Link href="/sign-in" className="px-4 py-3">
+                Login
+              </Link>
+              <Link
+                href="/sign-up"
+                className="px-4 py-2 rounded bg-primary text-white"
+              >
+                Sign Up
+              </Link>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="flex items-center gap-3"
+              onClick={() => setShowProfileDialogBox((prev) => !prev)}
             >
-              Sign Up
-            </Link>
-          </div>
+              <Image
+                src={session.user.image ?? "/images/default-avatar.webp"}
+                width={40}
+                height={40}
+                alt="user-profile"
+                className="rounded-full"
+              />
+              {showProfileDialogBox && <ProfileDialogBox />}
+            </button>
+          )}
         </div>
       </nav>
     </header>

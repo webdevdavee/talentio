@@ -95,8 +95,14 @@ body {
   background-repeat: no-repeat;
 }
 
-.sign-up-img {
-  background-image: url("/images/signup-img.webp");
+.auth-img {
+  background-image: url("/images/auth-img.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.auth-error {
+  background-image: url("/images/auth-error.webp");
   background-size: cover;
   background-repeat: no-repeat;
 }

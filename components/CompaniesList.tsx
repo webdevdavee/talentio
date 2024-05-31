@@ -38,9 +38,9 @@ const CompaniesList = ({
         industries.length > 0 &&
         type === "from_industry" && (
           <div className="w-full grid grid-cols-4 items-center gap-6 mt-16">
-            {industries.slice(sliceStart, sliceEnd).map((industry) => (
+            {industries.slice(sliceStart, sliceEnd).map((industry, index) => (
               <IndustryCard
-                key={industry._id}
+                key={index}
                 industry={industry}
                 fetchCompanies={fetchCompanies}
               />

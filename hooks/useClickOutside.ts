@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 
-// Handle clicks outside profile dialog box
 export const useClickOutside = (
   ref: React.RefObject<HTMLDivElement>,
   onClickOutside: (value: React.SetStateAction<boolean>) => void

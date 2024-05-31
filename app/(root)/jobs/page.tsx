@@ -22,7 +22,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
   // Create an array of promises
   const promises = [
     getJobsPropertyValueCount("type"),
-    getJobsPropertyValueCount("category.name"),
+    getJobsPropertyValueCount("category"),
     getJobsPropertyValueCount("level"),
     getJobsPropertyValueCount("salary"),
   ];

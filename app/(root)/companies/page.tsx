@@ -4,7 +4,6 @@ import {
   getCompanies,
   getArrayPropertyValuesFrequency,
 } from "@/database/actions/company.actions";
-import { getIndustries } from "@/database/actions/industry.actions";
 import { getUniquePropertyValue } from "@/database/actions/job.actions";
 
 export async function generateMetadata() {
@@ -19,7 +18,6 @@ const page = async ({ searchParams }: SearchParamProps) => {
   page = !page || page < 1 ? 1 : page;
 
   const companies: GetCompanies | undefined = await getCompanies(page);
-  const industries: Industry[] = await getIndustries();
 
   // Create an array of promises
   const industryFrequency = await getArrayPropertyValuesFrequency("industry");
@@ -41,7 +39,6 @@ const page = async ({ searchParams }: SearchParamProps) => {
       />
       <Companies
         companies={companies}
-        industries={industries}
         page={page}
         industryFrequency={industryFrequency}
       />

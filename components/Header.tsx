@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
 import ProfileDialogBox from "./ProfileDialogBox";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import useClickOutside from "@/hooks/useClickOutside";
 
 const Header = () => {
   const pathname = usePathname();
@@ -16,7 +17,13 @@ const Header = () => {
     },
   });
 
+  const profileDialogRef = useRef<HTMLDivElement>(null);
   const [showProfileDialogBox, setShowProfileDialogBox] = useState(false);
+
+  // Handle clicks outside profile dialog
+  useClickOutside(profileDialogRef, () => {
+    setShowProfileDialogBox(false);
+  });
 
   return (
     <header className="w-full bg-white px-16 py-4 border-b border-b-gray-200">
@@ -58,9 +65,9 @@ const Header = () => {
               </Link>
             </div>
           ) : (
-            <button
-              type="button"
-              className="flex items-center gap-3"
+            <div
+              ref={profileDialogRef}
+              className="flex items-center gap-3 cursor-pointer"
               onClick={() => setShowProfileDialogBox((prev) => !prev)}
             >
               <Image
@@ -71,7 +78,7 @@ const Header = () => {
                 className="rounded-full"
               />
               {showProfileDialogBox && <ProfileDialogBox />}
-            </button>
+            </div>
           )}
         </div>
       </nav>

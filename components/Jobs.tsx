@@ -77,7 +77,7 @@ const Jobs = ({
       ): JobsFrequencyData => {
         return {
           typeFrequency: countPropertyValues(jobs, "type"),
-          categoryFrequency: countPropertyValues(jobs, "name"),
+          categoryFrequency: countPropertyValues(jobs, "category"),
           levelFrequency: countPropertyValues(jobs, "level"),
           salaryFrequency: countPropertyValues(jobs, "salary"),
         };

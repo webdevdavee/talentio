@@ -108,7 +108,7 @@ export const handleJobFilter = async (
       query.type = { $in: typeFilter };
     }
     if (categoryFilter && categoryFilter.length > 0) {
-      query["category.name"] = { $in: categoryFilter };
+      query.category = { $in: categoryFilter };
     }
     if (levelFilter && levelFilter.length > 0) {
       query.level = { $in: levelFilter };

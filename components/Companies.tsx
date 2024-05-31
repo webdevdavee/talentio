@@ -12,17 +12,11 @@ import CompaniesFromFilter from "./CompaniesFromFilter";
 
 type CompaniesProps = {
   companies: GetCompanies | undefined;
-  industries: Industry[];
   page: number;
   industryFrequency: PropertyValueFrequency[];
 };
 
-const Companies = ({
-  companies,
-  industries,
-  page,
-  industryFrequency,
-}: CompaniesProps) => {
+const Companies = ({ companies, page, industryFrequency }: CompaniesProps) => {
   const searchParams = useSearchParams();
   const companiesParams = new URLSearchParams(searchParams.toString());
 
@@ -113,10 +107,7 @@ const Companies = ({
           <div className="px-16">
             <SignUpBanner />
           </div>
-          <CompanyIndustry
-            industries={industries}
-            companiesParams={companiesParams}
-          />
+          <CompanyIndustry companiesParams={companiesParams} />
         </div>
       )}
     </>

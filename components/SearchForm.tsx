@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TSearchSchema, searchSchema } from "@/lib/zod";
@@ -9,6 +9,7 @@ import { createURL } from "@/lib/utils";
 import SearchList from "./SearchList";
 import SearchTitleInput from "./SearchTitleInput";
 import SearchListInput from "./SearchListInput";
+import useClickOutside from "@/hooks/useClickOutside";
 
 type SearchFormProps = {
   data: SearchDataList[];
@@ -28,6 +29,7 @@ const SearchForm = ({
 
   const [listInputValue, setListInputValue] = useState("Germany");
   const [showList, setShowList] = useState(false);
+  const searchListRef = useRef<HTMLDivElement>(null);
 
   const searchSearchParams = new URLSearchParams(searchParams.toString());
 
@@ -74,6 +76,11 @@ const SearchForm = ({
     setValue("list", listInputValue);
   }, []);
 
+  // Handle clicks outside list
+  useClickOutside(searchListRef, () => {
+    setShowList(false);
+  });
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -89,7 +96,7 @@ const SearchForm = ({
         placeholderText={placeholderText}
         type={type}
       />
-      <div className="relative">
+      <div ref={searchListRef} className="relative">
         {type !== "companies" && (
           <SearchListInput
             inputRegister={register("list")}

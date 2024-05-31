@@ -37,13 +37,6 @@ const JobDetails = ({ job, company }: JobProps) => {
                   __html: cleanLongDescription,
                 }}
               />
-              <button
-                type="button"
-                className="bg-primary text-white px-6 py-2 mt-12"
-                onClick={() => setShowForm(true)}
-              >
-                Apply for job
-              </button>
             </>
           )}
         </div>

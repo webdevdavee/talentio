@@ -51,10 +51,7 @@ type Job = {
   _id: string;
   title: string;
   description: string;
-  category: {
-    name: string;
-    icon: string;
-  };
+  category: string;
   type: string;
   location: string;
   level: string;
@@ -66,15 +63,21 @@ type Job = {
 };
 
 type Category = {
-  _id: string;
   category: string;
   icon: string;
 };
 
 type Industry = {
-  _id: string;
   industry: string;
   icon: string;
+};
+
+type JobLevel = {
+  level: string;
+};
+
+type JobType = {
+  type: string;
 };
 
 type Company = {
@@ -84,7 +87,7 @@ type Company = {
   logo: string;
   industry: string[];
   company_size: string;
-  contact: { link: string; logo: string }[];
+  contact: string[];
 };
 
 type GetJob = {

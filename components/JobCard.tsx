@@ -33,9 +33,7 @@ const JobCard = ({ job }: JobCardProps) => {
             ? job.description.slice(0, 55) + "..."
             : job.description}
         </p>
-        <span className="px-3 py-2 border border-gray-300">
-          {job.category.name}
-        </span>
+        <span className="px-3 py-2 border border-gray-300">{job.category}</span>
       </div>
     </Link>
   );

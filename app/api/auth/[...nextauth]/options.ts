@@ -12,7 +12,7 @@ export const options: NextAuthOptions = {
         const updatedProfile = {
           ...profile,
           id: profile.sub,
-          accountType: profile.accountType ?? "individual",
+          accountType: "individual",
         };
 
         // Create user from OAuth provider
@@ -26,10 +26,9 @@ export const options: NextAuthOptions = {
           email_verified: updatedProfile.email_verified,
         };
 
-        const createAUser = async () => {
+        (async () => {
           await createUser(newUser);
-        };
-        createAUser();
+        })();
 
         return updatedProfile;
       },
@@ -76,12 +75,10 @@ export const options: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.accountType = user.accountType;
-      console.log("tokenStatus: ", token);
       return token;
     },
     async session({ session, token }) {
       if (session.user) session.user.accountType = token.accountType;
-      console.log("sessionStatus: ", session);
       return session;
     },
   },

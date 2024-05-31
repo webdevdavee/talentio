@@ -3,16 +3,13 @@ import CompaniesFromIndustryInput from "./CompaniesFromIndustryInput";
 import { getCompaniesByIndustry } from "@/database/actions/company.actions";
 import Loader from "./Loader";
 import CompaniesList from "./CompaniesList";
+import { industries } from "@/constants";
 
 type CompanyIndustryProps = {
-  industries: Industry[];
   companiesParams: URLSearchParams;
 };
 
-const CompanyIndustry = ({
-  industries,
-  companiesParams,
-}: CompanyIndustryProps) => {
+const CompanyIndustry = ({ companiesParams }: CompanyIndustryProps) => {
   const [showLoader, setShowLoader] = useState(false);
 
   // Array to hold the companies gotten from the specific or selected industry

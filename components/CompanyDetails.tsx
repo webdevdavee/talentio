@@ -6,6 +6,7 @@ import CompanyTeam from "./CompanyTeam";
 import { useEffect, useState } from "react";
 import { getJobsByCompany } from "@/database/actions/job.actions";
 import JobCard2 from "./JobCard2";
+import { socialsIconPaths } from "@/constants";
 
 type CompanyDetailsProps = {
   company: Company;
@@ -37,16 +38,28 @@ const CompanyDetails = ({ company }: CompanyDetailsProps) => {
           <div className="flex flex-col gap-5">
             <h3 className="text-2xl font-semibold">Contact</h3>
             <span className="flex gap-4 flex-wrap">
-              {company.contact.map((contact, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  className="flex items-center gap-3 p-2 border border-primary"
-                >
-                  <Image src={contact.logo} width={20} height={20} alt="icon" />
-                  <p>{contact.link}</p>
-                </button>
-              ))}
+              {company.contact.map((contact, index) => {
+                // Extract the platform name (e.g., LinkedIn, Facebook, etc.)
+                const platform = contact.split(".")[0];
+
+                // Get the corresponding logo filename from the mapping
+                const logo = socialsIconPaths[platform];
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    className="flex items-center gap-2 p-2 border border-primary"
+                  >
+                    <Image
+                      src={logo ?? "/email.svg"}
+                      width={18}
+                      height={18}
+                      alt={`${platform} Logo`}
+                    />
+                    <p className="text-[0.9rem]">{contact}</p>
+                  </button>
+                );
+              })}
             </span>
           </div>
           <div className="flex flex-col gap-5">

@@ -5,6 +5,7 @@ import {
   authRoutes,
   apiAuthPrefix,
   DEFAULT_LOGIN_REDIRECT,
+  dynamicPublicRoutes,
 } from "@/routes";
 
 const { auth } = NextAuth(authConfig);
@@ -16,11 +17,16 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const dynamicRoutes =
-    nextUrl.pathname.startsWith("/job") ||
-    nextUrl.pathname.startsWith("/company");
+
+  const isDynamicRoute = dynamicPublicRoutes.some((pattern) =>
+    pattern.test(nextUrl.pathname)
+  );
 
   if (isApiAuthRoute) {
+    return;
+  }
+
+  if (isDynamicRoute) {
     return;
   }
 
@@ -31,11 +37,7 @@ export default auth((req) => {
     return;
   }
 
-  if (dynamicRoutes) {
-    return;
-  }
-
-  if (!isLoggedIn && !isPublicRoute) {
+  if (!isLoggedIn && !isPublicRoute && !isDynamicRoute) {
     return Response.redirect(new URL("/sign-in", nextUrl));
   }
 

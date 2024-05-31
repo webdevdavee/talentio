@@ -24,3 +24,10 @@ export const apiAuthPrefix = "/api/auth";
  * @types {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+
+/**
+ * These routes are public dynamic routes and as such, are stored as regex.
+ * They do not require authentication.
+ * @types {string}
+ */
+export const dynamicPublicRoutes = [/^\/job\/.*/, /^\/company\/.*/];

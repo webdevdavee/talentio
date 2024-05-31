@@ -1,16 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type JobDetailHeaderProps = {
   job: Job;
-  showForm: boolean;
-  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const JobDetailHeader = ({
-  job,
-  showForm,
-  setShowForm,
-}: JobDetailHeaderProps) => {
+const JobDetailHeader = ({ job }: JobDetailHeaderProps) => {
   return (
     <section className="flex flex-col gap-3 border-b border-b-gray-200 pb-3">
       <span className="flex items-start justify-between gap-3">
@@ -40,22 +35,12 @@ const JobDetailHeader = ({
             </span>
           </span>
         </span>
-        <button
-          type="button"
+        <Link
+          href="/apply-now"
           className="bg-primary text-white text-sm px-6 py-2"
-          onClick={() => setShowForm(true)}
-          style={{ display: !showForm ? "block" : "none" }}
         >
           Apply now
-        </button>
-        <button
-          type="button"
-          className="bg-red-500 px-3 py-2 text-white text-sm"
-          onClick={() => setShowForm(false)}
-          style={{ display: showForm ? "block" : "none" }}
-        >
-          Close form
-        </button>
+        </Link>
       </span>
     </section>
   );

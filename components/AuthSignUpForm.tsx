@@ -28,6 +28,7 @@ const AuthSignUpForm = () => {
   });
 
   const onSubmit = async (data: TAuthSignUpFormSchema) => {
+    setError("");
     // Sign up user
     try {
       // Create user
@@ -36,7 +37,6 @@ const AuthSignUpForm = () => {
         accountType: "individual",
         email_verified: false,
       });
-      setError("");
       reset();
       router.push("/");
     } catch (error: any) {

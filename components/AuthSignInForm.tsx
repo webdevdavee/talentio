@@ -27,6 +27,7 @@ const AuthSignInForm = () => {
   });
 
   const onSubmit = async (data: TAuthSignInFormSchema) => {
+    setError("");
     // Call the next auth sign in function with the user's credentials
     const response = await signIn("credentials", {
       ...data,
@@ -34,7 +35,6 @@ const AuthSignInForm = () => {
     });
     // If sign in was successful, perform the below functions
     if (response?.ok && !response.error) {
-      setError("");
       reset();
       router.push("/");
     } else {

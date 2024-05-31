@@ -1,10 +1,6 @@
-"use client";
-
 import JobDetailHeader from "./JobDetailHeader";
 import DOMPurify from "isomorphic-dompurify";
 import JobDetailsCompany from "./JobDetailsCompany";
-import JobApplicationForm from "./JobApplicationForm";
-import { useState } from "react";
 
 type JobProps = {
   job: Job;
@@ -12,8 +8,6 @@ type JobProps = {
 };
 
 const JobDetails = ({ job, company }: JobProps) => {
-  const [showForm, setShowForm] = useState(false);
-
   const cleanLongDescription = DOMPurify.sanitize(
     job.long_description ? job.long_description : ""
   );
@@ -22,23 +16,13 @@ const JobDetails = ({ job, company }: JobProps) => {
     <section>
       <div className="flex gap-4">
         <div className="w-[70%]">
-          <JobDetailHeader
-            job={job}
-            showForm={showForm}
-            setShowForm={setShowForm}
+          <JobDetailHeader job={job} />
+          <div
+            className="mt-4"
+            dangerouslySetInnerHTML={{
+              __html: cleanLongDescription,
+            }}
           />
-          {showForm ? (
-            <JobApplicationForm />
-          ) : (
-            <>
-              <div
-                className="mt-4"
-                dangerouslySetInnerHTML={{
-                  __html: cleanLongDescription,
-                }}
-              />
-            </>
-          )}
         </div>
         <JobDetailsCompany company={company} />
       </div>

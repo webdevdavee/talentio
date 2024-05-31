@@ -107,7 +107,7 @@ type CategoryCounts = {
 };
 
 type CategoryCount = {
-  _id: { name: string; icon: string };
+  _id: string;
   count: number;
 };
 

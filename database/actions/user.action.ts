@@ -23,7 +23,7 @@ export const createUser = async (user: CreateUserParam) => {
     }
 
     if (user.password) {
-      const hashedPassword = await bcrypt.hash(user.password, 11);
+      const hashedPassword = await bcrypt.hash(user.password, 7);
       user.password = hashedPassword;
     }
 

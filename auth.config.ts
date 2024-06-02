@@ -10,7 +10,10 @@ export default {
       return token;
     },
     async session({ session, token }) {
-      if (session.user) session.user.accountType = token.accountType;
+      if (session.user && token.sub) {
+        session.user.accountType = token.accountType;
+        session.user.id = token.sub;
+      }
       console.log("SESSION: ", session);
       return session;
     },

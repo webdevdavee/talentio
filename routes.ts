@@ -23,7 +23,7 @@ export const apiAuthPrefix = "/api/auth";
  * The default redirect path after logging in.
  * @types {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+export const DEFAULT_LOGIN_REDIRECT = "/individual/dashboard";
 
 /**
  * These routes are public dynamic routes and as such, are stored as regex.

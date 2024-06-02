@@ -3,54 +3,85 @@
 import { connectToDatabase } from "..";
 import { handleError } from "@/lib/utils";
 import Users from "../models/user.model";
-import * as bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
+import { AuthSignInFormSchema, AuthSignUpFormSchema } from "@/lib/zod/authZod";
+import { z } from "zod";
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AuthError } from "next-auth";
 
-export const createUser = async (user: CreateUserParam) => {
+export const createUser = async (
+  data: z.infer<typeof AuthSignUpFormSchema>
+) => {
   try {
     await connectToDatabase();
 
-    if (!user) {
-      throw new Error("User does not exists.");
+    const validatedFields = AuthSignUpFormSchema.safeParse(data);
+    if (!validatedFields.success) {
+      throw new Error("Invalid fields");
     }
 
-    // Check for duplicate email or username
+    const { name, email, password } = validatedFields.data;
+
+    const hashedPassword = await bcrypt.hash(password, 7);
+
+    // Check for duplicate email or name
     const existingUser = await Users.findOne({
-      $or: [{ email: user.email }, { username: user.username }],
+      $or: [{ email: email }, { name: name }],
     });
 
     if (existingUser) {
-      throw new Error("Username or email already in use.");
+      return { error: "Username or email already in use." };
     }
 
-    if (user.password) {
-      const hashedPassword = await bcrypt.hash(user.password, 7);
-      user.password = hashedPassword;
-    }
+    const user = {
+      name,
+      email,
+      password: hashedPassword,
+    };
 
-    const newUser = await Users.create(user);
+    await Users.create(user);
 
-    return JSON.parse(JSON.stringify(newUser));
+    console.log("User created!");
   } catch (error: any) {
     handleError(error);
   }
 };
 
-export const findUser = async ({ username, email }: FindUserParam) => {
+export const loginUser = async (data: z.infer<typeof AuthSignInFormSchema>) => {
+  const validatedFields = AuthSignInFormSchema.safeParse(data);
+  if (!validatedFields.success) {
+    return { error: "Invalid fields" };
+  }
+
+  const { email, password } = validatedFields.data;
+  const user = {
+    email,
+    password,
+  };
+
+  try {
+    await signIn("credentials", {
+      ...user,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    });
+  } catch (error: any) {
+    if (error instanceof AuthError) {
+      if (error.cause) {
+        return { error: error.cause.err?.message };
+      }
+    }
+    throw error;
+  }
+};
+
+export const findByEmail = async (email: string) => {
   try {
     await connectToDatabase();
-    const query: any = {};
 
-    if (username && username) {
-      query.username = username;
-    }
+    const user = await Users.findOne({ email: email });
 
-    if (email && email) {
-      query.email = email;
-    }
-
-    const user = await Users.findOne(query);
-
-    if (!user) throw new Error("User not found.");
+    if (!user) throw new Error("Invalid credentials.");
 
     return JSON.parse(JSON.stringify(user));
   } catch (error: any) {

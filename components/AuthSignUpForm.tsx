@@ -8,15 +8,15 @@ import Image from "next/image";
 import { createUser } from "@/database/actions/user.action";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import PasswordInput from "./PasswordInput";
 import Loader2 from "./Loader2";
 import { AuthSignUpFormSchema, TAuthSignUpFormSchema } from "@/lib/zod/authZod";
+import { signIn } from "next-auth/react";
 
 const AuthSignUpForm = () => {
   const router = useRouter();
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | undefined>("");
 
   const {
     register,
@@ -29,20 +29,13 @@ const AuthSignUpForm = () => {
 
   const onSubmit = async (data: TAuthSignUpFormSchema) => {
     setError("");
-    // Sign up user
-    try {
-      // Create user
-      await createUser({
-        ...data,
-        accountType: "individual",
-        email_verified: false,
-      });
+    // Register user
+    const response = await createUser(data);
+    if (!response?.error) {
       reset();
-      router.push("/");
-    } catch (error: any) {
-      // If any errors, set the error state to the caught error
-      setError(error.message);
+      router.push("/sign-in");
     }
+    setError(response?.error);
   };
 
   return (
@@ -55,14 +48,14 @@ const AuthSignUpForm = () => {
         <h1 className="text-2xl font-medium mb-4">Create your account</h1>
         <div className="w-full flex flex-col gap-4">
           <InputBox2
-            inputRegister={register("username")}
+            inputRegister={register("name")}
             label="Username"
-            htmlFor="username"
+            htmlFor="name"
             inputType="text"
             required
             error={
-              errors.username && (
-                <p className="text-red-500">{`${errors.username.message}`}</p>
+              errors.name && (
+                <p className="text-red-500">{`${errors.name.message}`}</p>
               )
             }
           />
@@ -102,17 +95,13 @@ const AuthSignUpForm = () => {
           {isSubmitting ? (
             <Loader2 className="second-loader" />
           ) : (
-            <p>Sign in</p>
+            <p>Create an account</p>
           )}
         </button>
         <button
           type="button"
           className="w-full flex gap-2 items-center justify-center p-3 border border-[#272829]"
-          onClick={() =>
-            signIn("google", {
-              callbackUrl: "http://localhost:3000/",
-            })
-          }
+          onClick={() => signIn("google")}
         >
           <Image
             src="/companies/google.svg"
@@ -120,7 +109,7 @@ const AuthSignUpForm = () => {
             height={20}
             alt="sign up"
           />
-          <p>Sign in with Google</p>
+          <p>Sign up with Google</p>
         </button>
         <div className="flex items-center gap-2 flex-wrap">
           <p>Already have an account?</p>

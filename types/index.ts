@@ -152,22 +152,6 @@ type User = {
   email: string;
   password: string;
   photo: string;
-  applications: {
-    title: string;
-    type: string;
-    location: string;
-    level: string;
-    salary: string;
-    company: string;
-  }[];
-  savedJobs: {
-    title: string;
-    type: string;
-    location: string;
-    level: string;
-    salary: string;
-    company: string;
-  }[];
   accountType: string;
   email_verified: boolean;
   createdAt: Date;

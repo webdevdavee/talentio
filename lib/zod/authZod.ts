@@ -3,7 +3,7 @@ import { validatePassword } from "../utils";
 
 // SIGN UP FORM SCHEMA
 export const AuthSignUpFormSchema = z.object({
-  username: z
+  name: z
     .string()
     .min(3, "Use 3 characters or more")
     .trim()

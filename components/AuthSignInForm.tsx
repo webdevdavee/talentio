@@ -7,15 +7,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import PasswordInput from "./PasswordInput";
 import Loader2 from "./Loader2";
 import { AuthSignInFormSchema, TAuthSignInFormSchema } from "@/lib/zod/authZod";
+import { signIn } from "next-auth/react";
+import { loginUser } from "@/database/actions/user.action";
 
 const AuthSignInForm = () => {
   const router = useRouter();
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | undefined>("");
 
   const {
     register,
@@ -28,18 +29,9 @@ const AuthSignInForm = () => {
 
   const onSubmit = async (data: TAuthSignInFormSchema) => {
     setError("");
-    // Call the next auth sign in function with the user's credentials
-    const response = await signIn("credentials", {
-      ...data,
-      redirect: false,
-    });
-    // If sign in was successful, perform the below functions
-    if (response?.ok && !response.error) {
-      reset();
-      router.push("/");
-    } else {
-      setError(response?.error as string);
-    }
+    const response = await loginUser(data);
+    setError(response?.error);
+    reset();
   };
 
   return (
@@ -93,11 +85,7 @@ const AuthSignInForm = () => {
         <button
           type="button"
           className="w-full flex gap-2 items-center justify-center p-3 border border-[#272829]"
-          onClick={() =>
-            signIn("google", {
-              callbackUrl: "http://localhost:3000/",
-            })
-          }
+          onClick={() => signIn("google")}
         >
           <Image
             src="/companies/google.svg"

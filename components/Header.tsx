@@ -3,13 +3,14 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import ProfileDialogBox from "./ProfileDialogBox";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
 
 const Header = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   const profileDialogRef = useRef<HTMLDivElement>(null);
   const [showProfileDialogBox, setShowProfileDialogBox] = useState(false);
@@ -46,18 +47,20 @@ const Header = () => {
               </Link>
             </div>
           </div>
-          <div>
-            <Link href="/sign-in" className="px-4 py-3">
-              Login
-            </Link>
-            <Link
-              href="/sign-up"
-              className="px-4 py-2 rounded bg-primary text-white"
-            >
-              Sign Up
-            </Link>
-          </div>
-          {/* <div
+          {!session ? (
+            <div>
+              <Link href="/sign-in" className="px-4 py-3">
+                Login
+              </Link>
+              <Link
+                href="/sign-up"
+                className="px-4 py-2 rounded bg-primary text-white"
+              >
+                Sign Up
+              </Link>
+            </div>
+          ) : (
+            <div
               ref={profileDialogRef}
               className="flex items-center gap-3 cursor-pointer"
               onClick={() => setShowProfileDialogBox((prev) => !prev)}
@@ -69,8 +72,9 @@ const Header = () => {
                 alt="user-profile"
                 className="rounded-full"
               />
-              {showProfileDialogBox && <ProfileDialogBox />}
-            </div> */}
+              {showProfileDialogBox && <ProfileDialogBox session={session} />}
+            </div>
+          )}
         </div>
       </nav>
     </header>

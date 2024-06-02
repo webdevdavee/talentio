@@ -19,7 +19,7 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const isDynamicRoute = dynamicPublicRoutes.some((pattern) =>
+  const isDynamicPublicRoute = dynamicPublicRoutes.some((pattern) =>
     pattern.test(nextUrl.pathname)
   );
 
@@ -37,7 +37,7 @@ export default auth((req) => {
   }
 
   // If a user is not logged in but requests a page that is not public, redirect them to the sign-in page
-  if (!isLoggedIn && !isPublicRoute && !isDynamicRoute) {
+  if (!isLoggedIn && !isPublicRoute && !isDynamicPublicRoute) {
     return Response.redirect(new URL("/sign-in", nextUrl));
   }
 

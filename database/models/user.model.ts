@@ -11,6 +11,7 @@ const JobSchema = new Schema({
 
 const UserSchema = new Schema(
   {
+    userId: { type: String },
     firstname: { type: String },
     lastname: { type: String },
     name: { type: String, required: true, unique: true },

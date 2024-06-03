@@ -5,20 +5,21 @@ export default {
   providers: [Google],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.accountType = user.accountType;
-      console.log("TOKEN: ", token);
+      if (user) {
+        token.accountType = user.accountType;
+        token.id = user._id;
+        token.picture = user.photo;
+      }
       return token;
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.accountType = token.accountType;
-        session.user.id = token.sub;
+        session.user.id = token.id;
       }
-      console.log("SESSION: ", session);
       return session;
     },
   },
-
   pages: {
     signIn: "/sign-in",
     error: "/error",

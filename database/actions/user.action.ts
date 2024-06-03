@@ -38,6 +38,8 @@ export const createUser = async (
       name,
       email,
       password: hashedPassword,
+      photo: "/images/default-avatar.webp",
+      accountType: "individual",
     };
 
     await Users.create(user);
@@ -81,7 +83,21 @@ export const findByEmail = async (email: string) => {
 
     const user = await Users.findOne({ email: email });
 
-    if (!user) throw new Error("Invalid credentials.");
+    if (!user) throw new Error("No user found.");
+
+    return JSON.parse(JSON.stringify(user));
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const findById = async (userId: string) => {
+  try {
+    await connectToDatabase();
+
+    const user = await Users.findById(userId);
+
+    if (!user) throw new Error("No user found.");
 
     return JSON.parse(JSON.stringify(user));
   } catch (error: any) {

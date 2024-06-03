@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import credentials from "next-auth/providers/credentials";
 import { AuthSignInFormSchema } from "./lib/zod/authZod";
-import { handleError } from "./lib/utils";
 import { findByEmail } from "./database/actions/user.action";
 import bcrypt from "bcryptjs";
 

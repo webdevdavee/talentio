@@ -146,6 +146,7 @@ type PropertyValueFrequency = {
 
 type User = {
   _id: string;
+  userId: string;
   firstname?: string;
   lastname?: string;
   username: string;

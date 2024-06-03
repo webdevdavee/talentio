@@ -66,7 +66,7 @@ const Header = () => {
               onClick={() => setShowProfileDialogBox((prev) => !prev)}
             >
               <Image
-                src={session.user.image ?? "/images/default-avatar.webp"}
+                src={session.user.image as string}
                 width={40}
                 height={40}
                 alt="user-profile"

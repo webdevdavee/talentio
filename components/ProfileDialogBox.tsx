@@ -13,7 +13,7 @@ const ProfileDialogBox = ({ session }: ProfileDialogBoxProps) => {
       <div className="flex flex-col">
         <div className="flex justify-center items-center gap-3 p-2 mb-2 border-b border-b-gray-200">
           <Image
-            src={session.user.image ?? "/images/default-avatar.webp"}
+            src={session.user.image as string}
             width={60}
             height={60}
             alt="user-profile"

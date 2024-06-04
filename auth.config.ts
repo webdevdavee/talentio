@@ -1,8 +1,8 @@
 import type { NextAuthConfig } from "next-auth";
-import Google from "next-auth/providers/google";
+import google from "next-auth/providers/google";
 
 export default {
-  providers: [Google],
+  providers: [google],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -10,6 +10,7 @@ export default {
         token.id = user._id;
         token.picture = user.photo;
       }
+      console.log("TOKEN: ", token);
       return token;
     },
     async session({ session, token }) {
@@ -17,6 +18,7 @@ export default {
         session.user.accountType = token.accountType;
         session.user.id = token.id;
       }
+      console.log("SESSION: ", session);
       return session;
     },
   },

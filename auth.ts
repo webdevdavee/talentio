@@ -4,6 +4,7 @@ import credentials from "next-auth/providers/credentials";
 import { AuthSignInFormSchema } from "./lib/zod/authZod";
 import { findByEmail } from "./database/actions/user.action";
 import bcrypt from "bcryptjs";
+import google from "next-auth/providers/google";
 
 export const {
   auth,
@@ -13,6 +14,7 @@ export const {
 } = NextAuth({
   ...authConfig,
   providers: [
+    google,
     credentials({
       async authorize(credentials) {
         const validateCredentials = AuthSignInFormSchema.safeParse(credentials);

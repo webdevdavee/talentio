@@ -12,6 +12,7 @@ import PasswordInput from "./PasswordInput";
 import Loader2 from "./Loader2";
 import { AuthSignUpFormSchema, TAuthSignUpFormSchema } from "@/lib/zod/authZod";
 import { signIn } from "next-auth/react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 const AuthSignUpForm = () => {
   const router = useRouter();
@@ -101,7 +102,9 @@ const AuthSignUpForm = () => {
         <button
           type="button"
           className="w-full flex gap-2 items-center justify-center p-3 border border-[#272829]"
-          onClick={() => signIn("google")}
+          onClick={() =>
+            signIn("google", { callbackUrl: DEFAULT_LOGIN_REDIRECT })
+          }
         >
           <Image
             src="/companies/google.svg"

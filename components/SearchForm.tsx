@@ -74,7 +74,7 @@ const SearchForm = ({
 
   useEffect(() => {
     setValue("list", listInputValue);
-  }, []);
+  }, [listInputValue]);
 
   // Handle clicks outside list
   useClickOutside(searchListRef, () => {

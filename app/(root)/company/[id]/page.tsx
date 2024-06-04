@@ -37,7 +37,7 @@ export async function generateStaticParams() {
     companies = fetchedCompanies.companiesNoLimit;
   }
   return companies.map((company: Company) => ({
-    params: { id: company._id },
+    id: company._id,
   }));
 }
 

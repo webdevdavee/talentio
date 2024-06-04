@@ -29,15 +29,15 @@ const page = async ({ params: { id } }: Params) => {
   );
 };
 
-export async function generateStaticParams() {
-  const fetchedJobs = await getJobs();
-  let jobs = [];
-  if (fetchedJobs && fetchedJobs.jobsNoLimit) {
-    jobs = fetchedJobs.jobsNoLimit;
-  }
-  return jobs.map((job: Job) => ({
-    params: { id: job._id },
-  }));
-}
+// export async function generateStaticParams() {
+//   const fetchedJobs = await getJobs();
+//   let jobs = [];
+//   if (fetchedJobs && fetchedJobs.jobsNoLimit) {
+//     jobs = fetchedJobs.jobsNoLimit;
+//   }
+//   return jobs.map((job: Job) => ({
+//     params: { id: job._id },
+//   }));
+// }
 
 export default page;

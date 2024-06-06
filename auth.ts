@@ -9,9 +9,6 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "./lib/db";
 import { Adapter } from "next-auth/adapters";
 import { handleError } from "./lib/utils";
-import foursquare from "next-auth/providers/foursquare";
-import User from "./database/models/user.model";
-import { connectToDatabase } from "./database";
 
 export const {
   auth,
@@ -55,6 +52,7 @@ export const {
         if (!existingUser) return token;
         token.accountType = existingUser.accountType;
         token.id = existingUser._id;
+        token.provider = existingUser.provider;
       }
       return token;
     },
@@ -62,13 +60,15 @@ export const {
       if (session.user) {
         session.user.accountType = token.accountType;
         session.user.id = token.id;
+        session.user.provider = token.provider;
       }
       return session;
     },
     async signIn({ user, account }) {
+      // Sign in Oauth and set email verification to true
       if (account?.provider === "google") {
         try {
-          await OauthUserLogin({ ...user, emailVerified: true });
+          await OauthUserLogin({ ...user, provider: account.provider });
         } catch (error: any) {
           handleError(error);
           return false;

@@ -40,7 +40,7 @@ export const createUser = async (
       password: hashedPassword,
       image: "/images/default-avatar.webp",
       accountType: "individual",
-      emailVerified: null,
+      provider: "credentials",
     };
 
     await User.create(user);
@@ -120,6 +120,31 @@ export const OauthUserLogin = async (user: any) => {
       ...user,
       accountType: "individual",
     });
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const addNewUserField = async ({
+  userId,
+  newFieldName,
+  fieldData,
+}: addNewUserFieldParams) => {
+  if (!fieldData.answer) {
+    return { error: "Invalid field." };
+  }
+
+  try {
+    await connectToDatabase();
+
+    const updatedUser = await User.updateOne(
+      { _id: userId },
+      { $set: { [newFieldName]: fieldData } }
+    );
+
+    if (!updatedUser.acknowledged) {
+      return { error: "Somethig went wrong." };
+    }
   } catch (error: any) {
     handleError(error);
   }

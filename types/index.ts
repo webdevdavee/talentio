@@ -149,9 +149,16 @@ type User = {
   name: string;
   email: string;
   password?: string;
-  emailVerified?: boolean;
   image: string;
   accountType: string;
+  securityQuestion: { question: string; answer: string };
+  provider: string;
   createdAt: Date;
   updatedAt: Date;
+};
+
+type addNewUserFieldParams = {
+  userId: string;
+  newFieldName: string;
+  fieldData: any;
 };

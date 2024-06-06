@@ -38,3 +38,10 @@ export const AuthSignInFormSchema = z.object({
 });
 
 export type TAuthSignInFormSchema = z.infer<typeof AuthSignInFormSchema>;
+
+// SECURITY QUESTIONS SCHEMA
+export const SecurityQuestionsSchema = z.object({
+  answer: z.string().min(3, "Use 3 characters or more").trim(),
+});
+
+export type TSecurityQuestionsSchema = z.infer<typeof SecurityQuestionsSchema>;

@@ -1,0 +1,120 @@
+"use client";
+
+import { useForm } from "react-hook-form";
+import InputBox2 from "@/components/InputBox2";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef, useState } from "react";
+import Loader2 from "@/components/Loader2";
+import {
+  SecurityQuestionsSchema,
+  TSecurityQuestionsSchema,
+} from "@/lib/zod/authZod";
+import DropdownButton from "./DropdownButton";
+import DropdownList from "./DropdownList";
+import useClickOutside from "@/hooks/useClickOutside";
+import { addNewUserField } from "@/database/actions/user.action";
+import { useRouter } from "next/navigation";
+
+type SecurityQuestionsFormProps = {
+  userId: string | undefined;
+};
+
+const SecurityQuestionsForm = ({ userId }: SecurityQuestionsFormProps) => {
+  const router = useRouter();
+  const [showQuestions, setShowQuestions] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState("Select question");
+  const questionsListRef = useRef<HTMLDivElement>(null);
+  const [error, setError] = useState<string | undefined>("");
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<TSecurityQuestionsSchema>({
+    resolver: zodResolver(SecurityQuestionsSchema),
+  });
+
+  const onSubmit = async (data: TSecurityQuestionsSchema) => {
+    const fieldData = { question: selectedQuestion, answer: data.answer };
+    if (userId) {
+      const updateUser = await addNewUserField({
+        userId,
+        newFieldName: "securityQuestion",
+        fieldData,
+      });
+      setError(updateUser?.error);
+      router.push("/individual/dashboard");
+    }
+    reset();
+  };
+
+  // Handle clicks outside list
+  useClickOutside(questionsListRef, () => {
+    setShowQuestions(false);
+  });
+
+  return (
+    <section className="w-full h-screen flex items-center justify-center overflow-hidden">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-[50%] flex flex-col gap-6 items-center justify-center py-12 px-24"
+      >
+        {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
+        <h1 className="text-2xl font-medium mb-4">Secure Your Account</h1>
+        <p>
+          For your security, please answer the following questions to verify
+          your identity.
+        </p>
+        <section
+          ref={questionsListRef}
+          className="mt-6 w-full flex flex-col gap-4"
+        >
+          <DropdownButton
+            selectedQuestion={selectedQuestion}
+            showQuestions={showQuestions}
+            setShowQuestions={setShowQuestions}
+          />
+          <div className="relative">
+            {showQuestions && (
+              <DropdownList
+                setShowQuestions={setShowQuestions}
+                setSelectedQuestion={setSelectedQuestion}
+              />
+            )}
+          </div>
+        </section>
+        <div className="w-full flex flex-col gap-4">
+          <InputBox2
+            inputRegister={register("answer")}
+            label="Answer"
+            htmlFor="answer"
+            inputType="text"
+            inputMode="answer"
+            required
+            error={
+              errors.answer && (
+                <p className="text-red-500">{`${errors.answer.message}`}</p>
+              )
+            }
+          />
+        </div>
+        <button
+          type="submit"
+          className={`w-full p-3 text-center text-white transition duration-150 ${
+            isSubmitting ? "bg-gray-200" : "bg-primary transition duration-150"
+          }`}
+        >
+          {isSubmitting ? (
+            <Loader2 className="second-loader" />
+          ) : (
+            <p>Complete sign up</p>
+          )}
+        </button>
+      </form>
+      <picture className="w-[50%] h-screen auth-img"></picture>
+    </section>
+  );
+};
+
+export default SecurityQuestionsForm;

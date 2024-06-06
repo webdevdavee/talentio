@@ -11,7 +11,8 @@ const UserSchema = new Schema(
     password: { type: String },
     image: { type: String },
     accountType: { type: String },
-    emailVerified: { type: Boolean },
+    securityQuestion: { question: { type: String }, answer: { type: String } },
+    provider: { type: String },
   },
   { timestamps: true }
 );

@@ -5,7 +5,6 @@ import InputBox2 from "./InputBox2";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import PasswordInput from "./PasswordInput";
 import Loader2 from "./Loader2";
@@ -15,15 +14,12 @@ import { loginUser } from "@/database/actions/user.action";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 const AuthSignInForm = () => {
-  const router = useRouter();
-
   const [error, setError] = useState<string | undefined>("");
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<TAuthSignInFormSchema>({
     resolver: zodResolver(AuthSignInFormSchema),
   });
@@ -32,7 +28,6 @@ const AuthSignInForm = () => {
     setError("");
     const response = await loginUser(data);
     setError(response?.error);
-    reset();
   };
 
   return (

@@ -275,3 +275,14 @@ export const socialsIconPaths: IndexSignature = {
   facebook: "/facebook.svg",
   twitter: "/twitter.svg",
 };
+
+export const securityQuestions: string[] = [
+  "What was the name of your favorite childhood teacher?",
+  "What is the name of the first school you attended?",
+  "What was the name of the first concert you attended?",
+  "What is the title of your favorite book?",
+  "What was the make and model of your first car?",
+  "What was your dream job as a child?",
+  "What was the first film you saw in a theater?",
+  "What was the name of your first best friend?",
+];

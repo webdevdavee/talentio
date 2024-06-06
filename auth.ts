@@ -2,9 +2,16 @@ import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import credentials from "next-auth/providers/credentials";
 import { AuthSignInFormSchema } from "./lib/zod/authZod";
-import { findByEmail } from "./database/actions/user.action";
+import { OauthUserLogin, findByEmail } from "./database/actions/user.action";
 import bcrypt from "bcryptjs";
 import google from "next-auth/providers/google";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import clientPromise from "./lib/db";
+import { Adapter } from "next-auth/adapters";
+import { handleError } from "./lib/utils";
+import foursquare from "next-auth/providers/foursquare";
+import User from "./database/models/user.model";
+import { connectToDatabase } from "./database";
 
 export const {
   auth,
@@ -13,8 +20,12 @@ export const {
   signOut,
 } = NextAuth({
   ...authConfig,
+  adapter: MongoDBAdapter(clientPromise) as Adapter,
   providers: [
-    google,
+    google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
     credentials({
       async authorize(credentials) {
         const validateCredentials = AuthSignInFormSchema.safeParse(credentials);
@@ -37,4 +48,34 @@ export const {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        const existingUser = await findByEmail(user.email as string);
+        if (!existingUser) return token;
+        token.accountType = existingUser.accountType;
+        token.id = existingUser._id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.accountType = token.accountType;
+        session.user.id = token.id;
+      }
+      return session;
+    },
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        try {
+          await OauthUserLogin({ ...user, emailVerified: true });
+        } catch (error: any) {
+          handleError(error);
+          return false;
+        }
+      }
+      return true;
+    },
+  },
+  session: { strategy: "jwt" },
 });

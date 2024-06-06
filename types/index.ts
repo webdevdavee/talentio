@@ -146,31 +146,12 @@ type PropertyValueFrequency = {
 
 type User = {
   _id: string;
-  userId: string;
-  firstname?: string;
-  lastname?: string;
-  username: string;
-  email: string;
-  password: string;
-  photo: string;
-  accountType: string;
-  email_verified: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-type CreateUserParam = {
-  firstname?: string;
-  lastname?: string;
-  username?: string;
+  name: string;
   email: string;
   password?: string;
-  photo?: string;
+  emailVerified?: boolean;
+  image: string;
   accountType: string;
-  email_verified: boolean;
-};
-
-type FindUserParam = {
-  username?: string;
-  email?: string;
+  createdAt: Date;
+  updatedAt: Date;
 };

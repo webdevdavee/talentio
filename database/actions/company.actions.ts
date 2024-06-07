@@ -4,7 +4,6 @@ import { connectToDatabase } from "..";
 import { formatNumberWithCommas, handleError } from "@/lib/utils";
 import Companies from "../models/company.model";
 import { z } from "zod";
-import { CompanyAuthSignUpFormSchema } from "@/lib/zod/authZod";
 import bcrypt from "bcryptjs";
 
 export const getCompanies = async (page = 1, limit = 10) => {
@@ -174,65 +173,65 @@ export const handleCompanyFilter = async (
   }
 };
 
-export const createCompany = async (
-  data: z.infer<typeof CompanyAuthSignUpFormSchema>,
-  industry: string[]
-) => {
-  try {
-    await connectToDatabase();
+// export const createCompany = async (
+//   data: z.infer<typeof CompanyAuthSignUpFormSchema>,
+//   industry: string[]
+// ) => {
+//   try {
+//     await connectToDatabase();
 
-    const validatedFields = CompanyAuthSignUpFormSchema.safeParse(data);
-    if (!validatedFields.success) {
-      return { error: "Invalid credentials." };
-    }
+//     const validatedFields = CompanyAuthSignUpFormSchema.safeParse(data);
+//     if (!validatedFields.success) {
+//       return { error: "Invalid credentials." };
+//     }
 
-    const {
-      name,
-      email,
-      password,
-      size,
-      about,
-      logo,
-      twitter,
-      facebook,
-      linkedin,
-      mail,
-    } = validatedFields.data;
+//     const {
+//       name,
+//       email,
+//       password,
+//       size,
+//       about,
+//       logo,
+//       twitter,
+//       facebook,
+//       linkedin,
+//       mail,
+//     } = validatedFields.data;
 
-    const hashedPassword = await bcrypt.hash(password, 7);
+//     const hashedPassword = await bcrypt.hash(password, 7);
 
-    // Check for duplicate email or name
-    const existingCompany = await Companies.findOne({
-      $or: [{ email: email }, { company: name }],
-    });
+//     // Check for duplicate email or name
+//     const existingCompany = await Companies.findOne({
+//       $or: [{ email: email }, { company: name }],
+//     });
 
-    if (existingCompany) {
-      return { error: "Name or email already in use." };
-    }
+//     if (existingCompany) {
+//       return { error: "Name or email already in use." };
+//     }
 
-    // Format size with commas
-    const formattedSize = formatNumberWithCommas(size);
+//     // Format size with commas
+//     const formattedSize = formatNumberWithCommas(size);
 
-    // Construct the company
-    const company = {
-      company: name,
-      email,
-      about,
-      password: hashedPassword,
-      logo,
-      industry,
-      company_size: `${formattedSize}+ employees`,
-      contact: [twitter, facebook, linkedin, mail],
-      accountType: "company",
-      provider: "credentials",
-    };
+//     // Construct the company
+//     const company = {
+//       company: name,
+//       email,
+//       about,
+//       password: hashedPassword,
+//       logo,
+//       industry,
+//       company_size: `${formattedSize}+ employees`,
+//       contact: [twitter, facebook, linkedin, mail],
+//       accountType: "company",
+//       provider: "credentials",
+//     };
 
-    const createdUser = await Companies.create(company);
-    console.log(createdUser);
+//     const createdUser = await Companies.create(company);
+//     console.log(createdUser);
 
-    console.log("Company created!");
-  } catch (error: any) {
-    console.error(error);
-    handleError(error);
-  }
-};
+//     console.log("Company created!");
+//   } catch (error: any) {
+//     console.error(error);
+//     handleError(error);
+//   }
+// };

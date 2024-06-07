@@ -45,3 +45,40 @@ export const SecurityQuestionsSchema = z.object({
 });
 
 export type TSecurityQuestionsSchema = z.infer<typeof SecurityQuestionsSchema>;
+
+// RECOVER ACCOUNT EMAIL SCHEMA
+export const RecoverAccountEmailsSchema = z.object({
+  email: z.string().email().toLowerCase().trim(),
+});
+
+export type TRecoverAccountEmailsSchemaSchema = z.infer<
+  typeof RecoverAccountEmailsSchema
+>;
+
+// RESET PASSWORD SCHEMA
+export const ResetPasswordSchema = z.object({
+  newPassword: z
+    .string()
+    .min(8, "Should be at least 8 characters long.")
+    .regex(/[a-zA-Z]/, "Should have at least one letter")
+    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
+    .trim()
+    .refine(
+      (s) => !s.includes(" "),
+      "Only letters, numbers and special characters allowed. No spacing."
+    ),
+  confirmPassword: z
+    .string()
+    .min(8, "Should be at least 8 characters long.")
+    .regex(/[a-zA-Z]/, "Should have at least one letter")
+    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
+    .trim()
+    .refine(
+      (s) => !s.includes(" "),
+      "Only letters, numbers and special characters allowed. No spacing."
+    ),
+});
+
+export type TResetPasswordSchema = z.infer<typeof ResetPasswordSchema>;

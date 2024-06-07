@@ -14,6 +14,7 @@ import DropdownList from "./DropdownList";
 import useClickOutside from "@/hooks/useClickOutside";
 import { addNewUserField } from "@/database/actions/user.action";
 import { useRouter } from "next/navigation";
+import bcrypt from "bcryptjs";
 
 type SecurityQuestionsFormProps = {
   userId: string | undefined;
@@ -36,17 +37,25 @@ const SecurityQuestionsForm = ({ userId }: SecurityQuestionsFormProps) => {
   });
 
   const onSubmit = async (data: TSecurityQuestionsSchema) => {
-    const fieldData = { question: selectedQuestion, answer: data.answer };
-    if (userId) {
+    setError("");
+    // Makes sure the user selects a question and the userId exists
+    if (userId && selectedQuestion !== "Select question") {
+      // Hash the user's answer for improved security
+      const hashedAnswer = await bcrypt.hash(data.answer, 7);
+      const fieldData = { question: selectedQuestion, answer: hashedAnswer };
+      // Update user's data
       const updateUser = await addNewUserField({
         userId,
         newFieldName: "securityQuestion",
         fieldData,
       });
+      // Handle error
       setError(updateUser?.error);
+      reset();
       router.push("/individual/dashboard");
+    } else {
+      setError("Select a question.");
     }
-    reset();
   };
 
   // Handle clicks outside list

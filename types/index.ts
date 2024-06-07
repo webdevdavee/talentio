@@ -162,3 +162,9 @@ type addNewUserFieldParams = {
   newFieldName: string;
   fieldData: any;
 };
+
+type updateUserFieldParams = {
+  userId: string;
+  field: string;
+  fieldData: any;
+};

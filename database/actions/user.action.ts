@@ -84,7 +84,7 @@ export const findByEmail = async (email: string) => {
 
     const user = await User.findOne({ email: email });
 
-    if (!user) throw new Error("No user found.");
+    if (!user) throw new Error("Email does not exists.");
 
     return JSON.parse(JSON.stringify(user));
   } catch (error: any) {
@@ -144,6 +144,34 @@ export const addNewUserField = async ({
 
     if (!updatedUser.acknowledged) {
       return { error: "Somethig went wrong." };
+    }
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const updateUserField = async ({
+  userId,
+  field,
+  fieldData,
+}: updateUserFieldParams) => {
+  if (!fieldData) {
+    return { error: "Invalid field." };
+  }
+
+  await connectToDatabase();
+  try {
+    const updatedUser = await User.updateOne(
+      { _id: userId },
+      { $set: { [field]: fieldData } }
+    );
+
+    if (!updatedUser.acknowledged) {
+      return { error: "Somethig went wrong." };
+    }
+
+    if (updatedUser.modifiedCount === 1 && updatedUser.acknowledged) {
+      return { success: "Reset successful! Taking you back to log in." };
     }
   } catch (error: any) {
     handleError(error);

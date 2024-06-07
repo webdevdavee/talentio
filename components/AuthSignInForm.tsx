@@ -64,6 +64,11 @@ const AuthSignInForm = () => {
               )
             }
           />
+          <span className="w-full flex justify-end">
+            <Link href="/reset-password" className="text-primary">
+              Forgot password?
+            </Link>
+          </span>
         </div>
         <button
           type="submit"

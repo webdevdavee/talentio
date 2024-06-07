@@ -9,7 +9,6 @@ import { useUploadThing } from "@/lib/utils/uploadthing";
 
 type FileUploaderProps = {
   files: File[];
-  type?: string;
   onFieldChange: (url: string) => void;
   fileUrl: string;
   setFiles: Dispatch<SetStateAction<File[]>>;
@@ -17,7 +16,6 @@ type FileUploaderProps = {
 
 export default function FileUploader({
   files,
-  type,
   fileUrl,
   onFieldChange,
   setFiles,

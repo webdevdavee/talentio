@@ -7,8 +7,6 @@ type TextAreaProps = {
   placeholder?: string;
   required?: boolean;
   inputMode?: string;
-  value?: string;
-  setValue?: React.Dispatch<React.SetStateAction<string>>;
   style?: string;
 };
 
@@ -21,8 +19,6 @@ const TextArea = ({
   placeholder,
   required,
   inputMode,
-  value,
-  setValue,
   style,
 }: TextAreaProps) => {
   return (
@@ -39,8 +35,6 @@ const TextArea = ({
         type={inputType}
         id={htmlFor}
         placeholder={placeholder}
-        value={value}
-        onChange={(e) => setValue && e.target.value}
         inputMode={inputMode}
       />
       {error}

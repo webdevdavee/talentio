@@ -48,7 +48,7 @@ const AuthSignInForm = () => {
             required
             error={
               errors.email && (
-                <p className="text-red-500">{`${errors.email.message}`}</p>
+                <p className="text-red-500">{errors.email.message}</p>
               )
             }
           />
@@ -60,7 +60,7 @@ const AuthSignInForm = () => {
             required
             error={
               errors.password && (
-                <p className="text-red-500">{`${errors.password.message}`}</p>
+                <p className="text-red-500">{errors.password.message}</p>
               )
             }
           />

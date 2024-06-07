@@ -85,3 +85,8 @@ export const validatePassword = (password: string) => {
     hasSpecialChar
   );
 };
+
+// Format numbers with commas
+export const formatNumberWithCommas = (number: string) => {
+  return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

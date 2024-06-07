@@ -3,14 +3,21 @@
  * They do not require authentication.
  * @types {string[]}
  */
-export const publicRoutes = ["/", "/jobs", "/companies", "/reset-password"];
+export const publicRoutes = ["/", "/jobs", "/companies"];
 
 /**
  * These routes are used for authentication.
  * These routes will redirect logged in users to their "/dashboard".
  * @types {string[]}
  */
-export const authRoutes = ["/sign-in", "/sign-up", "/error"];
+export const authRoutes = [
+  "/sign-in",
+  "/sign-up",
+  "/error",
+  "/reset-password",
+  "/onboarding",
+  "/api/uploadthing",
+];
 
 /**
  * The prefix for api authentication routes.
@@ -24,7 +31,6 @@ export const apiAuthPrefix = "/api/auth";
  * @types {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/security-questions";
-// export const DEFAULT_LOGIN_REDIRECT = "/individual/dashboard";
 
 /**
  * These routes are public dynamic routes and as such, are stored as regex.

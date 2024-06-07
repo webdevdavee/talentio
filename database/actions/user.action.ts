@@ -18,7 +18,7 @@ export const createUser = async (
 
     const validatedFields = AuthSignUpFormSchema.safeParse(data);
     if (!validatedFields.success) {
-      throw new Error("Invalid fields");
+      return { error: "Invalid credentials." };
     }
 
     const { name, email, password } = validatedFields.data;

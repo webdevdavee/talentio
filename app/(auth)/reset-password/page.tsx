@@ -1,12 +1,13 @@
-import { auth } from "@/auth";
 import ResetPasswordWrapper from "@/components/ResetPasswordWrapper";
-import { redirect } from "next/navigation";
+
+export async function generateMetadata() {
+  return {
+    title: "Reset Password",
+    description: "Reset your password",
+  };
+}
 
 const page = async () => {
-  const session = await auth();
-
-  if (session) redirect("/individual/dashboard");
-
   return (
     <section>
       <ResetPasswordWrapper />

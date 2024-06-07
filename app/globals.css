@@ -107,6 +107,18 @@ body {
   background-repeat: no-repeat;
 }
 
+.onboarding-img {
+  background-image: url("/images/onboarding-img.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.comp-sign-up {
+  background-image: url("/images/comp-sign-up.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .auth-error {
   background-image: url("/images/auth-error.webp");
   background-size: cover;

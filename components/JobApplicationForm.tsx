@@ -56,7 +56,7 @@ const JobApplicationForm = () => {
             required
             error={
               errors.firstname && (
-                <p className="text-red-500">{`${errors.firstname.message}`}</p>
+                <p className="text-red-500">{errors.firstname.message}</p>
               )
             }
           />
@@ -68,7 +68,7 @@ const JobApplicationForm = () => {
             required
             error={
               errors.lastname && (
-                <p className="text-red-500">{`${errors.lastname.message}`}</p>
+                <p className="text-red-500">{errors.lastname.message}</p>
               )
             }
           />
@@ -82,7 +82,7 @@ const JobApplicationForm = () => {
           inputMode="email"
           error={
             errors.email && (
-              <p className="text-red-500">{`${errors.email.message}`}</p>
+              <p className="text-red-500">{errors.email.message}</p>
             )
           }
         />
@@ -95,7 +95,7 @@ const JobApplicationForm = () => {
           inputMode="tel"
           error={
             errors.phone && (
-              <p className="text-red-500">{`${errors.phone.message}`}</p>
+              <p className="text-red-500">{errors.phone.message}</p>
             )
           }
         />
@@ -107,7 +107,7 @@ const JobApplicationForm = () => {
           required
           error={
             errors.nationality && (
-              <p className="text-red-500">{`${errors.nationality.message}`}</p>
+              <p className="text-red-500">{errors.nationality.message}</p>
             )
           }
         />
@@ -120,7 +120,7 @@ const JobApplicationForm = () => {
           style="max-h-[17rem] min-h-[12rem] overflow-y-auto"
           error={
             errors.coverletter && (
-              <p className="text-red-500">{`${errors.coverletter.message}`}</p>
+              <p className="text-red-500">{errors.coverletter.message}</p>
             )
           }
         />

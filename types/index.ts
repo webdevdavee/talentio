@@ -83,8 +83,12 @@ type JobType = {
 type Company = {
   _id: string;
   company: string;
+  email: string;
+  password: string;
   about: string;
   logo: string;
+  accountType: string;
+  securityQuestion: { question: string; answer: string };
   industry: string[];
   company_size: string;
   contact: string[];

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { auth } from "@/auth";
 import DashboardSidebarNav from "./DashboardSidebarNav";
+import Link from "next/link";
 
 const DashboardSidebar = async () => {
   const session = await auth();
@@ -8,13 +9,15 @@ const DashboardSidebar = async () => {
   return (
     <aside className="sticky top-0 w-[17%] h-screen bg-[#F5F5F5] flex flex-col justify-between py-6 px-4">
       <section>
-        <Image
-          src="/talentio.svg"
-          width={125}
-          height={125}
-          alt="logo"
-          className="mb-12"
-        />
+        <Link href="/">
+          <Image
+            src="/talentio.svg"
+            width={125}
+            height={125}
+            alt="logo"
+            className="mb-12"
+          />
+        </Link>
         <DashboardSidebarNav />
       </section>
       <div className="flex gap-4 items-center">

@@ -21,6 +21,16 @@ const DashboardSidebarNav = () => {
           <p>My applications</p>
         </Link>
         <Link
+          href="/individual/dashboard/saved-jobs"
+          className={`flex items-center gap-3 cursor-pointer py-2 px-3 hover:bg-gray-200 transition hover:border-l-[2px] hover:border-l-primary ${
+            pathname === "/individual/dashboard/saved-jobs" &&
+            "bg-gray-200 border-l-[2px] border-l-primary"
+          }`}
+        >
+          <Image src="/love-black.svg" width={20} height={20} alt="logo" />
+          <p>Saved jobs</p>
+        </Link>
+        <Link
           href="/individual/dashboard/messages"
           className={`flex items-center gap-3 cursor-pointer py-2 px-3 hover:bg-gray-200 transition hover:border-l-[2px] hover:border-l-primary ${
             pathname === "/individual/dashboard/messages" &&

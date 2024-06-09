@@ -6,10 +6,15 @@ import { useForm, Controller } from "react-hook-form";
 import InputBox from "./InputBox";
 import TextArea from "./TextArea";
 import FileUploader from "./FileUploader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUploadThing } from "@/lib/utils/uploadthing";
+import { useSearchParams } from "next/navigation";
+import { getJobById } from "@/database/actions/job.actions";
+import Link from "next/link";
 
 const JobApplicationForm = () => {
+  const searchParams = useSearchParams();
+
   const {
     control,
     register,
@@ -22,6 +27,7 @@ const JobApplicationForm = () => {
 
   const [files, setFiles] = useState<File[]>([]);
   const { startUpload } = useUploadThing("fileUploader");
+  const [job, setJob] = useState<Job>();
 
   const onSubmit = async (data: TJobApplicationFormSchema) => {
     // Initialize the URL for the resume.
@@ -44,8 +50,33 @@ const JobApplicationForm = () => {
     reset();
   };
 
+  const jobToApplyUrlParam = new URLSearchParams(searchParams.toString());
+  const jobToApply = jobToApplyUrlParam.get("job");
+
+  // Fetch the job user has choosen to apply to
+  useEffect(() => {
+    (async () => {
+      const job = await getJobById(jobToApply as string);
+      setJob(job);
+    })();
+  }, [jobToApply]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full mt-4 bg-white">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-[50%] bg-white">
+      {job ? (
+        <h1 className="mb-10 w-full text-center text-xl font-semibold">
+          Apply to{" "}
+          <Link
+            href={`/job/${job._id}`}
+            className="text-primary underline"
+          >{`${job?.title} (${job?.level}) at ${job?.company}`}</Link>
+        </h1>
+      ) : (
+        <p className="mb-10 w-full text-center text-xl font-semibold">
+          Loading...
+        </p>
+      )}
+
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
           <InputBox

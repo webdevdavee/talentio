@@ -8,7 +8,7 @@ const page = async () => {
   if (session?.user.accountType === "company") redirect("/company/dashboard");
   return (
     <section>
-      <div className="m-10">
+      <div className="w-full flex justify-center p-10">
         <JobApplicationForm />
       </div>
     </section>

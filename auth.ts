@@ -2,13 +2,14 @@ import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import credentials from "next-auth/providers/credentials";
 import { AuthSignInFormSchema } from "./lib/zod/authZod";
-import { OauthUserLogin, findByEmail } from "./database/actions/user.action";
+import { OauthUserLogin } from "./database/actions/individual.action";
 import bcrypt from "bcryptjs";
 import google from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "./lib/db";
 import { Adapter } from "next-auth/adapters";
 import { handleError } from "./lib/utils";
+import { findByEmail } from "./database/actions/users.actions";
 
 export const {
   auth,
@@ -48,10 +49,10 @@ export const {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        const existingUser = await findByEmail(user.email as string);
+        const existingUser: AllUsers = await findByEmail(user.email as string);
         if (!existingUser) return token;
         token.accountType = existingUser.accountType;
-        token.id = existingUser._id;
+        token.id = existingUser.userId;
         token.provider = existingUser.provider;
       }
       return token;
@@ -59,7 +60,7 @@ export const {
     async session({ session, token }) {
       if (session.user) {
         session.user.accountType = token.accountType;
-        session.user.id = token.id;
+        session.user.id = token.id as string;
         session.user.provider = token.provider;
       }
       return session;

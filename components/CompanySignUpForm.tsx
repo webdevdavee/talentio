@@ -47,7 +47,12 @@ const CompanySignUpForm = () => {
     <section className="w-full h-screen flex items-center justify-center overflow-hidden">
       <div className="w-[50%] flex flex-col gap-6 items-center justify-center py-12 px-24">
         {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
-        <h1 className="text-2xl font-medium mb-4">Create company account</h1>
+        <h1
+          className="text-2xl font-medium mb-4"
+          style={{ display: step === 2 || step === 3 ? "none" : "block" }}
+        >
+          Create company account
+        </h1>
         {step === 1 ? (
           <CompanySignupStep1
             nextStep={nextStep}
@@ -58,7 +63,6 @@ const CompanySignUpForm = () => {
             nextStep={nextStep}
             prevStep={prevStep}
             updateFormData={updateFormData}
-            error={error}
             setError={setError}
           />
         ) : (

@@ -80,18 +80,62 @@ type JobType = {
   type: string;
 };
 
+type AllUsers = {
+  userId: string;
+  name: string;
+  email: string;
+  image: string;
+  password: string;
+  accountType: string;
+  securityQuestion: { question: string; answer: string };
+  provider: string;
+};
+
+type User = {
+  _id: string;
+  userId: string;
+  name: string;
+  email: string;
+  password?: string;
+  image: string;
+  accountType: string;
+  securityQuestion: { question: string; answer: string };
+  provider: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type CompanyUser = {
+  _id: string;
+  userId: string;
+  name: string;
+  email: string;
+  password: string;
+  image: string;
+  accountType: string;
+  companyId: string;
+  securityQuestion: { question: string; answer: string };
+  provider: string;
+  role: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 type Company = {
   _id: string;
+  userId: string;
   company: string;
   email: string;
   password: string;
+  industry: string[];
   about: string;
   logo: string;
   accountType: string;
   securityQuestion: { question: string; answer: string };
-  industry: string[];
   company_size: string;
   contact: string[];
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 type GetJob = {
@@ -148,21 +192,9 @@ type PropertyValueFrequency = {
   count: number;
 };
 
-type User = {
-  _id: string;
-  name: string;
-  email: string;
-  password?: string;
-  image: string;
-  accountType: string;
-  securityQuestion: { question: string; answer: string };
-  provider: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
 type addNewUserFieldParams = {
-  userId: string;
+  email: string;
+  accountType: string;
   newFieldName: string;
   fieldData: any;
 };

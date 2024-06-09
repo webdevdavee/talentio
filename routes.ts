@@ -3,7 +3,7 @@
  * They do not require authentication.
  * @types {string[]}
  */
-export const publicRoutes = ["/", "/jobs", "/companies"];
+export const publicRoutes = ["/", "/jobs", "/companies", "/api/uploadthing"];
 
 /**
  * These routes are used for authentication.
@@ -16,7 +16,6 @@ export const authRoutes = [
   "/error",
   "/reset-password",
   "/onboarding",
-  "/api/uploadthing",
 ];
 
 /**

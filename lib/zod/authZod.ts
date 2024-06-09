@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { validatePassword } from "../utils";
+import { isValidUrl, validatePassword } from "../utils";
 
 // SIGN UP FORM SCHEMA
 export const AuthSignUpFormSchema = z.object({
@@ -117,12 +117,81 @@ export type TCompanySignUpFormSchema2 = z.infer<
 
 // COMPANY STEP 3 SIGN UP FORM SCHEMA
 export const CompanySignUpFormSchema3 = z.object({
-  twitter: z.string().min(3, "Use 3 characters or more").trim(),
-  facebook: z.string().min(3, "Use 3 characters or more").trim(),
-  linkedin: z.string().min(3, "Use 3 characters or more").trim(),
-  mail: z.string().min(3, "Use 3 characters or more").trim(),
+  twitter: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .url()
+    .trim()
+    .refine((data) => isValidUrl(data), {
+      message: "Please enter a valid URL",
+    }),
+  facebook: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .url()
+    .trim()
+    .refine((data) => isValidUrl(data), {
+      message: "Please enter a valid URL",
+    }),
+  linkedin: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .url()
+    .trim()
+    .refine((data) => isValidUrl(data), {
+      message: "Please enter a valid URL",
+    }),
+  mail: z.string().email().toLowerCase().trim(),
 });
 
 export type TCompanySignUpFormSchema3 = z.infer<
   typeof CompanySignUpFormSchema3
 >;
+
+// COMPANY SIGN UP SCHEMA
+export const CompanySignUpFormSchema = z.object({
+  name: z.string().min(3, "Use 3 characters or more").trim(),
+  email: z.string().email().toLowerCase().trim(),
+  password: z
+    .string()
+    .min(8, "Should be at least 8 characters long.")
+    .regex(/[a-zA-Z]/, "Should have at least one letter")
+    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
+    .trim()
+    .refine(
+      (s) => !s.includes(" "),
+      "Only letters, numbers and special characters allowed. No spacing."
+    ),
+  size: z.string().min(1, "Required").trim(),
+  industry: z.array(z.string()),
+  about: z.string().min(3, "Use 3 characters or more").trim(),
+  logo: z.string(),
+  twitter: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .url()
+    .trim()
+    .refine((data) => isValidUrl(data), {
+      message: "Please enter a valid URL",
+    }),
+  facebook: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .url()
+    .trim()
+    .refine((data) => isValidUrl(data), {
+      message: "Please enter a valid URL",
+    }),
+  linkedin: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .url()
+    .trim()
+    .refine((data) => isValidUrl(data), {
+      message: "Please enter a valid URL",
+    }),
+  mail: z.string().email().toLowerCase().trim(),
+});
+
+export type TCompanySignUpFormSchema = z.infer<typeof CompanySignUpFormSchema>;

@@ -10,8 +10,8 @@ import PasswordInput from "./PasswordInput";
 import Loader2 from "./Loader2";
 import { AuthSignInFormSchema, TAuthSignInFormSchema } from "@/lib/zod/authZod";
 import { signIn } from "next-auth/react";
-import { loginUser } from "@/database/actions/user.action";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { loginUser } from "@/database/actions/users.actions";
 
 const AuthSignInForm = () => {
   const [error, setError] = useState<string | undefined>("");

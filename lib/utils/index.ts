@@ -90,3 +90,13 @@ export const validatePassword = (password: string) => {
 export const formatNumberWithCommas = (number: string) => {
   return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+// Check if the string is a valid URL
+export const isValidUrl = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};

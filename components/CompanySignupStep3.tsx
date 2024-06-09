@@ -6,14 +6,36 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InputBox2 from "./InputBox2";
 import Loader2 from "./Loader2";
+import { useRouter } from "next/navigation";
+import { createCompany } from "@/database/actions/users.actions";
+
+type Step1 = {
+  size: string;
+  name: string;
+  email: string;
+  password: string;
+};
+
+type Step2 = {
+  industry: string[];
+  about: string;
+  logo: string;
+};
+
+type Step3 = {
+  twitter: string;
+  facebook: string;
+  linkedin: string;
+  mail: string;
+};
 
 type CompanySignupStep3Props = {
   prevStep: () => void;
   updateFormData: (newData: any) => void;
   formData: {
-    step1Data: {};
-    step2Data: {};
-    step3Data: {};
+    step1Data: Step1;
+    step2Data: Step2;
+    step3Data: Step3;
   };
   setError: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
@@ -24,9 +46,12 @@ const CompanySignupStep3 = ({
   formData,
   setError,
 }: CompanySignupStep3Props) => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<TCompanySignUpFormSchema3>({
     resolver: zodResolver(CompanySignUpFormSchema3),
@@ -34,8 +59,19 @@ const CompanySignupStep3 = ({
 
   const onSubmit = async (data: TCompanySignUpFormSchema3) => {
     updateFormData({ step3Data: data });
+    const signupData = {
+      ...formData.step1Data,
+      ...formData.step2Data,
+      ...data,
+    };
+    // Create company
+    const response = await createCompany(signupData);
+    if (!response?.error) {
+      reset();
+      router.push("/sign-in");
+    }
+    setError(response?.error);
   };
-  console.log("Form data:", formData);
 
   return (
     <form
@@ -46,7 +82,7 @@ const CompanySignupStep3 = ({
       <div className="w-full flex flex-col gap-4">
         <InputBox2
           inputRegister={register("twitter")}
-          label="Twitter"
+          label="Twitter (must be a url)"
           htmlFor="twitter"
           inputType="text"
           required
@@ -58,7 +94,7 @@ const CompanySignupStep3 = ({
         />
         <InputBox2
           inputRegister={register("facebook")}
-          label="Facebook"
+          label="Facebook (must be a url)"
           htmlFor="facebook"
           inputType="text"
           required
@@ -70,7 +106,7 @@ const CompanySignupStep3 = ({
         />
         <InputBox2
           inputRegister={register("linkedin")}
-          label="Linkedin"
+          label="Linkedin (must be a url)"
           htmlFor="linkedin"
           inputType="text"
           required
@@ -85,6 +121,7 @@ const CompanySignupStep3 = ({
           label="Mail"
           htmlFor="mail"
           inputType="text"
+          inputMode="email"
           required
           error={
             errors.mail && <p className="text-red-500">{errors.mail.message}</p>

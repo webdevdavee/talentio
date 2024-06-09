@@ -26,18 +26,6 @@ const CompanyDetailsHeader = ({ company }: CompanyDetailsHeaderProps) => {
             </span>
             <span className="flex gap-3 items-center justify-start">
               <Image
-                src="/location.svg"
-                width={30}
-                height={30}
-                alt="location"
-              />
-              <span className="flex flex-col">
-                <p>Location</p>
-                <p className="font-medium">15+ countries</p>
-              </span>
-            </span>
-            <span className="flex gap-3 items-center justify-start">
-              <Image
                 src="/building.svg"
                 width={30}
                 height={30}

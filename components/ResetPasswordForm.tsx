@@ -6,7 +6,7 @@ import Loader2 from "./Loader2";
 import { ResetPasswordSchema, TResetPasswordSchema } from "@/lib/zod/authZod";
 import PasswordInput from "./PasswordInput";
 import bcrypt from "bcryptjs";
-import { updateUserField } from "@/database/actions/user.action";
+import { updateUserField } from "@/database/actions/individual.action";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

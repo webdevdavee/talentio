@@ -38,7 +38,7 @@ const CompanySignupStep1 = ({
     >
       <InputBox2
         inputRegister={register("name")}
-        label="Username"
+        label="Company Name"
         htmlFor="name"
         inputType="text"
         required
@@ -71,7 +71,7 @@ const CompanySignupStep1 = ({
       />
       <InputBox2
         inputRegister={register("size")}
-        label="Staff size"
+        label="Staff Size"
         htmlFor="size"
         inputType="number"
         inputMode="numeric"

@@ -12,15 +12,19 @@ import {
 import DropdownButton from "./DropdownButton";
 import DropdownList from "./DropdownList";
 import useClickOutside from "@/hooks/useClickOutside";
-import { addNewUserField } from "@/database/actions/user.action";
+import { addNewUserField } from "@/database/actions/individual.action";
 import { useRouter } from "next/navigation";
 import bcrypt from "bcryptjs";
 
 type SecurityQuestionsFormProps = {
-  userId: string | undefined;
+  email: string | null | undefined;
+  accountType: string;
 };
 
-const SecurityQuestionsForm = ({ userId }: SecurityQuestionsFormProps) => {
+const SecurityQuestionsForm = ({
+  email,
+  accountType,
+}: SecurityQuestionsFormProps) => {
   const router = useRouter();
   const [showQuestions, setShowQuestions] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState("Select question");
@@ -38,14 +42,15 @@ const SecurityQuestionsForm = ({ userId }: SecurityQuestionsFormProps) => {
 
   const onSubmit = async (data: TSecurityQuestionsSchema) => {
     setError("");
-    // Makes sure the user selects a question and the userId exists
-    if (userId && selectedQuestion !== "Select question") {
+    // Makes sure the user selects a question and the email exists
+    if (email && selectedQuestion !== "Select question") {
       // Hash the user's answer for improved security
       const hashedAnswer = await bcrypt.hash(data.answer, 7);
       const fieldData = { question: selectedQuestion, answer: hashedAnswer };
       // Update user's data
       const updateUser = await addNewUserField({
-        userId,
+        email,
+        accountType,
         newFieldName: "securityQuestion",
         fieldData,
       });

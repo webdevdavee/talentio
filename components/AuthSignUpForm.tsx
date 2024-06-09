@@ -5,7 +5,6 @@ import InputBox2 from "./InputBox2";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import Image from "next/image";
-import { createUser } from "@/database/actions/user.action";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import PasswordInput from "./PasswordInput";
@@ -13,6 +12,7 @@ import Loader2 from "./Loader2";
 import { AuthSignUpFormSchema, TAuthSignUpFormSchema } from "@/lib/zod/authZod";
 import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { createUser } from "@/database/actions/users.actions";
 
 const AuthSignUpForm = () => {
   const router = useRouter();

@@ -1,15 +1,16 @@
 import { Schema, model, models } from "mongoose";
 
-const UserSchema = new Schema(
+const UsersSchema = new Schema(
   {
-    name: { type: String, required: true, unique: true },
+    userId: { type: String },
+    name: { type: String, required: true },
     email: {
       type: String,
       required: true,
       unique: true,
     },
-    password: { type: String },
     image: { type: String },
+    password: { type: String },
     accountType: { type: String },
     securityQuestion: { question: { type: String }, answer: { type: String } },
     provider: { type: String },
@@ -17,6 +18,6 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-const User = models.User || model("User", UserSchema);
+const Users = models.Users || model("Users", UsersSchema);
 
-export default User;
+export default Users;

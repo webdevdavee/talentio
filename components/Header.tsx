@@ -53,7 +53,7 @@ const Header = () => {
                 Login
               </Link>
               <Link
-                href="/sign-up"
+                href="/onboarding"
                 className="px-4 py-2 rounded bg-primary text-white"
               >
                 Sign Up

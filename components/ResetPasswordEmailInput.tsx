@@ -6,7 +6,7 @@ import {
   TRecoverAccountEmailsSchemaSchema,
 } from "@/lib/zod/authZod";
 import Loader2 from "./Loader2";
-import { findByEmail } from "@/database/actions/user.action";
+import { findByEmail } from "@/database/actions/users.actions";
 
 type ResetPasswordEmailInputProps = {
   moveToResetPasword: boolean;

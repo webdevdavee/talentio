@@ -8,14 +8,14 @@ import TextArea from "./TextArea";
 import { useState } from "react";
 import ImageUploader from "./ImageUploader";
 import Loader2 from "./Loader2";
-import ListInput from "./ListInput";
 import { useUploadThing } from "@/lib/utils/uploadthing";
+import DropdownListInput from "./DropdownListInput";
+import { industries } from "@/constants";
 
 type CompanySignupStep2Props = {
   nextStep: () => void;
   prevStep: () => void;
   updateFormData: (newData: any) => void;
-  error: string | undefined;
   setError: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
@@ -23,11 +23,12 @@ const CompanySignupStep2 = ({
   nextStep,
   prevStep,
   updateFormData,
-  error,
   setError,
 }: CompanySignupStep2Props) => {
   const [files, setFiles] = useState<File[]>([]);
   const [industry, setIndustry] = useState<string[]>([]);
+  const [industryError, setIndustryError] = useState<string>("");
+  const [logoError, setLogoError] = useState("");
 
   const {
     control,
@@ -42,6 +43,21 @@ const CompanySignupStep2 = ({
   const { startUpload } = useUploadThing("imageUploader");
 
   const onSubmit = async (data: TCompanySignUpFormSchema2) => {
+    setIndustryError("");
+    setLogoError("");
+
+    // Check if industry was provided, if not throw an error and break the onSubmit function
+    if (industry.length < 1) {
+      setIndustryError("Required");
+      return;
+    }
+
+    // Check if logo was provided, if not throw an error and break the onSubmit function
+    if (!data.logo) {
+      setLogoError("Logo is Required");
+      return;
+    }
+
     // Initialize the URL for the featured image.
     let uploadedImageUrl = data.logo;
 
@@ -51,6 +67,7 @@ const CompanySignupStep2 = ({
 
       // If the upload fails, exit the function early.
       if (!uploadedImages) {
+        setError("Logo upload failed.");
         return;
       }
 
@@ -68,15 +85,19 @@ const CompanySignupStep2 = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-4"
+      className="w-full flex flex-col gap-4 mt-10"
     >
-      <ListInput
-        label="Industry"
-        data={industry}
-        setData={setIndustry}
-        error={error}
-        setError={setError}
-      />
+      <div>
+        <DropdownListInput
+          dropdownData={industries.map((industry) => industry.industry)}
+          data={industry}
+          setData={setIndustry}
+          label="Industry"
+          secondaryText="Select your industry"
+          required
+        />
+        <p className="text-red-500">{industryError}</p>
+      </div>
       <TextArea
         inputRegister={register("about")}
         label="About"
@@ -88,19 +109,22 @@ const CompanySignupStep2 = ({
           errors.about && <p className="text-red-500">{errors.about.message}</p>
         }
       />
-      <Controller
-        name="logo"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <ImageUploader
-            type="big"
-            onFieldChange={field.onChange}
-            imageUrl={field.value}
-            setFiles={setFiles}
-          />
-        )}
-      />
+      <div>
+        <Controller
+          name="logo"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <ImageUploader
+              type="big"
+              onFieldChange={field.onChange}
+              imageUrl={field.value}
+              setFiles={setFiles}
+            />
+          )}
+        />
+        <p className="text-red-500">{logoError}</p>
+      </div>
       <button
         type="submit"
         className={`w-full p-3 text-white transition duration-150 ${

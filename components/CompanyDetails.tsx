@@ -39,8 +39,10 @@ const CompanyDetails = ({ company }: CompanyDetailsProps) => {
             <h3 className="text-2xl font-semibold">Contact</h3>
             <span className="flex gap-4 flex-wrap">
               {company.contact.map((contact, index) => {
-                // Extract the platform name (e.g., LinkedIn, Facebook, etc.)
-                const platform = contact.split(".")[0];
+                // Extract the platform name (e.g. LinkedIn, Facebook, etc.)
+                const platform = contact
+                  .replace(/^(?:https?:\/\/)?(?:www\.)?/i, "")
+                  .split(".")[0];
 
                 // Get the corresponding logo filename from the mapping
                 const logo = socialsIconPaths[platform];

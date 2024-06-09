@@ -6,10 +6,14 @@ import CompaniesList from "./CompaniesList";
 import { industries } from "@/constants";
 
 type CompanyIndustryProps = {
+  pageType?: string;
   companiesParams: URLSearchParams;
 };
 
-const CompanyIndustry = ({ companiesParams }: CompanyIndustryProps) => {
+const CompanyIndustry = ({
+  pageType,
+  companiesParams,
+}: CompanyIndustryProps) => {
   const [showLoader, setShowLoader] = useState(false);
 
   // Array to hold the companies gotten from the specific or selected industry
@@ -59,7 +63,9 @@ const CompanyIndustry = ({ companiesParams }: CompanyIndustryProps) => {
   };
 
   return (
-    <section className="w-full px-16 mt-8 py-8 bg-slate-50">
+    <section
+      className={`w-full px-16 mt-8 py-8 bg-slate-50 ${pageType && "px-8"}`}
+    >
       <h1 className="text-3xl font-bold">Companies by Industry</h1>
       <CompaniesList
         type="from_industry"

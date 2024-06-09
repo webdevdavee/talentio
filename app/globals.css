@@ -135,3 +135,11 @@ input[type="password"]::-ms-reveal {
     letter-spacing: 0.2em; /* Space between characters */
   }
 }
+
+table tbody tr:nth-child(odd) {
+  background-color: #f7f7f7; /* This is lighter gray */
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #e7e7e7; /* This is darker gray */
+}

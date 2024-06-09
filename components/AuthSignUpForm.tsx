@@ -12,7 +12,7 @@ import Loader2 from "./Loader2";
 import { AuthSignUpFormSchema, TAuthSignUpFormSchema } from "@/lib/zod/authZod";
 import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { createUser } from "@/database/actions/users.actions";
+import { createUser } from "@/database/actions/individual.action";
 
 const AuthSignUpForm = () => {
   const router = useRouter();

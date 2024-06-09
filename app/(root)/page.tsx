@@ -4,8 +4,13 @@ import Hero from "@/components/Hero";
 import FeaturedJobs from "@/components/FeaturedJobs";
 import SignUpBanner from "@/components/SignUpBanner";
 import LatestJobs from "@/components/LatestJobs";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
+  const session = await auth();
+  if (session?.user.accountType === "company") redirect("/company/dashboard");
+
   return (
     <section className="w-full">
       <Hero />

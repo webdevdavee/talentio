@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import InputBox2 from "./InputBox2";
 import Loader2 from "./Loader2";
 import { useRouter } from "next/navigation";
-import { createCompany } from "@/database/actions/users.actions";
+import { createCompany } from "@/database/actions/company.actions";
 
 type Step1 = {
   size: string;

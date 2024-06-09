@@ -4,6 +4,8 @@ import {
 } from "@/database/actions/company.actions";
 import { Metadata } from "next";
 import CompanyDetails from "@/components/CompanyDetails";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 type Params = {
   params: {
@@ -22,6 +24,8 @@ export async function generateMetadata({
 }
 
 const page = async ({ params: { id } }: Params) => {
+  const session = await auth();
+  if (session?.user.accountType === "company") redirect("/company/dashboard");
   const company = await getCompanyById(id);
   return (
     <section className="px-16 my-8">

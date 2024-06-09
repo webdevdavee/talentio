@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import Companies from "@/components/Companies";
-import SubHero from "@/components/SubHero";
+import DashboardCompaniesHero from "@/components/dashboard/DashboardCompaniesHero";
 import {
   getCompanies,
   getArrayPropertyValuesFrequency,
@@ -9,9 +9,11 @@ import { getUniquePropertyValue } from "@/database/actions/job.actions";
 import { redirect } from "next/navigation";
 
 export async function generateMetadata() {
+  const session = await auth();
+
   return {
-    title: "Talentio - Find companies",
-    description: "Find your dream company",
+    title: `Companies - ${session?.user.name}`,
+    description: "Find the company that suit your skills",
   };
 }
 
@@ -31,8 +33,8 @@ const page = async ({ searchParams }: SearchParamProps) => {
   if (session?.user.accountType === "company") redirect("/company/dashboard");
 
   return (
-    <section>
-      <SubHero
+    <section className="px-8">
+      <DashboardCompaniesHero
         data={listOfCompaniesFromJobs}
         title="Find your"
         breakTitle="dream companies"
@@ -43,6 +45,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
         type="companies"
       />
       <Companies
+        pageType="dashboard"
         companies={companies}
         page={page}
         industryFrequency={industryFrequency}

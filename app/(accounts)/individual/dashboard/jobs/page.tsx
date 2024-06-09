@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import Jobs from "@/components/Jobs";
-import SubHero from "@/components/SubHero";
+import DashboardJobsHero from "@/components/dashboard/DashboardJobsHero";
 import {
   getJobs,
   getJobsPropertyValueCount,
@@ -9,8 +9,10 @@ import {
 import { redirect } from "next/navigation";
 
 export async function generateMetadata() {
+  const session = await auth();
+
   return {
-    title: "Talentio - Find jobs",
+    title: `Dashboard - ${session?.user.name}`,
     description: "Find jobs that suit your skills",
   };
 }
@@ -44,8 +46,8 @@ const page = async ({ searchParams }: SearchParamProps) => {
   if (session?.user.accountType === "company") redirect("/company/dashboard");
 
   return (
-    <section>
-      <SubHero
+    <section className="px-8">
+      <DashboardJobsHero
         data={listOfLocationsFromJobs}
         title="Find your"
         breakTitle="dream job."
@@ -56,6 +58,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
         type="jobs"
       />
       <Jobs
+        pageType="dashboard"
         fetchedJobs={fetchedJobs}
         page={page}
         typeFrequency={typeFrequency}

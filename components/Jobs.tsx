@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { countPropertyValues, handleError } from "@/lib/utils";
 
 type JobsProps = {
+  pageType?: string;
   fetchedJobs: GetJob | undefined;
   page: number;
   typeFrequency: JobsFilterFrequency[];
@@ -17,6 +18,7 @@ type JobsProps = {
 };
 
 const Jobs = ({
+  pageType,
   fetchedJobs,
   page,
   typeFrequency,
@@ -105,7 +107,11 @@ const Jobs = ({
   }, [page, areFiltersEmpty, value1, value2]);
 
   return (
-    <div className="w-full flex items-start justify-start gap-8 p-16">
+    <div
+      className={`w-full flex items-start justify-start gap-8 p-16 ${
+        pageType && "px-0 py-10"
+      }`}
+    >
       <JobsFilterBar
         setJobsData={setJobsData}
         typeFrequency={typeFrequency}

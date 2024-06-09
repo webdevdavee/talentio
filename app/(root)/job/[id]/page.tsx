@@ -1,7 +1,9 @@
+import { auth } from "@/auth";
 import JobDetails from "@/components/JobDetails";
 import { getCompanyByName } from "@/database/actions/company.actions";
 import { getJobById, getJobs } from "@/database/actions/job.actions";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 type Params = {
   params: {
@@ -20,6 +22,8 @@ export async function generateMetadata({
 }
 
 const page = async ({ params: { id } }: Params) => {
+  const session = await auth();
+  if (session?.user.accountType === "company") redirect("/company/dashboard");
   const job: Job = await getJobById(id);
   const company: Company[] = await getCompanyByName(job.company);
   return (

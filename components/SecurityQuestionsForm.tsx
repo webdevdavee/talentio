@@ -12,7 +12,7 @@ import {
 import DropdownButton from "./DropdownButton";
 import DropdownList from "./DropdownList";
 import useClickOutside from "@/hooks/useClickOutside";
-import { addNewUserField } from "@/database/actions/individual.action";
+import { addNewUserField } from "@/database/actions/users.actions";
 import { useRouter } from "next/navigation";
 import bcrypt from "bcryptjs";
 

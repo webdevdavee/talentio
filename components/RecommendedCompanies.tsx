@@ -1,12 +1,16 @@
 import CompaniesList from "./CompaniesList";
 
 type RecommendedCompaniesProps = {
+  pageType?: string;
   companies: Company[] | undefined;
 };
 
-const RecommendedCompanies = ({ companies }: RecommendedCompaniesProps) => {
+const RecommendedCompanies = ({
+  pageType,
+  companies,
+}: RecommendedCompaniesProps) => {
   return (
-    <section className="w-full px-16 mt-16">
+    <section className={`w-full px-16 mt-16 ${pageType && "px-0"}`}>
       <div className="flex flex-col items-start gap-1 mb-10">
         <h1 className="text-3xl font-bold">
           Recommended <span className="text-primary">Companies</span>

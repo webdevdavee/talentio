@@ -25,7 +25,11 @@ const ProfileDialogBox = ({ session }: ProfileDialogBoxProps) => {
           </span>
         </div>
         <Link
-          href="/individual/dashboard"
+          href={
+            session.user.accountType === "individual"
+              ? "/individual/dashboard"
+              : "/company/dashboard"
+          }
           className="p-2 hover:transition hover:bg-gray-100"
         >
           Go to dashboard

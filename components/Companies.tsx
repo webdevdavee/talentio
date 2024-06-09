@@ -11,12 +11,18 @@ import CompaniesFilterBar from "./CompaniesFilterBar";
 import CompaniesFromFilter from "./CompaniesFromFilter";
 
 type CompaniesProps = {
+  pageType?: string;
   companies: GetCompanies | undefined;
   page: number;
   industryFrequency: PropertyValueFrequency[];
 };
 
-const Companies = ({ companies, page, industryFrequency }: CompaniesProps) => {
+const Companies = ({
+  pageType,
+  companies,
+  page,
+  industryFrequency,
+}: CompaniesProps) => {
   const searchParams = useSearchParams();
   const companiesParams = new URLSearchParams(searchParams.toString());
 
@@ -87,7 +93,11 @@ const Companies = ({ companies, page, industryFrequency }: CompaniesProps) => {
   return (
     <>
       {industry.length > 0 || search.length > 0 ? (
-        <div className="w-full flex items-start justify-start gap-8 p-16">
+        <div
+          className={`w-full flex items-start justify-start gap-8 p-16 ${
+            pageType && "px-0 py-10"
+          }`}
+        >
           <CompaniesFilterBar
             setCompaniesData={setCompaniesData}
             industryFrequency={industryFrequency}
@@ -103,11 +113,17 @@ const Companies = ({ companies, page, industryFrequency }: CompaniesProps) => {
         </div>
       ) : (
         <div>
-          <RecommendedCompanies companies={companies?.companies} />
-          <div className="px-16">
+          <RecommendedCompanies
+            pageType={pageType}
+            companies={companies?.companies}
+          />
+          <div className={`px-16 ${pageType && "px-0"}`}>
             <SignUpBanner />
           </div>
-          <CompanyIndustry companiesParams={companiesParams} />
+          <CompanyIndustry
+            pageType={pageType}
+            companiesParams={companiesParams}
+          />
         </div>
       )}
     </>

@@ -7,6 +7,85 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { CompanySignUpFormSchema } from "@/lib/zod/authZod";
 import Users from "../models/users.model";
+import { v4 as uuidv4 } from "uuid";
+
+export const createCompany = async (
+  data: z.infer<typeof CompanySignUpFormSchema>
+) => {
+  try {
+    await connectToDatabase();
+
+    const validatedFields = CompanySignUpFormSchema.safeParse(data);
+    if (!validatedFields.success) {
+      return { error: "Invalid credentials." };
+    }
+
+    const {
+      name,
+      email,
+      password,
+      size,
+      industry,
+      about,
+      logo,
+      twitter,
+      facebook,
+      linkedin,
+      mail,
+    } = validatedFields.data;
+
+    const hashedPassword = await bcrypt.hash(password, 7);
+
+    // Check for duplicate email or name
+    const existingCompany = await Companies.findOne({
+      $or: [{ email: email }, { company: name }],
+    });
+
+    if (existingCompany) {
+      return { error: "Name or email already in use." };
+    }
+
+    // Format size with commas
+    const formattedSize = formatNumberWithCommas(size);
+
+    // Create a user or company id
+    const userId = uuidv4();
+
+    // Construct the company
+    const company = {
+      userId,
+      company: name,
+      email,
+      about,
+      password: hashedPassword,
+      logo,
+      industry,
+      company_size: `${formattedSize}+ employees`,
+      contact: [twitter, facebook, linkedin, mail],
+      accountType: "company",
+      provider: "credentials",
+    };
+
+    // Save company in all users collection and companies collection
+    await Promise.all([
+      Users.create({
+        userId,
+        name,
+        email,
+        password: hashedPassword,
+        image: logo,
+        accountType: "company",
+        provider: "credentials",
+      }),
+      Companies.create(company),
+    ]);
+
+    console.log("Company created!");
+  } catch (error: any) {
+    console.error(error);
+    handleError(error);
+  }
+};
 
 export const getCompanies = async (page = 1, limit = 10) => {
   try {

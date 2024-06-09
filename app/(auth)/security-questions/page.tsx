@@ -8,7 +8,11 @@ const page = async () => {
   const user: AllUsers = await findByEmail(session?.user.email as string);
 
   if (session?.user.provider !== "credentials" || user.securityQuestion)
-    redirect("/individual/dashboard");
+    redirect(
+      session?.user.accountType === "individual"
+        ? "/individual/dashboard"
+        : "/company/dashboard"
+    );
 
   return (
     <section>

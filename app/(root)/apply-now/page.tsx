@@ -1,7 +1,13 @@
 import { auth } from "@/auth";
 import JobApplicationForm from "@/components/JobApplicationForm";
 import { redirect } from "next/navigation";
-import React from "react";
+
+export async function generateMetadata() {
+  return {
+    title: "Talentio - Apply to job",
+    description: "Send your application.",
+  };
+}
 
 const page = async () => {
   const session = await auth();

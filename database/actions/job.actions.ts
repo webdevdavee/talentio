@@ -12,7 +12,6 @@ export const getJobs = async (page = 1, limit = 10) => {
     const skips = limit * (page - 1);
 
     const jobs = await Jobs.find({})
-      .find({})
       .skip(skips >= 0 ? skips : 0)
       .limit(limit > 0 ? limit : 10);
 

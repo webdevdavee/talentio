@@ -18,7 +18,7 @@ const page = async () => {
 
   return (
     <section className="px-8 flex flex-col gap-6">
-      <TableUtitlity />
+      <TableUtitlity title="Total applicants:" />
       <ApplicationsTable />
     </section>
   );

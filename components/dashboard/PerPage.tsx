@@ -1,12 +1,11 @@
 import Image from "next/image";
-import { SetStateAction } from "react";
 
 type PerPageProps = {
   perPage: number;
-  setPerPage: (value: SetStateAction<number>) => void;
+  handlePerPage: (e: any) => void;
 };
 
-const PerPage = ({ perPage, setPerPage }: PerPageProps) => {
+const PerPage = ({ perPage, handlePerPage }: PerPageProps) => {
   return (
     <section className="w-[10rem] flex item-center justify-center gap-3">
       <p className="w-fit flex items-center justify-center text-sm">
@@ -24,7 +23,7 @@ const PerPage = ({ perPage, setPerPage }: PerPageProps) => {
           className="w-full bg-transparent px-1 border-[1px] border-gray-300 focus:outline-none appearance-none cursor-pointer"
           name="options"
           value={perPage}
-          onChange={(e) => setPerPage(parseInt(e.target.value, 10))}
+          onChange={(e) => handlePerPage(e)}
         >
           <option>5</option>
           <option>10</option>

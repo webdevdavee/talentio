@@ -58,6 +58,7 @@ type Job = {
   salary: string;
   company: string;
   capacity: number;
+  applied: number;
   companylogo: string;
   long_description: string;
 };
@@ -203,4 +204,22 @@ type updateUserFieldParams = {
   userId: string;
   field: string;
   fieldData: any;
+};
+
+type UserSavedJobs = {
+  userId: string;
+  jobId: string;
+};
+
+type Application = {
+  title: string;
+  type: string;
+  location: string;
+  date: string;
+  level: string;
+  salary: string;
+  company: string;
+  companylogo: string;
+  createdAt: Date;
+  updatedAt: Date;
 };

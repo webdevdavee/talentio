@@ -20,7 +20,7 @@ const DashboardHeader = () => {
             ? "Jobs"
             : pathname === "/individual/dashboard/companies"
             ? "Companies"
-            : "/individual/dashboard/settings"}
+            : "Settings"}
         </h1>
         <div className="flex items-center gap-4">
           <button

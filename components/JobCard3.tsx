@@ -43,8 +43,8 @@ const JobCard3 = ({ job, layout }: JobCard3Props) => {
             Apply
           </button>
           <p className={`text-sm ${layout === "column" && "text-center mt-4"}`}>
-            <span className="font-semibold">5 applied</span> of {job.capacity}{" "}
-            capacity
+            <span className="font-semibold">{job.applied} applied</span> of{" "}
+            {job.capacity} capacity
           </p>
         </div>
       </div>

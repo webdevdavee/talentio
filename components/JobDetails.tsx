@@ -3,6 +3,7 @@ import DOMPurify from "isomorphic-dompurify";
 import JobDetailsCompany from "./JobDetailsCompany";
 import { getUserSavedJobs } from "@/database/actions/savedjobs.actions";
 import { auth } from "@/auth";
+import { getUserApplications } from "@/database/actions/applications.actions";
 
 type JobProps = {
   job: Job;
@@ -17,8 +18,14 @@ const JobDetails = async ({ job, company }: JobProps) => {
   );
 
   // Check if user has saved jobs
-  const userSavedJobs: { userId: string; jobId: string }[] =
-    await getUserSavedJobs(session?.user.id);
+  const userSavedJobs:
+    | {
+        jobs: any;
+        totalPages: number;
+      }
+    | undefined = await getUserSavedJobs(session?.user.id);
+
+  const getUserJobApplications = await getUserApplications(session?.user.id);
 
   return (
     <section>
@@ -26,7 +33,12 @@ const JobDetails = async ({ job, company }: JobProps) => {
         <div className="w-[70%]">
           <JobDetailHeader
             job={job}
-            userSavedJobs={userSavedJobs ? userSavedJobs : undefined}
+            userSavedJobs={userSavedJobs ? userSavedJobs.jobs : undefined}
+            userJobApplications={
+              getUserJobApplications
+                ? getUserJobApplications.applications
+                : undefined
+            }
           />
           <div
             className="mt-4"

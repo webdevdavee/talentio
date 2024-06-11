@@ -1,31 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import ApplicationsTable from "./ApplicationsTable";
 import TableUtitlity from "./TableUtitlity";
-import SavedJobsTable from "./SavedJobsTable";
 import Pagination from "../Pagination";
 
-type SavedJobsWrapperProps = {
+type ApplicationsWrapperProps = {
   jobsDetails: Job[];
   page: number;
   totalPages: number | undefined;
   perPage: number;
 };
 
-const SavedJobsWrapper = ({
+const ApplicationsWrapper = ({
   jobsDetails,
   page,
   totalPages,
   perPage,
-}: SavedJobsWrapperProps) => {
+}: ApplicationsWrapperProps) => {
   const [query, setQuery] = useState("");
+  const [jobs, setJobs] = useState(jobsDetails);
 
   // Create an array based on the search input
-  const filteredJobSearch = jobsDetails?.filter(
+  const filteredJobSearch = jobs?.filter(
     (job) =>
       job.title.toLowerCase().includes(query.toLowerCase()) ||
-      job.type.toLowerCase().includes(query.toLowerCase()) ||
-      job.level.toLowerCase().includes(query.toLowerCase())
+      job.company.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
@@ -33,14 +33,14 @@ const SavedJobsWrapper = ({
       <TableUtitlity
         query={query}
         setQuery={setQuery}
-        title="Total saved jobs:"
+        title="Total applications:"
         filteredSearch={filteredJobSearch}
         perPage={perPage}
       />
-      <SavedJobsTable jobs={filteredJobSearch} />
+      <ApplicationsTable jobs={filteredJobSearch} setJobs={setJobs} />
       <Pagination page={page} totalPages={totalPages} />
     </section>
   );
 };
 
-export default SavedJobsWrapper;
+export default ApplicationsWrapper;

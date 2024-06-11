@@ -82,7 +82,6 @@ export const createCompany = async (
 
     console.log("Company created!");
   } catch (error: any) {
-    console.error(error);
     handleError(error);
   }
 };

@@ -8,7 +8,7 @@ import { createURL } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type JobDetailHeaderProps = {
   job: Job;
@@ -18,18 +18,20 @@ type JobDetailHeaderProps = {
         jobId: string;
       }[]
     | undefined;
+  userJobApplications: UserApplication[];
 };
 
-const JobDetailHeader = ({ job, userSavedJobs }: JobDetailHeaderProps) => {
+const JobDetailHeader = ({
+  job,
+  userSavedJobs,
+  userJobApplications,
+}: JobDetailHeaderProps) => {
   const { data: session } = useSession();
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
   const jobToApplyUrlParam = new URLSearchParams(searchParams.toString());
-
-  // If job is saved by the user
-  const [jobSaved, setJobSaved] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,14 +49,14 @@ const JobDetailHeader = ({ job, userSavedJobs }: JobDetailHeaderProps) => {
   };
 
   // Check if job is saved by user
-  const isJobSaved = userSavedJobs?.find((item) => {
+  const savedJob = userSavedJobs?.find((item) => {
     return item.jobId === job._id;
   });
 
   const saveAJob = async () => {
     // If user is logged in, allow them to save or remove saved job, else take them to sign in
     if (session) {
-      if (isJobSaved) {
+      if (savedJob) {
         setIsLoading(true);
         await removeUserSavedJob(session.user.id, job._id, pathname);
         setIsLoading(false);
@@ -71,13 +73,10 @@ const JobDetailHeader = ({ job, userSavedJobs }: JobDetailHeaderProps) => {
     }
   };
 
-  useEffect(() => {
-    if (isJobSaved) {
-      setJobSaved(true);
-    } else {
-      setJobSaved(false);
-    }
-  }, [isJobSaved]);
+  // Check if user has applied to job
+  const appliedJob = userJobApplications?.find((item) => {
+    return item.jobId === job._id;
+  });
 
   return (
     <section className="flex flex-col gap-3 border-b border-b-gray-200 pb-3">
@@ -108,7 +107,7 @@ const JobDetailHeader = ({ job, userSavedJobs }: JobDetailHeaderProps) => {
             </span>
           </span>
         </span>
-        <div className="flex items-start gap-8 cursor-pointer">
+        <div className="flex items-start gap-8">
           {isLoading ? (
             <Image
               className="animate-spin"
@@ -117,13 +116,14 @@ const JobDetailHeader = ({ job, userSavedJobs }: JobDetailHeaderProps) => {
               src="/loading-spinner.svg"
               alt="wishlist"
             />
-          ) : jobSaved ? (
+          ) : savedJob ? (
             <Image
               src="/love-filled.svg"
               width={25}
               height={25}
               alt="save-job"
               onClick={saveAJob}
+              className="cursor-pointer"
             />
           ) : (
             <Image
@@ -132,19 +132,26 @@ const JobDetailHeader = ({ job, userSavedJobs }: JobDetailHeaderProps) => {
               height={25}
               alt="save-job"
               onClick={saveAJob}
+              className="cursor-pointer"
             />
           )}
           <div className="flex flex-col items-center gap-1">
             <button
               type="button"
               className={`text-white text-sm px-6 py-2 ${
-                job.applied === job.capacity ? "bg-gray-400" : "bg-primary"
+                job.applied === job.capacity || appliedJob?.jobId === job._id
+                  ? "bg-[gray]"
+                  : "bg-primary"
               }`}
               onClick={applyToJob}
-              disabled={job.applied === job.capacity}
+              disabled={
+                job.applied === job.capacity || appliedJob?.jobId === job._id
+              }
             >
               {job.applied === job.capacity
                 ? "Max applicants reached"
+                : appliedJob
+                ? "Applied"
                 : "Apply now"}
             </button>
             <p className="text-sm font-medium">

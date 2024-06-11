@@ -10,7 +10,7 @@ type TableUtitlityProps = {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   title: string;
-  filteredJobSearch?: Job[];
+  filteredSearch?: Job[];
   perPage: number;
 };
 
@@ -18,7 +18,7 @@ const TableUtitlity = ({
   query,
   setQuery,
   title,
-  filteredJobSearch,
+  filteredSearch,
   perPage,
 }: TableUtitlityProps) => {
   const pathname = usePathname();
@@ -40,7 +40,7 @@ const TableUtitlity = ({
   return (
     <div className="flex items-center justify-between">
       <h2 className="text-xl font-semibold">
-        {title} {filteredJobSearch?.length}
+        {title} {filteredSearch?.length}
       </h2>
       <div className="flex items-center gap-8">
         <PerPage perPage={perPage} handlePerPage={handlePerPage} />

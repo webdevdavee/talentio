@@ -1,5 +1,10 @@
+"use client";
+
+import { getUserApplications } from "@/database/actions/applications.actions";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 type JobCard3Props = {
   job: Job;
@@ -7,6 +12,27 @@ type JobCard3Props = {
 };
 
 const JobCard3 = ({ job, layout }: JobCard3Props) => {
+  const { data: session } = useSession();
+
+  const [hasUserApplied, setHasUserApplied] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const getUserJobApplications = await getUserApplications(
+        session?.user.id
+      );
+      const userApplications: UserApplication[] =
+        getUserJobApplications?.applications;
+
+      // Check if user has applied to job
+      const appliedJob = userApplications?.find((item) => {
+        return item.jobId === job._id;
+      });
+
+      if (appliedJob) setHasUserApplied(true);
+    })();
+  }, []);
+
   return (
     <Link
       href={`/job/${job._id}`}
@@ -38,9 +64,12 @@ const JobCard3 = ({ job, layout }: JobCard3Props) => {
         <div className="flex flex-col gap-2">
           <button
             type="button"
-            className="w-full h-fit bg-primary px-3 py-2 text-white"
+            className={`w-full h-fit bg-primary px-3 py-2 text-white ${
+              hasUserApplied ? "bg-[gray]" : "bg-primary"
+            }`}
+            disabled={hasUserApplied}
           >
-            Apply
+            {hasUserApplied ? "Applied" : "Apply"}
           </button>
           <p className={`text-sm ${layout === "column" && "text-center mt-4"}`}>
             <span className="font-semibold">{job.applied} applied</span> of{" "}

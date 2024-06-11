@@ -1,16 +1,19 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ProfileDialogBox from "./ProfileDialogBox";
 import { useRef, useState } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
+import { Session } from "next-auth";
 
-const Header = () => {
+type HeaderProps = {
+  session: Session | null;
+};
+
+const Header = ({ session }: HeaderProps) => {
   const pathname = usePathname();
-  const { data: session } = useSession();
 
   const profileDialogRef = useRef<HTMLDivElement>(null);
   const [showProfileDialogBox, setShowProfileDialogBox] = useState(false);
@@ -21,7 +24,7 @@ const Header = () => {
   });
 
   return (
-    <header className="w-full bg-white px-16 py-4 border-b border-b-gray-200">
+    <header className="w-full bg-white px-16 py-4 border-b border-b-gray-200 sticky top-0 z-30 drop-shadow-sm">
       <nav className="w-full">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-16">

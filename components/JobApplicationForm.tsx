@@ -6,32 +6,39 @@ import { useForm, Controller } from "react-hook-form";
 import InputBox from "./InputBox";
 import TextArea from "./TextArea";
 import FileUploader from "./FileUploader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUploadThing } from "@/lib/utils/uploadthing";
-import { useSearchParams } from "next/navigation";
-import { getJobById } from "@/database/actions/job.actions";
 import Link from "next/link";
+import { createApplication } from "@/database/actions/applications.actions";
+import { useRouter } from "next/navigation";
+import Loader2 from "./Loader2";
 
-const JobApplicationForm = () => {
-  const searchParams = useSearchParams();
+type JobApplicationFormProps = {
+  job: Job;
+  userId: string | undefined;
+};
 
+const JobApplicationForm = ({ job, userId }: JobApplicationFormProps) => {
   const {
     control,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm<TJobApplicationFormSchema>({
     resolver: zodResolver(jobApplicationFormSchema),
   });
 
+  const router = useRouter();
+
+  const [error, setError] = useState<string | undefined>("");
   const [files, setFiles] = useState<File[]>([]);
   const { startUpload } = useUploadThing("fileUploader");
-  const [job, setJob] = useState<Job>();
 
   const onSubmit = async (data: TJobApplicationFormSchema) => {
+    setError("");
     // Initialize the URL for the resume.
-    let uploadedImageUrl = data.resume;
+    let uploadedFileUrl = data.resume;
 
     try {
       // If there are files to upload, start the upload process.
@@ -41,28 +48,33 @@ const JobApplicationForm = () => {
         if (!uploadedPDF) {
           return;
         }
-        // Update the featured image URL with the first uploaded image's URL.
-        uploadedImageUrl = uploadedPDF[0].url;
+        // Update the featured File URL with the first uploaded File's URL.
+        uploadedFileUrl = uploadedPDF[0].url;
       }
+      // Create user application
+      const response = await createApplication(
+        {
+          ...data,
+          resume: uploadedFileUrl,
+        },
+        job._id,
+        userId as string
+      );
+      // If no errors, take user to their dashboard to see their application
+      if (!response?.error) {
+        reset();
+        router.push("/individual/dashboard");
+      }
+      setError(response?.error);
     } catch (error) {
       console.log(error);
     }
     reset();
   };
 
-  const jobToApplyUrlParam = new URLSearchParams(searchParams.toString());
-  const jobToApply = jobToApplyUrlParam.get("job");
-
-  // Fetch the job user has choosen to apply to
-  useEffect(() => {
-    (async () => {
-      const job = await getJobById(jobToApply as string);
-      setJob(job);
-    })();
-  }, [jobToApply]);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-[50%] bg-white">
+      {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
       {job ? (
         <h1 className="mb-10 w-full text-center text-xl font-semibold">
           Apply to{" "}
@@ -170,9 +182,16 @@ const JobApplicationForm = () => {
         />
         <button
           type="submit"
-          className="w-full px-4 py-3 bg-primary text-white"
+          className={`w-full p-3 text-white transition duration-150 ${
+            isSubmitting ? "bg-gray-200" : "bg-primary transition duration-150"
+          }`}
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? (
+            <Loader2 className="second-loader" />
+          ) : (
+            <p>Submit Application</p>
+          )}
         </button>
       </div>
     </form>

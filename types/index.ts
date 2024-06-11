@@ -61,6 +61,7 @@ type Job = {
   applied: number;
   companylogo: string;
   long_description: string;
+  applicationDate?: Date;
 };
 
 type Category = {
@@ -211,15 +212,15 @@ type UserSavedJobs = {
   jobId: string;
 };
 
-type Application = {
-  title: string;
-  type: string;
-  location: string;
-  date: string;
-  level: string;
-  salary: string;
-  company: string;
-  companylogo: string;
+type UserApplication = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  nationality: string;
+  coverletter: string;
+  resume: string;
+  jobId: string;
+  userId: string;
   createdAt: Date;
-  updatedAt: Date;
 };

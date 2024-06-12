@@ -89,15 +89,15 @@ export const getJobsPropertyValueCount = async (field: string) => {
 };
 
 // Function to handle the filtering
-export const handleJobFilter = async (
-  typeFilter?: string[],
-  categoryFilter?: string[],
-  levelFilter?: string[],
-  salaryFilter?: string[],
-  search?: string[],
+export const handleJobFilter = async ({
+  typeFilter,
+  categoryFilter,
+  levelFilter,
+  salaryFilter,
+  search,
   page = 1,
-  limit = 10
-) => {
+  limit = 10,
+}: HandleJobFilter) => {
   try {
     await connectToDatabase();
     // Build the query object based on the provided filters
@@ -212,55 +212,3 @@ export const getJobsByCompany = async (company: string) => {
     handleError(error);
   }
 };
-
-// export const searchJobFromInput = async (
-//   jobTitle: string,
-//   jobLocation: string,
-//   page = 1,
-//   limit = 10
-// ) => {
-//   try {
-//     await connectToDatabase();
-
-//     // Make a search pattern using special rules that ensure each word you’re looking for is included in the text.
-//     let jobTitleString = jobTitle.split(/\s+/);
-//     let pattern = jobTitleString.map((string) => `(?=.*${string})`).join("");
-
-//     let jobLocationString = jobLocation.split(/\s+/);
-//     let pattern2 = jobLocationString
-//       .map((string) => `(?=.*${string})`)
-//       .join("");
-
-//     // Calculate the number of documents to skip
-//     const skips = limit * (page - 1);
-
-//     const query = {
-//       $or: [
-//         {
-//           title: {
-//             $regex: pattern,
-//             $options: "i",
-//           },
-//         },
-//         {
-//           location: {
-//             $regex: pattern2,
-//             $options: "i",
-//           },
-//         },
-//       ],
-//     };
-
-//     const jobs = await Jobs.find(query)
-//       .skip(skips >= 0 ? skips : 0)
-//       .limit(limit > 0 ? limit : 10);
-
-//     // Get the total number of jobs
-//     const jobCount = await Jobs.find(query).countDocuments();
-//     const totalPages = Math.ceil(jobCount / limit);
-
-//     return { jobs: JSON.parse(JSON.stringify(jobs)), totalPages };
-//   } catch (error) {
-//     handleError(error);
-//   }
-// };

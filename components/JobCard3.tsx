@@ -17,21 +17,31 @@ const JobCard3 = ({ job, layout }: JobCard3Props) => {
   const [hasUserApplied, setHasUserApplied] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      const getUserJobApplications = await getUserApplications(
-        session?.user.id
-      );
-      const userApplications: UserApplication[] =
-        getUserJobApplications?.applications;
+    let isMounted = true;
 
-      // Check if user has applied to job
-      const appliedJob = userApplications?.find((item) => {
-        return item.jobId === job._id;
-      });
+    const fetchUserApplications = async () => {
+      try {
+        const getUserJobApplications = await getUserApplications(
+          session?.user.id
+        );
+        if (isMounted) {
+          const userApplications = getUserJobApplications?.applications || [];
+          const appliedJob = userApplications.find(
+            (item: any) => item.jobId === job._id
+          );
+          if (appliedJob) setHasUserApplied(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user applications:", error);
+      }
+    };
 
-      if (appliedJob) setHasUserApplied(true);
-    })();
-  }, []);
+    fetchUserApplications();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [getUserApplications, session?.user.id, job._id]);
 
   return (
     <Link

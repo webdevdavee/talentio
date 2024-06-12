@@ -165,6 +165,16 @@ type IndexSignature = {
   [key: string]: any;
 };
 
+type HandleJobFilter = {
+  typeFilter?: string[];
+  categoryFilter?: string[];
+  levelFilter?: string[];
+  salaryFilter?: string[];
+  search?: string[];
+  page?: number;
+  limit?: number;
+};
+
 type JobsFilterFrequency = {
   _id: string;
   count: number;

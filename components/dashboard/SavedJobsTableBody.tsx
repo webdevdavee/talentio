@@ -1,11 +1,30 @@
+import { useOverlayStore } from "@/lib/store/OverlayStore";
 import Image from "next/image";
 import Link from "next/link";
 
 type SavedJobsTableBodyProps = {
   jobs: Job[];
+  checkedItems: CheckedItems;
+  handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setSingleJobToBeDeleted: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >;
 };
 
-const SavedJobsTableBody = ({ jobs }: SavedJobsTableBodyProps) => {
+const SavedJobsTableBody = ({
+  jobs,
+  checkedItems,
+  handleCheckboxChange,
+  setShowDeleteModal,
+  setSingleJobToBeDeleted,
+}: SavedJobsTableBodyProps) => {
+  const openDeleteModal = (jobId: string) => {
+    useOverlayStore.setState({ overlay: true });
+    setShowDeleteModal(true);
+    setSingleJobToBeDeleted(jobId);
+  };
+
   return (
     <tbody className="border border-gray-300">
       {jobs.map((job) => (
@@ -14,6 +33,9 @@ const SavedJobsTableBody = ({ jobs }: SavedJobsTableBodyProps) => {
             <input
               className="flex w-5 h-5 rounded-lg border-[1px] border-solid border-gray-300 bg-white text-left"
               type="checkbox"
+              value={job._id}
+              checked={checkedItems[job._id] || false}
+              onChange={handleCheckboxChange}
             />
           </th>
           <td className="text-sm w-max p-3 underline">
@@ -37,13 +59,9 @@ const SavedJobsTableBody = ({ jobs }: SavedJobsTableBodyProps) => {
             </p>
           </td>
           <td className="text-sm w-max p-3">
-            <Image
-              src="/three-dots.svg"
-              width={20}
-              height={20}
-              alt="more-option"
-              className="cursor-pointer"
-            />
+            <button type="button" onClick={() => openDeleteModal(job._id)}>
+              <Image src="/trash.svg" width={20} height={20} alt="delete" />
+            </button>
           </td>
         </tr>
       ))}

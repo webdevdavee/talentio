@@ -143,3 +143,10 @@ table tbody tr:nth-child(odd) {
 table tbody tr:nth-child(even) {
   background-color: #e7e7e7; /* This is darker gray */
 }
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,3 +1,4 @@
+import Loader from "../Loader";
 import ApplicationsTableBody from "./ApplicationsTableBody";
 import ApplicationsTableHead from "./ApplicationsTableHead";
 
@@ -6,10 +7,11 @@ type ApplicationsTableBodyProps = {
   setJobs: React.Dispatch<React.SetStateAction<Job[]>>;
   checkedItems: CheckedItems;
   setCheckedItems: React.Dispatch<React.SetStateAction<CheckedItems>>;
-};
-
-type CheckedItems = {
-  [key: string]: boolean;
+  setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setSingleApplicationToBeDeleted: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >;
+  isLoading: boolean;
 };
 
 const ApplicationsTable = ({
@@ -17,6 +19,9 @@ const ApplicationsTable = ({
   setJobs,
   checkedItems,
   setCheckedItems,
+  setShowDeleteModal,
+  setSingleApplicationToBeDeleted,
+  isLoading,
 }: ApplicationsTableBodyProps) => {
   // Function to handle individual checkbox toggle
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,28 +65,42 @@ const ApplicationsTable = ({
 
   return (
     <section>
-      <table className="w-full">
-        <ApplicationsTableHead
-          jobs={jobs}
-          setJobs={setJobs}
-          checkedItems={checkedItems}
-          selectAll={selectAll}
-        />
-        {jobs && jobs.length > 0 && (
-          <ApplicationsTableBody
-            jobs={jobs}
-            checkedItems={checkedItems}
-            handleCheckboxChange={handleCheckboxChange}
-          />
-        )}
-      </table>
-      {!jobs ? (
-        <p className="w-full mt-10 text-center">You have no saved jobs</p>
+      {!isLoading ? (
+        <>
+          <table className="w-full">
+            <ApplicationsTableHead
+              jobs={jobs}
+              setJobs={setJobs}
+              checkedItems={checkedItems}
+              selectAll={selectAll}
+            />
+            {jobs && jobs.length > 0 && (
+              <ApplicationsTableBody
+                jobs={jobs}
+                checkedItems={checkedItems}
+                handleCheckboxChange={handleCheckboxChange}
+                setShowDeleteModal={setShowDeleteModal}
+                setSingleApplicationToBeDeleted={
+                  setSingleApplicationToBeDeleted
+                }
+              />
+            )}
+          </table>
+          {!jobs ? (
+            <p className="w-full mt-10 text-center">You have no applied jobs</p>
+          ) : (
+            jobs &&
+            jobs?.length <= 0 && (
+              <p className="w-full mt-10 text-center">
+                You have no applied jobs
+              </p>
+            )
+          )}
+        </>
       ) : (
-        jobs &&
-        jobs?.length <= 0 && (
-          <p className="w-full mt-10 text-center">You have no saved jobs</p>
-        )
+        <section className="h-[70%] flex items-center justify-center py-16">
+          <Loader className="loader" />
+        </section>
       )}
     </section>
   );

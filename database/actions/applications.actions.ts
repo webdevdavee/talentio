@@ -5,6 +5,7 @@ import { handleError } from "@/lib/utils";
 import Applications from "../models/applications.model";
 import { z } from "zod";
 import { jobApplicationFormSchema } from "@/lib/zod";
+import { revalidatePath } from "next/cache";
 
 export const createApplication = async (
   application: z.infer<typeof jobApplicationFormSchema>,
@@ -71,6 +72,27 @@ export const getUserApplicationByJobId = async (jobId: string) => {
     }
     return JSON.parse(JSON.stringify(application));
   } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const deleteApplication = async (
+  applications: { id: string }[],
+  path: string
+) => {
+  try {
+    await connectToDatabase();
+
+    // Construct an array of ids from products
+    const idsToDelete = applications.map((application) => application.id);
+
+    // Perform the deletion
+    await Applications.deleteMany({
+      jobId: { $in: idsToDelete },
+    });
+
+    revalidatePath(path);
+  } catch (error) {
     handleError(error);
   }
 };

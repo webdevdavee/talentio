@@ -1,3 +1,4 @@
+import { useOverlayStore } from "@/lib/store/OverlayStore";
 import { convertDateFormat } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,13 +7,25 @@ type ApplicationTableBodyProps = {
   jobs: Job[];
   checkedItems: CheckedItems;
   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setSingleApplicationToBeDeleted: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >;
 };
 
 const ApplicationsTableBody = ({
   jobs,
   checkedItems,
   handleCheckboxChange,
+  setShowDeleteModal,
+  setSingleApplicationToBeDeleted,
 }: ApplicationTableBodyProps) => {
+  const openDeleteModal = (jobId: string) => {
+    useOverlayStore.setState({ overlay: true });
+    setShowDeleteModal(true);
+    setSingleApplicationToBeDeleted(jobId);
+  };
+
   return (
     <tbody className="border border-gray-300">
       {jobs.map((job) => (
@@ -27,15 +40,16 @@ const ApplicationsTableBody = ({
             />
           </td>
           <td className="text-sm w-max p-3">
-            <Link
-              href={`/job/${job._id}`}
-              className="flex items-center gap-3 underline"
-            >
+            <div className="flex items-center gap-3">
               <Image src={job.companylogo} width={20} height={20} alt="img" />
               <p>{job.company}</p>
+            </div>
+          </td>
+          <td className="text-sm w-max p-3">
+            <Link href={`/job/${job._id}`} className="underline">
+              {job.title}
             </Link>
           </td>
-          <td className="text-sm w-max p-3">{job.title}</td>
           <td className="text-sm w-max p-3">
             {convertDateFormat(job.applicationDate as Date)}
           </td>
@@ -45,8 +59,8 @@ const ApplicationsTableBody = ({
               See application
             </button>
           </td>
-          <td>
-            <button type="button" className="flex gap-2 pr-4">
+          <td className="text-sm w-max p-3">
+            <button type="button" onClick={() => openDeleteModal(job._id)}>
               <Image src="/trash.svg" width={20} height={20} alt="delete" />
             </button>
           </td>

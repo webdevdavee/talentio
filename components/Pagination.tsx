@@ -73,14 +73,17 @@ const Pagination = ({ page, totalPages }: PaginationProps) => {
             className="w-[4rem] px-3 py-2 border border-gray-400 text-sm focus:border-[#272829] focus:transition focus:outline-none"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            disabled={page === totalPages}
+            disabled={page === totalPages || !totalPages}
           />
         </form>
         <button
           type="button"
           onClick={nextPage}
           style={{
-            display: totalPages && page === totalPages ? "none" : "block",
+            display:
+              (totalPages && page === totalPages) || !totalPages
+                ? "none"
+                : "block",
           }}
         >
           Next

@@ -167,3 +167,24 @@ export const sortArray = (array: any[], property: string, order: string) => {
   });
   return sortedArray;
 };
+
+// Sort string like this: $70,000 - $85,000
+export const sortSalaryRanges = (
+  salaries: any[],
+  property: string,
+  order: string
+) => {
+  const extractMinSalary = (salaryRange: string): number => {
+    const [minSalary] = salaryRange.match(/\$\d+(?:,\d{3})*/g) || [""];
+    return parseInt(minSalary.replace(/[^\d]/g, ""), 10);
+  };
+
+  const sortedSalaries = [...salaries].sort((a, b) => {
+    const minSalaryA = extractMinSalary(a[property]);
+    const minSalaryB = extractMinSalary(b[property]);
+
+    return order === "asc" ? minSalaryA - minSalaryB : minSalaryB - minSalaryA;
+  });
+
+  return sortedSalaries;
+};

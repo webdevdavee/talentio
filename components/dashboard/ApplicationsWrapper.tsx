@@ -4,35 +4,74 @@ import { useEffect, useState } from "react";
 import ApplicationsTable from "./ApplicationsTable";
 import TableUtitlity from "./TableUtitlity";
 import Pagination from "../Pagination";
+import { usePathname, useRouter } from "next/navigation";
+import DeletePopup from "../DeletePopup";
+import Loader from "../Loader";
+import {
+  deleteApplication,
+  getUserApplications,
+} from "@/database/actions/applications.actions";
+import { useOverlayStore } from "@/lib/store/OverlayStore";
+import { getJobById } from "@/database/actions/job.actions";
 
 type ApplicationsWrapperProps = {
-  jobsDetails: Job[];
+  userId: string | undefined;
   page: number;
-  totalPages: number | undefined;
   perPage: number;
 };
 
 const ApplicationsWrapper = ({
-  jobsDetails,
+  userId,
   page,
-  totalPages,
   perPage,
 }: ApplicationsWrapperProps) => {
+  const pathname = usePathname();
+
   const [query, setQuery] = useState("");
-  const [jobs, setJobs] = useState(jobsDetails);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [totalPages, setTotalPages] = useState<number>();
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
-  const [checkedJobs, setCheckedJobs] = useState<
+  const [isLoading, setIsLoading] = useState(true);
+  const [checkedApplications, setCheckedApplication] = useState<
     {
       id: string;
     }[]
   >([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [singleApplicationToBeDeleted, setSingleApplicationToBeDeleted] =
+    useState<string>();
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      // Fetch the user's applications
+      const getApplications = await getUserApplications(userId, page, perPage);
+
+      setTotalPages(getApplications?.totalPages);
+
+      // Fetch the full job details for each application
+      const jobsDetails: Job[] = await Promise.all(
+        getApplications?.applications.map(
+          async (application: UserApplication) => {
+            const job = await getJobById(application.jobId);
+            return {
+              ...job,
+              applicationDate: application.createdAt, // Add the application date to the job object
+            };
+          }
+        )
+      );
+      setJobs(jobsDetails);
+      setIsLoading(false);
+    };
+    fetchApplications();
+  }, [page, perPage]);
 
   // Create a new array (newCheckedJobs) off of checkedItems
   useEffect(() => {
     const newCheckedJobs = Object.keys(checkedItems).map((key) => ({
       id: key,
     }));
-    setCheckedJobs(newCheckedJobs);
+    setCheckedApplication(newCheckedJobs);
   }, [checkedItems]);
 
   // Create an array based on the search input
@@ -42,8 +81,37 @@ const ApplicationsWrapper = ({
       job.company.toLowerCase().includes(query.toLowerCase())
   );
 
+  // Delete appliaction(s) function
+  const deleteApplications = async () => {
+    if (jobs && jobs.length <= 1) setIsLoading(true);
+
+    // Ready the application(s) to be deleted
+    const idToArray = singleApplicationToBeDeleted
+      ? [{ id: singleApplicationToBeDeleted }]
+      : [];
+
+    if (checkedApplications.length > 0) {
+      await deleteApplication(checkedApplications, pathname);
+    }
+
+    if (idToArray.length > 0) {
+      await deleteApplication(idToArray, pathname);
+    }
+
+    setShowDeleteModal(false);
+    useOverlayStore.setState({ overlay: false });
+
+    if (jobs && jobs.length <= 1) setIsLoading(false);
+    if (jobs && jobs.length > 1) window.location.reload();
+  };
+
   return (
     <section className="flex flex-col gap-6">
+      <DeletePopup
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        deleteData={deleteApplications}
+      />
       <TableUtitlity
         query={query}
         setQuery={setQuery}
@@ -56,6 +124,9 @@ const ApplicationsWrapper = ({
         setJobs={setJobs}
         checkedItems={checkedItems}
         setCheckedItems={setCheckedItems}
+        setShowDeleteModal={setShowDeleteModal}
+        setSingleApplicationToBeDeleted={setSingleApplicationToBeDeleted}
+        isLoading={isLoading}
       />
       <Pagination page={page} totalPages={totalPages} />
     </section>

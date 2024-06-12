@@ -66,3 +66,21 @@ export const removeUserSavedJob = async (
     handleError(error);
   }
 };
+
+export const deleteSavedJobs = async (jobs: { id: string }[], path: string) => {
+  try {
+    await connectToDatabase();
+
+    // Construct an array of ids from products
+    const idsToDelete = jobs.map((job) => job.id);
+
+    // Perform the deletion
+    await SavedJobs.deleteMany({
+      jobId: { $in: idsToDelete },
+    });
+
+    revalidatePath(path ? path : "");
+  } catch (error) {
+    handleError(error);
+  }
+};

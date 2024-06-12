@@ -28,7 +28,7 @@ const page = async ({ params: { id } }: Params) => {
   const company: Company[] = await getCompanyByName(job.company);
   return (
     <section className="px-16 my-8">
-      <JobDetails job={job} company={company[0]} />
+      <JobDetails job={job} company={company[0]} userId={session?.user.id} />
     </section>
   );
 };

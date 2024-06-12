@@ -234,3 +234,7 @@ type UserApplication = {
   userId: string;
   createdAt: Date;
 };
+
+type CheckedItems = {
+  [key: string]: boolean;
+};

@@ -4,19 +4,28 @@ import Link from "next/link";
 
 type ApplicationTableBodyProps = {
   jobs: Job[];
+  checkedItems: CheckedItems;
+  handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const ApplicationsTableBody = ({ jobs }: ApplicationTableBodyProps) => {
+const ApplicationsTableBody = ({
+  jobs,
+  checkedItems,
+  handleCheckboxChange,
+}: ApplicationTableBodyProps) => {
   return (
     <tbody className="border border-gray-300">
       {jobs.map((job) => (
-        <tr>
-          <th className="p-3">
+        <tr key={job._id}>
+          <td className="p-3">
             <input
               className="flex w-5 h-5 rounded-lg border-[1px] border-solid border-gray-300 bg-white text-left"
               type="checkbox"
+              value={job._id}
+              checked={checkedItems[job._id] || false}
+              onChange={handleCheckboxChange}
             />
-          </th>
+          </td>
           <td className="text-sm w-max p-3">
             <Link
               href={`/job/${job._id}`}
@@ -36,14 +45,10 @@ const ApplicationsTableBody = ({ jobs }: ApplicationTableBodyProps) => {
               See application
             </button>
           </td>
-          <td className="text-sm w-max p-3">
-            <Image
-              src="/three-dots.svg"
-              width={20}
-              height={20}
-              alt="more-option"
-              className="cursor-pointer"
-            />
+          <td>
+            <button type="button" className="flex gap-2 pr-4">
+              <Image src="/trash.svg" width={20} height={20} alt="delete" />
+            </button>
           </td>
         </tr>
       ))}

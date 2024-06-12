@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ApplicationsTable from "./ApplicationsTable";
 import TableUtitlity from "./TableUtitlity";
 import Pagination from "../Pagination";
@@ -20,6 +20,20 @@ const ApplicationsWrapper = ({
 }: ApplicationsWrapperProps) => {
   const [query, setQuery] = useState("");
   const [jobs, setJobs] = useState(jobsDetails);
+  const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
+  const [checkedJobs, setCheckedJobs] = useState<
+    {
+      id: string;
+    }[]
+  >([]);
+
+  // Create a new array (newCheckedJobs) off of checkedItems
+  useEffect(() => {
+    const newCheckedJobs = Object.keys(checkedItems).map((key) => ({
+      id: key,
+    }));
+    setCheckedJobs(newCheckedJobs);
+  }, [checkedItems]);
 
   // Create an array based on the search input
   const filteredJobSearch = jobs?.filter(
@@ -37,7 +51,12 @@ const ApplicationsWrapper = ({
         filteredSearch={filteredJobSearch}
         perPage={perPage}
       />
-      <ApplicationsTable jobs={filteredJobSearch} setJobs={setJobs} />
+      <ApplicationsTable
+        jobs={filteredJobSearch}
+        setJobs={setJobs}
+        checkedItems={checkedItems}
+        setCheckedItems={setCheckedItems}
+      />
       <Pagination page={page} totalPages={totalPages} />
     </section>
   );

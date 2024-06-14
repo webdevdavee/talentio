@@ -120,7 +120,7 @@ export const getCompanies = async (page = 1, limit = 10) => {
 export const getCompanyById = async (companyId: string) => {
   try {
     await connectToDatabase();
-    const company = await Companies.findById(companyId);
+    const company = await Companies.findOne({ userId: companyId });
     if (!company) {
       throw new Error("Company not found.");
     }

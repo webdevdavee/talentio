@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const DashboardHeader = () => {
+const Header = () => {
   const pathname = usePathname();
   return (
     <header className="w-full bg-white py-6 px-8 border-b border-b-gray-200 mb-3">
@@ -39,4 +39,4 @@ const DashboardHeader = () => {
   );
 };
 
-export default DashboardHeader;
+export default Header;

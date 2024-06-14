@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import ApplicationsTable from "./ApplicationsTable";
 import TableUtitlity from "./TableUtitlity";
-import Pagination from "../Pagination";
+import Pagination from "../../../../components/Pagination";
 import { usePathname, useRouter } from "next/navigation";
-import DeletePopup from "../DeletePopup";
-import Loader from "../Loader";
+import DeletePopup from "../../../../components/DeletePopup";
+import Loader from "../../../../components/Loader";
 import {
   deleteApplication,
   getUserApplicationByJobId,

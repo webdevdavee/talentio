@@ -286,3 +286,13 @@ export const securityQuestions: string[] = [
   "What was the first film you saw in a theater?",
   "What was the name of your first best friend?",
 ];
+
+export const week: string[] = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];

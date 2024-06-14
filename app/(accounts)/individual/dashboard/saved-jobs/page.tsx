@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import SavedJobsWrapper from "@/components/dashboard/SavedJobsWrapper";
+import SavedJobsWrapper from "@/app/(accounts)/individual/_components/SavedJobsWrapper";
 import { redirect } from "next/navigation";
 
 export async function generateMetadata() {

@@ -1,4 +1,4 @@
-import Loader from "../Loader";
+import Loader from "../../../../components/Loader";
 import SavedJobsTableBody from "./SavedJobsTableBody";
 import SavedJobsTableHead from "./SavedJobsTableHead";
 

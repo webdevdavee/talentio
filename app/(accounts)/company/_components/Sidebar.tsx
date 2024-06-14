@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { auth } from "@/auth";
-import DashboardSidebarNav from "./DashboardSidebarNav";
+import SidebarNav from "./SidebarNav";
 import Link from "next/link";
 
-const DashboardSidebar = async () => {
+const Sidebar = async () => {
   const session = await auth();
 
   return (
@@ -18,9 +18,9 @@ const DashboardSidebar = async () => {
             className="mb-12"
           />
         </Link>
-        <DashboardSidebarNav />
+        <SidebarNav />
       </section>
-      <div className="flex gap-4 items-center">
+      {/* <div className="flex gap-4 items-center">
         <Image
           src={session?.user.image as string}
           width={40}
@@ -34,9 +34,9 @@ const DashboardSidebar = async () => {
             {session?.user.email}
           </p>
         </span>
-      </div>
+      </div> */}
     </aside>
   );
 };
 
-export default DashboardSidebar;
+export default Sidebar;

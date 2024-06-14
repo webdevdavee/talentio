@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const DashboardSidebarNav = () => {
+const SidebarNav = () => {
   const pathname = usePathname();
 
   return (
@@ -75,4 +75,4 @@ const DashboardSidebarNav = () => {
   );
 };
 
-export default DashboardSidebarNav;
+export default SidebarNav;

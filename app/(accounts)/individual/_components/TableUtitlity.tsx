@@ -1,8 +1,8 @@
 "use client";
 
 import { ChangeEvent } from "react";
-import PerPage from "./PerPage";
-import Searchbar from "./Searchbar";
+import PerPage from "../../../../components/dashboard/PerPage";
+import Searchbar from "../../../../components/dashboard/Searchbar";
 import { createURL } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 

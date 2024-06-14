@@ -1,4 +1,4 @@
-import Loader from "../Loader";
+import Loader from "../../../../components/Loader";
 import ApplicationsTableBody from "./ApplicationsTableBody";
 import ApplicationsTableHead from "./ApplicationsTableHead";
 

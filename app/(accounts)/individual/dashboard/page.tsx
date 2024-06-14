@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import ApplicationsWrapper from "@/components/dashboard/ApplicationsWrapper";
+import ApplicationsWrapper from "@/app/(accounts)/individual/_components/ApplicationsWrapper";
 import { redirect } from "next/navigation";
 
 export async function generateMetadata() {

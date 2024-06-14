@@ -1,13 +1,13 @@
-import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
+import Header from "../_components/Header";
+import Sidebar from "../_components/Sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <main>
       <section className="flex">
-        <DashboardSidebar />
+        <Sidebar />
         <div className="flex flex-col w-[83%]">
-          <DashboardHeader />
+          <Header />
           {children}
         </div>
       </section>

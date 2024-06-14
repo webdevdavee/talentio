@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import PerPage from "./PerPage";
 import Searchbar from "./Searchbar";
 import { createURL } from "@/lib/utils";
@@ -12,6 +12,8 @@ type TableUtitlityProps = {
   title: string;
   filteredSearch?: Job[];
   perPage: number;
+  deleteBtnText: string;
+  deleteFunction: () => Promise<void>;
 };
 
 const TableUtitlity = ({
@@ -20,6 +22,8 @@ const TableUtitlity = ({
   title,
   filteredSearch,
   perPage,
+  deleteBtnText,
+  deleteFunction,
 }: TableUtitlityProps) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -43,6 +47,17 @@ const TableUtitlity = ({
         {title} {filteredSearch?.length}
       </h2>
       <div className="flex items-center gap-8">
+        <div className="flex items-center justify-center gap-3 m:flex-col m:gap-6 m:w-full">
+          <div className="m:w-full flex justify-between gap-2">
+            <button
+              type="button"
+              className="py-2 px-3 border-[1px] border-gray-400 text-sm"
+              onClick={deleteFunction}
+            >
+              {deleteBtnText}
+            </button>
+          </div>
+        </div>
         <PerPage perPage={perPage} handlePerPage={handlePerPage} />
         <Searchbar
           query={query}

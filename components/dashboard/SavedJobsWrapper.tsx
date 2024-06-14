@@ -104,6 +104,8 @@ const SavedJobsWrapper = ({ userId, page, perPage }: SavedJobsWrapperProps) => {
         title="Total saved jobs:"
         filteredSearch={filteredJobSearch}
         perPage={perPage}
+        deleteBtnText="Delete job(s)"
+        deleteFunction={deleteSavedJob}
       />
       <SavedJobsTable
         jobs={filteredJobSearch}

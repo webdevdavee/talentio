@@ -66,7 +66,7 @@ export const getUserApplications = async (
 export const getUserApplicationByJobId = async (jobId: string) => {
   try {
     await connectToDatabase();
-    const application = await Applications.find({ jobId });
+    const application = await Applications.findOne({ jobId });
     if (!application) {
       throw new Error("Application not found");
     }

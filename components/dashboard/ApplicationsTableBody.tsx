@@ -11,6 +11,7 @@ type ApplicationTableBodyProps = {
   setSingleApplicationToBeDeleted: React.Dispatch<
     React.SetStateAction<string | undefined>
   >;
+  handleShowApplication: (jobId: string) => Promise<void>;
 };
 
 const ApplicationsTableBody = ({
@@ -19,6 +20,7 @@ const ApplicationsTableBody = ({
   handleCheckboxChange,
   setShowDeleteModal,
   setSingleApplicationToBeDeleted,
+  handleShowApplication,
 }: ApplicationTableBodyProps) => {
   const openDeleteModal = (jobId: string) => {
     useOverlayStore.setState({ overlay: true });
@@ -55,7 +57,11 @@ const ApplicationsTableBody = ({
           </td>
           <td className="text-sm w-max p-3">{job.salary}</td>
           <td className="text-sm w-max p-3">
-            <button type="button" className="bg-primary text-white p-2">
+            <button
+              type="button"
+              className="bg-primary text-white p-2"
+              onClick={() => handleShowApplication(job._id)}
+            >
               See application
             </button>
           </td>

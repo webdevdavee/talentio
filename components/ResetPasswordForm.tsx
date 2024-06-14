@@ -44,7 +44,7 @@ const ResetPasswordForm = ({
       const hashedPassword = await bcrypt.hash(data.newPassword, 7);
       // Reset the user's password
       const updatedUser = await updateUserField({
-        userId: user?._id as string,
+        userId: user?.userId as string,
         field: "password",
         fieldData: hashedPassword,
       });

@@ -51,6 +51,8 @@ export const {
       if (user) {
         const existingUser: AllUsers = await findByEmail(user.email as string);
         if (!existingUser) return token;
+        token.name = existingUser.name;
+        token.email = existingUser.email;
         token.accountType = existingUser.accountType;
         token.id = existingUser.userId;
         token.provider = existingUser.provider;
@@ -59,6 +61,8 @@ export const {
     },
     async session({ session, token }) {
       if (session.user) {
+        session.user.name = token.name;
+        session.user.email = token.email as string;
         session.user.accountType = token.accountType;
         session.user.id = token.id as string;
         session.user.provider = token.provider;

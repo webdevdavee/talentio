@@ -12,6 +12,7 @@ type ApplicationsTableBodyProps = {
     React.SetStateAction<string | undefined>
   >;
   isLoading: boolean;
+  handleShowApplication: (jobId: string) => Promise<void>;
 };
 
 const ApplicationsTable = ({
@@ -22,6 +23,7 @@ const ApplicationsTable = ({
   setShowDeleteModal,
   setSingleApplicationToBeDeleted,
   isLoading,
+  handleShowApplication,
 }: ApplicationsTableBodyProps) => {
   // Function to handle individual checkbox toggle
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +85,7 @@ const ApplicationsTable = ({
                 setSingleApplicationToBeDeleted={
                   setSingleApplicationToBeDeleted
                 }
+                handleShowApplication={handleShowApplication}
               />
             )}
           </table>

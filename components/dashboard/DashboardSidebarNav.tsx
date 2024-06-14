@@ -41,7 +41,7 @@ const DashboardSidebarNav = () => {
           <p>Messages</p>
         </Link>
         <Link
-          href="/individual/dashboard/jobs"
+          href="/jobs"
           className={`flex items-center gap-3 cursor-pointer py-2 px-3 hover:bg-gray-200 transition hover:border-l-[2px] hover:border-l-primary ${
             pathname === "/individual/dashboard/jobs" &&
             "bg-gray-200 border-l-[2px] border-l-primary"
@@ -51,7 +51,7 @@ const DashboardSidebarNav = () => {
           <p>Find jobs</p>
         </Link>
         <Link
-          href="/individual/dashboard/companies"
+          href="/companies"
           className={`flex items-center gap-3 cursor-pointer py-2 px-3 hover:bg-gray-200 transition hover:border-l-[2px] hover:border-l-primary ${
             pathname === "/individual/dashboard/companies" &&
             "bg-gray-200 border-l-[2px] border-l-primary"

@@ -1,4 +1,6 @@
+import useClickOutside from "@/hooks/useClickOutside";
 import { useOverlayStore } from "@/lib/store/OverlayStore";
+import { useRef } from "react";
 
 type DeletePopupProps = {
   showDeleteModal: boolean;
@@ -11,6 +13,14 @@ const DeletePopup = ({
   setShowDeleteModal,
   deleteData,
 }: DeletePopupProps) => {
+  const popupRef = useRef<HTMLDivElement>(null);
+
+  // Handle clicks outside profile dialog
+  useClickOutside(popupRef, () => {
+    setShowDeleteModal(false);
+    useOverlayStore.setState({ overlay: false });
+  });
+
   const cancelDeleteProduct = () => {
     setShowDeleteModal(false);
     useOverlayStore.setState({ overlay: false });
@@ -19,7 +29,10 @@ const DeletePopup = ({
   return (
     <>
       {showDeleteModal && (
-        <section className="modal z-[36] border-[1px] border-gray-300 p-6 bg-white">
+        <section
+          ref={popupRef}
+          className="modal z-[36] border-[1px] border-gray-300 p-6 bg-white"
+        >
           <p className="mb-8">
             This action is irreversible. Do you want to proceed?
           </p>

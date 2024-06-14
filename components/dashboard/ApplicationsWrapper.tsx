@@ -9,10 +9,12 @@ import DeletePopup from "../DeletePopup";
 import Loader from "../Loader";
 import {
   deleteApplication,
+  getUserApplicationByJobId,
   getUserApplications,
 } from "@/database/actions/applications.actions";
 import { useOverlayStore } from "@/lib/store/OverlayStore";
 import { getJobById } from "@/database/actions/job.actions";
+import SeeMyApplication from "./SeeMyApplication";
 
 type ApplicationsWrapperProps = {
   userId: string | undefined;
@@ -32,12 +34,14 @@ const ApplicationsWrapper = ({
   const [totalPages, setTotalPages] = useState<number>();
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [applicationToShow, seApplicationToShow] = useState<UserApplication>();
   const [checkedApplications, setCheckedApplication] = useState<
     {
       id: string;
     }[]
   >([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showMyApplication, setShowMyApplication] = useState(false);
   const [singleApplicationToBeDeleted, setSingleApplicationToBeDeleted] =
     useState<string>();
 
@@ -105,6 +109,16 @@ const ApplicationsWrapper = ({
     if (jobs && jobs.length > 1) window.location.reload();
   };
 
+  // Get the application to display on modal from the jobId
+  const handleShowApplication = async (jobId: string) => {
+    const application = await getUserApplicationByJobId(jobId);
+    if (application) {
+      seApplicationToShow(application);
+      setShowMyApplication(true);
+      useOverlayStore.setState({ overlay: true });
+    }
+  };
+
   return (
     <section className="flex flex-col gap-6">
       <DeletePopup
@@ -112,12 +126,19 @@ const ApplicationsWrapper = ({
         setShowDeleteModal={setShowDeleteModal}
         deleteData={deleteApplications}
       />
+      <SeeMyApplication
+        applicationToShow={applicationToShow}
+        showMyApplication={showMyApplication}
+        setShowMyApplication={setShowMyApplication}
+      />
       <TableUtitlity
         query={query}
         setQuery={setQuery}
         title="Total applications:"
         filteredSearch={filteredJobSearch}
         perPage={perPage}
+        deleteBtnText="Delete application(s)"
+        deleteFunction={deleteApplications}
       />
       <ApplicationsTable
         jobs={filteredJobSearch}
@@ -127,6 +148,7 @@ const ApplicationsWrapper = ({
         setShowDeleteModal={setShowDeleteModal}
         setSingleApplicationToBeDeleted={setSingleApplicationToBeDeleted}
         isLoading={isLoading}
+        handleShowApplication={handleShowApplication}
       />
       <Pagination page={page} totalPages={totalPages} />
     </section>

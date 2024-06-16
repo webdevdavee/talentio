@@ -4,8 +4,6 @@ import SidebarNav from "./SidebarNav";
 import Link from "next/link";
 
 const Sidebar = async () => {
-  const session = await auth();
-
   return (
     <aside className="sticky top-0 w-[17%] h-screen bg-[#F5F5F5] flex flex-col justify-between py-6 px-4">
       <section>

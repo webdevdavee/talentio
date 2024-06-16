@@ -3,7 +3,7 @@ type RadioInputProps = {
   name: string;
   label: string;
   checked: boolean;
-  onChange: (id: string) => void;
+  onChange: (type: string, label: string) => void;
 };
 
 const RadioInput = ({
@@ -17,7 +17,7 @@ const RadioInput = ({
     <button
       type="button"
       className="flex items-center space-x-2 p-4 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary"
-      onClick={() => onChange(id)}
+      onClick={() => onChange(name, id)}
     >
       <input
         type="radio"

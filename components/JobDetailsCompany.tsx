@@ -23,7 +23,7 @@ const JobDetailsCompany = ({ company }: JobDetailsCompanyProps) => {
           View company profile
         </Link>
       </div>
-      <div className="flex flex-col gap-6">
+      <div className="w-full flex flex-col items-start gap-6">
         <span className="flex flex-col gap-3">
           <b>About company</b>
           <p>{company.about}</p>

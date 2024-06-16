@@ -120,6 +120,19 @@ export const getCompanies = async (page = 1, limit = 10) => {
 export const getCompanyById = async (companyId: string) => {
   try {
     await connectToDatabase();
+    const company = await Companies.findById(companyId);
+    if (!company) {
+      throw new Error("Company not found.");
+    }
+    return JSON.parse(JSON.stringify(company));
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getCompanyByUserId = async (companyId: string) => {
+  try {
+    await connectToDatabase();
     const company = await Companies.findOne({ userId: companyId });
     if (!company) {
       throw new Error("Company not found.");
@@ -133,7 +146,7 @@ export const getCompanyById = async (companyId: string) => {
 export const getCompanyByName = async (companyName: string) => {
   try {
     await connectToDatabase();
-    const company = await Companies.find({ company: companyName });
+    const company = await Companies.findOne({ company: companyName });
     if (!company) {
       throw new Error("Company not found.");
     }

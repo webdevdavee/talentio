@@ -91,6 +91,11 @@ export const formatNumberWithCommas = (number: string) => {
   return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+// Capitalize first letter of a string
+export const capitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 // Check if the string is a valid URL
 export const isValidUrl = (url: string) => {
   try {

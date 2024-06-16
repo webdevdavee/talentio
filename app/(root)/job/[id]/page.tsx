@@ -25,10 +25,10 @@ const page = async ({ params: { id } }: Params) => {
   const session = await auth();
   if (session?.user.accountType === "company") redirect("/company/dashboard");
   const job: Job = await getJobById(id);
-  const company: Company[] = await getCompanyByName(job.company);
+  const company: Company = await getCompanyByName(job.company);
   return (
     <section className="px-16 my-8">
-      <JobDetails job={job} company={company[0]} userId={session?.user.id} />
+      <JobDetails job={job} company={company} userId={session?.user.id} />
     </section>
   );
 };

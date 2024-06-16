@@ -81,8 +81,64 @@ const JobDetailHeader = ({
   return (
     <section className="flex flex-col gap-3 border-b border-b-gray-200 pb-3">
       <span className="flex items-start justify-between gap-3">
-        <span className="flex flex-col gap-5">
-          <h1 className="text-2xl font-bold capitalize">{job.title}</h1>
+        <span className="w-full flex flex-col gap-5">
+          <div className="flex items-start justify-between">
+            <h1 className="text-2xl font-bold capitalize">{job.title}</h1>
+            <div className="flex items-start gap-8">
+              {isLoading ? (
+                <Image
+                  className="animate-spin"
+                  width={25}
+                  height={25}
+                  src="/loading-spinner.svg"
+                  alt="wishlist"
+                />
+              ) : savedJob ? (
+                <Image
+                  src="/love-filled.svg"
+                  width={25}
+                  height={25}
+                  alt="save-job"
+                  onClick={saveAJob}
+                  className="cursor-pointer"
+                />
+              ) : (
+                <Image
+                  src="/love.svg"
+                  width={25}
+                  height={25}
+                  alt="save-job"
+                  onClick={saveAJob}
+                  className="cursor-pointer"
+                />
+              )}
+              <div className="flex flex-col items-center gap-1">
+                <button
+                  type="button"
+                  className={`text-white text-sm px-6 py-2 ${
+                    job.applied === job.capacity ||
+                    appliedJob?.jobId === job._id
+                      ? "bg-[gray]"
+                      : "bg-primary"
+                  }`}
+                  onClick={applyToJob}
+                  disabled={
+                    job.applied === job.capacity ||
+                    appliedJob?.jobId === job._id
+                  }
+                >
+                  {job.applied === job.capacity
+                    ? "Max applicants reached"
+                    : appliedJob
+                    ? "Applied"
+                    : "Apply now"}
+                </button>
+                <p className="text-sm font-medium">
+                  {job.applied} applied of {job.capacity} applicants
+                </p>
+              </div>
+            </div>
+          </div>
           <span className="flex items-center gap-6">
             <span className="flex items-center gap-2">
               <Image src="/briefcase2.svg" width={20} height={20} alt="level" />
@@ -107,58 +163,6 @@ const JobDetailHeader = ({
             </span>
           </span>
         </span>
-        <div className="flex items-start gap-8">
-          {isLoading ? (
-            <Image
-              className="animate-spin"
-              width={25}
-              height={25}
-              src="/loading-spinner.svg"
-              alt="wishlist"
-            />
-          ) : savedJob ? (
-            <Image
-              src="/love-filled.svg"
-              width={25}
-              height={25}
-              alt="save-job"
-              onClick={saveAJob}
-              className="cursor-pointer"
-            />
-          ) : (
-            <Image
-              src="/love.svg"
-              width={25}
-              height={25}
-              alt="save-job"
-              onClick={saveAJob}
-              className="cursor-pointer"
-            />
-          )}
-          <div className="flex flex-col items-center gap-1">
-            <button
-              type="button"
-              className={`text-white text-sm px-6 py-2 ${
-                job.applied === job.capacity || appliedJob?.jobId === job._id
-                  ? "bg-[gray]"
-                  : "bg-primary"
-              }`}
-              onClick={applyToJob}
-              disabled={
-                job.applied === job.capacity || appliedJob?.jobId === job._id
-              }
-            >
-              {job.applied === job.capacity
-                ? "Max applicants reached"
-                : appliedJob
-                ? "Applied"
-                : "Apply now"}
-            </button>
-            <p className="text-sm font-medium">
-              {job.applied} applied of {job.capacity} applicants
-            </p>
-          </div>
-        </div>
       </span>
     </section>
   );

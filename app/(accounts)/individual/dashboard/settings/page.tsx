@@ -3,6 +3,15 @@ import SettingsForm from "@/components/dashboard/SettingsForm";
 import { findIndividualById } from "@/database/actions/individual.action";
 import { redirect } from "next/navigation";
 
+export async function generateMetadata() {
+  const session = await auth();
+
+  return {
+    title: `Settings - ${session?.user.name}`,
+    description: "Have a look at your saved jobs",
+  };
+}
+
 const page = async () => {
   const session = await auth();
   if (session?.user.accountType === "company") redirect("/company/dashboard");

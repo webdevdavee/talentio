@@ -59,8 +59,8 @@ type Job = {
   company: string;
   capacity: number;
   applied: number;
+  companyId: string;
   companylogo: string;
-  long_description: string;
   applicationDate?: Date;
 };
 
@@ -72,10 +72,6 @@ type Category = {
 type Industry = {
   industry: string;
   icon: string;
-};
-
-type JobLevel = {
-  level: string;
 };
 
 type JobType = {

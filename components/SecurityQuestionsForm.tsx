@@ -15,6 +15,7 @@ import useClickOutside from "@/hooks/useClickOutside";
 import { addNewUserField } from "@/database/actions/users.actions";
 import { useRouter } from "next/navigation";
 import bcrypt from "bcryptjs";
+import { securityQuestions } from "@/constants";
 
 type SecurityQuestionsFormProps = {
   email: string | null | undefined;
@@ -85,15 +86,16 @@ const SecurityQuestionsForm = ({
           className="mt-6 w-full flex flex-col gap-4"
         >
           <DropdownButton
-            selectedQuestion={selectedQuestion}
-            showQuestions={showQuestions}
-            setShowQuestions={setShowQuestions}
+            selectedItem={selectedQuestion}
+            showListItem={showQuestions}
+            setShowListItems={setShowQuestions}
           />
           <div className="relative">
             {showQuestions && (
               <DropdownList
-                setShowQuestions={setShowQuestions}
-                setSelectedQuestion={setSelectedQuestion}
+                setShowListItems={setShowQuestions}
+                setSelectedListItem={setSelectedQuestion}
+                listData={securityQuestions}
               />
             )}
           </div>

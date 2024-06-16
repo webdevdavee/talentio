@@ -28,7 +28,7 @@ const Header = ({ company }: HeaderProps) => {
             Sign out
           </button>
           <Link
-            href="/post-job"
+            href="/company/dashboard/post-job"
             className="flex gap-1 items-center p-2 bg-primary text-white font-medium"
           >
             <Image src="/plus.svg" width={25} height={25} alt="post-a-job" />

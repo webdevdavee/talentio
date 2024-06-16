@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import Header from "../_components/Header";
 import Sidebar from "../_components/Sidebar";
-import { getCompanyById } from "@/database/actions/company.actions";
+import { getCompanyByUserId } from "@/database/actions/company.actions";
 
 export default async function Layout({
   children,
@@ -9,7 +9,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  const company = await getCompanyById(session?.user.id as string);
+  const company = await getCompanyByUserId(session?.user.id as string);
 
   return (
     <main>

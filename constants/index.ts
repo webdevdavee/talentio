@@ -243,17 +243,7 @@ export const industries: Industry[] = [
   },
 ];
 
-export const jobLevels: JobLevel[] = [
-  {
-    level: "Entry-level",
-  },
-  {
-    level: "Mid-level",
-  },
-  {
-    level: "Senior-level",
-  },
-];
+export const jobLevels: string[] = ["Entry-level", "Mid-level", "Senior-level"];
 
 export const jobTypes: JobType[] = [
   {

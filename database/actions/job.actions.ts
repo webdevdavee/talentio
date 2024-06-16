@@ -1,8 +1,55 @@
 "use server";
 
 import { connectToDatabase } from "..";
-import { handleError } from "@/lib/utils";
+import {
+  capitalizeFirstLetter,
+  formatNumberWithCommas,
+  handleError,
+} from "@/lib/utils";
 import Jobs from "../models/job.model";
+import { PostJobFormSchema } from "@/lib/zod";
+import { z } from "zod";
+
+export const createJob = async (
+  data: z.infer<typeof PostJobFormSchema>,
+  selectedCategory: string,
+  radioSelections: {
+    jobType: string;
+    jobLevel: string;
+  },
+  company: Company
+) => {
+  try {
+    await connectToDatabase();
+
+    const validatedFields = PostJobFormSchema.safeParse(data);
+    if (!validatedFields.success) {
+      return { error: "Invalid credentials." };
+    }
+
+    const { from, to } = validatedFields.data.salary;
+
+    const jobData = {
+      ...data,
+      capacity: Number(data.capacity),
+      salary: `$${formatNumberWithCommas(from)} - $${formatNumberWithCommas(
+        to
+      )}`,
+      category: selectedCategory,
+      type: capitalizeFirstLetter(radioSelections.jobType),
+      level: capitalizeFirstLetter(radioSelections.jobLevel),
+      company: company.company,
+      companylogo: company.logo,
+      companyId: company.userId,
+      applied: 0,
+    };
+
+    const newJob = await Jobs.create(jobData);
+    console.log(newJob);
+  } catch (error: any) {
+    handleError(error);
+  }
+};
 
 export const getJobs = async (page = 1, limit = 10) => {
   try {
@@ -39,7 +86,7 @@ export const getJobById = async (jobId: string) => {
       throw new Error("Job not found");
     }
     return JSON.parse(JSON.stringify(job));
-  } catch (error) {
+  } catch (error: any) {
     handleError(error);
   }
 };
@@ -61,7 +108,7 @@ export const getJobsCategoryCount = async () => {
     ]);
 
     return JSON.parse(JSON.stringify(result));
-  } catch (error) {
+  } catch (error: any) {
     handleError(error);
   }
 };
@@ -83,7 +130,7 @@ export const getJobsPropertyValueCount = async (field: string) => {
     ]);
 
     return JSON.parse(JSON.stringify(result));
-  } catch (error) {
+  } catch (error: any) {
     handleError(error);
   }
 };
@@ -168,7 +215,7 @@ export const handleJobFilter = async ({
       totalPages,
       jobsNoLimit: JSON.parse(JSON.stringify(jobsNoLimit)),
     };
-  } catch (error) {
+  } catch (error: any) {
     handleError(error);
   }
 };
@@ -196,7 +243,7 @@ export const getUniquePropertyValue = async (field: string) => {
     ]);
 
     return JSON.parse(JSON.stringify(data));
-  } catch (error) {
+  } catch (error: any) {
     handleError(error);
   }
 };
@@ -208,7 +255,7 @@ export const getJobsByCompany = async (company: string) => {
     const job = await Jobs.find({ company: company });
 
     return JSON.parse(JSON.stringify(job));
-  } catch (error) {
+  } catch (error: any) {
     handleError(error);
   }
 };

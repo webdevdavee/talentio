@@ -16,8 +16,8 @@ type JobProps = {
 
 const JobDetails = ({ job, company, userId }: JobProps) => {
   const [isLoading, setIsLoading] = useState(true);
-  const cleanLongDescription = DOMPurify.sanitize(
-    job.long_description ? job.long_description : ""
+  const cleanDescription = DOMPurify.sanitize(
+    job.description ? job.description : ""
   );
   const [userSavedJobs, setUserSavedJobs] = useState<
     | {
@@ -72,7 +72,7 @@ const JobDetails = ({ job, company, userId }: JobProps) => {
               <div
                 className="mt-4"
                 dangerouslySetInnerHTML={{
-                  __html: cleanLongDescription,
+                  __html: cleanDescription,
                 }}
               />
             </div>

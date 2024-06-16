@@ -76,3 +76,17 @@ export const individualSettingsFormSchema = z.object({
 export type TIndividualSettingsFormSchema = z.infer<
   typeof individualSettingsFormSchema
 >;
+
+// POST JOB FORM
+export const PostJobFormSchema = z.object({
+  title: z.string().min(3, "Use 3 characters or more"),
+  description: z.string().min(10, "Use 10 characters or more"),
+  location: z.string().min(3, "Use 3 characters or more"),
+  salary: z.object({
+    from: z.string().min(3, "Use 3 characters or more"),
+    to: z.string().min(3, "Use 3 characters or more"),
+  }),
+  capacity: z.string().min(1, "Required"),
+});
+
+export type TPostJobFormSchema = z.infer<typeof PostJobFormSchema>;

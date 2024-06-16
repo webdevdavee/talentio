@@ -12,7 +12,7 @@ const Onboarding = () => {
   const [error, setError] = useState<string | undefined>("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleRadioChange = (label: string) => {
+  const handleRadioChange = (type: string, label: string) => {
     setSelectedRadio(label);
   };
 
@@ -48,17 +48,17 @@ const Onboarding = () => {
           <div className="flex flex-col gap-4">
             <RadioInput
               id="individual"
-              name="radio-group"
+              name="individual"
               label="Individual"
               checked={selectedRadio === "individual"}
-              onChange={handleRadioChange}
+              onChange={() => handleRadioChange("individual", "individual")}
             />
             <RadioInput
               id="company"
-              name="radio-group"
+              name="company"
               label="Company"
               checked={selectedRadio === "company"}
-              onChange={handleRadioChange}
+              onChange={() => handleRadioChange("company", "company")}
             />
           </div>
           <p className="text-red-500">{error}</p>

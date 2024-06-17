@@ -1,10 +1,10 @@
 import Loader from "../../../../components/Loader";
-import ApplicationsTableBody from "./ApplicationsTableBody";
-import ApplicationsTableHead from "./ApplicationsTableHead";
+import ApplicantsTableBody from "./ApplicantsTableBody";
+import ApplicantsTableHead from "./ApplicantsTableHead";
 
-type ApplicationsTableBodyProps = {
-  applications: UserApplication[];
-  setApplications: React.Dispatch<React.SetStateAction<UserApplication[]>>;
+type ApplicantsTableBodyProps = {
+  applicants: UserApplication[];
+  setApplicants: React.Dispatch<React.SetStateAction<UserApplication[]>>;
   checkedItems: CheckedItems;
   setCheckedItems: React.Dispatch<React.SetStateAction<CheckedItems>>;
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,19 +12,19 @@ type ApplicationsTableBodyProps = {
     React.SetStateAction<string | undefined>
   >;
   isLoading: boolean;
-  handleShowApplication: (applicationId: string) => Promise<void>;
+  handleShowApplication: (jobId: string) => Promise<void>;
 };
 
-const ApplicationsTable = ({
-  applications,
-  setApplications,
+const ApplicantsTable = ({
+  applicants,
+  setApplicants,
   checkedItems,
   setCheckedItems,
   setShowDeleteModal,
   setSingleApplicationToBeDeleted,
   isLoading,
   handleShowApplication,
-}: ApplicationsTableBodyProps) => {
+}: ApplicantsTableBodyProps) => {
   // Function to handle individual checkbox toggle
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
@@ -54,8 +54,8 @@ const ApplicationsTable = ({
       if (isChecked) {
         const newCheckedItems: CheckedItems = {};
 
-        applications?.forEach((application: UserApplication) => {
-          newCheckedItems[application._id] = true;
+        applicants?.forEach((applicant: UserApplication) => {
+          newCheckedItems[applicant._id] = true;
         });
         return newCheckedItems;
       } else {
@@ -70,15 +70,15 @@ const ApplicationsTable = ({
       {!isLoading ? (
         <>
           <table className="w-full">
-            <ApplicationsTableHead
-              applications={applications}
-              setApplications={setApplications}
+            <ApplicantsTableHead
+              applicants={applicants}
+              setApplicants={setApplicants}
               checkedItems={checkedItems}
               selectAll={selectAll}
             />
-            {applications && applications.length > 0 && (
-              <ApplicationsTableBody
-                applications={applications}
+            {applicants && applicants.length > 0 && (
+              <ApplicantsTableBody
+                applicants={applicants}
                 checkedItems={checkedItems}
                 handleCheckboxChange={handleCheckboxChange}
                 setShowDeleteModal={setShowDeleteModal}
@@ -89,14 +89,12 @@ const ApplicationsTable = ({
               />
             )}
           </table>
-          {!applications ? (
-            <p className="w-full mt-10 text-center">You have no applications</p>
+          {!applicants ? (
+            <p className="w-full mt-10 text-center">No applicants to show</p>
           ) : (
-            applications &&
-            applications?.length <= 0 && (
-              <p className="w-full mt-10 text-center">
-                You have no applications
-              </p>
+            applicants &&
+            applicants?.length <= 0 && (
+              <p className="w-full mt-10 text-center">No applicants to show</p>
             )
           )}
         </>
@@ -109,4 +107,4 @@ const ApplicationsTable = ({
   );
 };
 
-export default ApplicationsTable;
+export default ApplicantsTable;

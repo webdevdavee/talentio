@@ -4,14 +4,21 @@ import Image from "next/image";
 import MetricCards from "./MetricCards";
 import JobsStats from "./JobsStats";
 import Calendar from "./Calendar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 import { useDateRangeStore } from "@/lib/store/DateRangeStore";
+import useClickOutside from "@/hooks/useClickOutside";
 
-const DashboardWrapper = () => {
+type DashboardWrapperProps = {
+  company: Company;
+  pageViews: number;
+};
+
+const DashboardWrapper = ({ company, pageViews }: DashboardWrapperProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   // Retrieve the date range from localStorage
   useEffect(() => {
@@ -30,11 +37,29 @@ const DashboardWrapper = () => {
     }
   }, []);
 
+  //greeting with respect to time of the day
+  const getGreeting = () => {
+    const currentTime = new Date().getHours();
+
+    if (currentTime >= 0 && currentTime < 12) {
+      return `Good morning, ${company.company}!`;
+    } else if (currentTime >= 12 && currentTime < 18) {
+      return `Good afternoon, ${company.company}!`;
+    } else {
+      return `Good evening, ${company.company}!`;
+    }
+  };
+
+  // Handle clicks outside profile dialog
+  useClickOutside(calendarRef, () => {
+    setShowCalendar(false);
+  });
+
   return (
     <section className="px-8 flex flex-col gap-8 mb-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-semibold text-xl">Good morning</h1>
+          <h1 className="font-semibold text-xl">{getGreeting()}</h1>
           <p className="text-gray-600 text-sm">
             Here is your job listing statistic report from{" "}
             {startDate && endDate ? (
@@ -44,7 +69,7 @@ const DashboardWrapper = () => {
             )}
           </p>
         </div>
-        <div className="relative">
+        <div ref={calendarRef} className="relative">
           <button
             type="button"
             className="flex items-center gap-3 border border-gray-200 p-2"
@@ -67,13 +92,12 @@ const DashboardWrapper = () => {
                 setStartDate={setStartDate}
                 endDate={endDate}
                 setEndDate={setEndDate}
-                setShowCalendar={setShowCalendar}
               />
             )}
           </div>
         </div>
       </div>
-      <MetricCards />
+      <MetricCards pageViews={pageViews} />
       <JobsStats />
     </section>
   );

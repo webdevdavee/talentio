@@ -30,7 +30,6 @@ const ChangePassword = ({ register, errors }: ChangePasswordProps) => {
           htmlFor="name"
           inputType="text"
           required
-          style="w-[40%]"
           error={
             errors.name && <p className="text-red-500">{errors.name.message}</p>
           }
@@ -41,7 +40,6 @@ const ChangePassword = ({ register, errors }: ChangePasswordProps) => {
           htmlFor="name"
           inputType="text"
           required
-          style="w-[40%]"
           error={
             errors.newPassord && (
               <p className="text-red-500">{errors.newPassord.message}</p>
@@ -54,7 +52,6 @@ const ChangePassword = ({ register, errors }: ChangePasswordProps) => {
           htmlFor="name"
           inputType="text"
           required
-          style="w-[40%]"
           error={
             errors.confirmPassword && (
               <p className="text-red-500">{errors.confirmPassword.message}</p>

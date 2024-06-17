@@ -286,3 +286,12 @@ export const week: string[] = [
   "Saturday",
   "Sunday",
 ];
+
+export const initialApplicationDetails = {
+  firstname: "",
+  lastname: "",
+  email: "",
+  phone: "",
+  nationality: "",
+  coverletter: "",
+};

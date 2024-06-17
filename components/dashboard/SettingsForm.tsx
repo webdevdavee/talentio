@@ -12,7 +12,6 @@ import ChangePassword from "./ChangePassword";
 import Loader2 from "../Loader2";
 import ProfileImageUploader from "./ProfileImageUploader";
 import { updateIndividual } from "@/database/actions/individual.action";
-import { useRouter } from "next/navigation";
 import { useUploadThing } from "@/lib/utils/uploadthing";
 
 type SettingsFormProps = {
@@ -73,10 +72,10 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
   };
 
   return (
-    <section className="mb-6">
+    <section className="w-[50%]">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex flex-col gap-6">
-          <div className="flex flex-col gap-4 mt-5">
+          <div className="flex flex-col gap-4">
             <span className="flex flex-col">
               <h2 className="text-lg font-medium">Profile picture</h2>
               <p className="text-sm">We support only SVG, PNG and JPEG</p>
@@ -103,7 +102,6 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
             htmlFor="name"
             inputType="text"
             required
-            style="w-[40%]"
             error={
               errors.name && (
                 <p className="text-red-500">{errors.name.message}</p>
@@ -117,7 +115,6 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
             inputType="text"
             inputMode="email"
             required
-            style="w-[40%]"
             error={
               errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
@@ -133,9 +130,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
               >
                 Change password?
               </button>
-              {error && (
-                <p className="w-[40%] p-2 bg-red-200 text-red-500">{error}</p>
-              )}
+              {error && <p className="p-2 bg-red-200 text-red-500">{error}</p>}
               {showChangePasswordForm && (
                 <ChangePassword register={register} errors={errors} />
               )}
@@ -143,7 +138,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
           )}
           <button
             type="submit"
-            className={`w-[20%] p-3 text-white transition duration-150 ${
+            className={`w-[40%] p-3 text-white transition duration-150 ${
               isSubmitting
                 ? "bg-gray-200"
                 : "bg-primary transition duration-150"

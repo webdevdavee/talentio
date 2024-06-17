@@ -202,7 +202,8 @@ export const handleJobFilter = async ({
     // Perform the query to filter documents
     const jobs = await Jobs.find(query)
       .skip(skips >= 0 ? skips : 0)
-      .limit(limit > 0 ? limit : 10);
+      .limit(limit > 0 ? limit : 10)
+      .sort("desc");
 
     const jobsNoLimit = await Jobs.find({});
 
@@ -256,6 +257,25 @@ export const getJobsByCompany = async (company: string) => {
 
     return JSON.parse(JSON.stringify(job));
   } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const updateJob = async (
+  jobId: string,
+  field: string,
+  fieldData: any
+) => {
+  try {
+    await connectToDatabase();
+
+    const updatedUser = await Jobs.updateOne(
+      { _id: jobId },
+      { $set: { [field]: fieldData } }
+    );
+
+    return JSON.parse(JSON.stringify(updatedUser));
+  } catch (error) {
     handleError(error);
   }
 };

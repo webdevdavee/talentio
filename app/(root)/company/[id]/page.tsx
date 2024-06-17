@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import CompanyDetails from "@/components/CompanyDetails";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { incrementPageView } from "@/database/actions/pageview.actions";
 
 type Params = {
   params: {
@@ -26,7 +27,11 @@ export async function generateMetadata({
 const page = async ({ params: { id } }: Params) => {
   const session = await auth();
   if (session?.user.accountType === "company") redirect("/company/dashboard");
-  const company = await getCompanyById(id);
+  const company: Company = await getCompanyById(id);
+
+  // Increment company's page view count
+  await incrementPageView(company.userId);
+
   return (
     <section className="px-16 my-8">
       <CompanyDetails company={company} />

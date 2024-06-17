@@ -12,13 +12,23 @@ import Link from "next/link";
 import { createApplication } from "@/database/actions/applications.actions";
 import { useRouter } from "next/navigation";
 import Loader2 from "./Loader2";
+import { updateJob } from "@/database/actions/job.actions";
+import { initialApplicationDetails } from "@/constants";
 
 type JobApplicationFormProps = {
   job: Job;
   userId: string | undefined;
+  applicationDetails: UserApplicationDetails;
 };
 
-const JobApplicationForm = ({ job, userId }: JobApplicationFormProps) => {
+const JobApplicationForm = ({
+  job,
+  userId,
+  applicationDetails,
+}: JobApplicationFormProps) => {
+  // Set initial form values.
+  const initialValues = applicationDetails ?? initialApplicationDetails;
+
   const {
     control,
     register,
@@ -27,6 +37,7 @@ const JobApplicationForm = ({ job, userId }: JobApplicationFormProps) => {
     reset,
   } = useForm<TJobApplicationFormSchema>({
     resolver: zodResolver(jobApplicationFormSchema),
+    defaultValues: initialValues,
   });
 
   const router = useRouter();
@@ -58,12 +69,14 @@ const JobApplicationForm = ({ job, userId }: JobApplicationFormProps) => {
           resume: uploadedFileUrl,
         },
         job._id,
+        job.companyId ?? job._id,
         userId as string
       );
       // If no errors, take user to their dashboard to see their application
       if (!response?.error) {
         reset();
         router.push("/individual/dashboard");
+        await updateJob(job._id, "applied", job.applied + 1);
       }
       setError(response?.error);
     } catch (error) {
@@ -133,7 +146,7 @@ const JobApplicationForm = ({ job, userId }: JobApplicationFormProps) => {
           inputRegister={register("phone")}
           label="Phone Number"
           htmlFor="phone"
-          inputType="text"
+          inputType="tel"
           required
           inputMode="tel"
           error={

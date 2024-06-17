@@ -61,7 +61,6 @@ type Job = {
   applied: number;
   companyId: string;
   companylogo: string;
-  applicationDate?: Date;
 };
 
 type Category = {
@@ -219,6 +218,7 @@ type UserSavedJobs = {
 };
 
 type UserApplication = {
+  _id: string;
   firstname: string;
   lastname: string;
   email: string;
@@ -228,9 +228,31 @@ type UserApplication = {
   resume: string;
   jobId: string;
   userId: string;
+  score: string;
+  stage: string;
+  job: Job;
   createdAt: Date;
 };
 
 type CheckedItems = {
   [key: string]: boolean;
+};
+
+type PageView = {
+  _id: string;
+  companyId: string;
+  viewCount: number;
+  views: { date: Date }[];
+};
+
+type UserApplicationDetails = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  nationality: string;
+  coverletter: string;
+  userId: string;
+  createdAt: Date;
 };

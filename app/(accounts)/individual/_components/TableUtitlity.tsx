@@ -10,10 +10,11 @@ type TableUtitlityProps = {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   title: string;
-  filteredSearch?: Job[];
+  filteredSearch?: UserApplication[];
   perPage: number;
   deleteBtnText: string;
   deleteFunction: () => Promise<void>;
+  searchPlaceholder: string;
 };
 
 const TableUtitlity = ({
@@ -24,6 +25,7 @@ const TableUtitlity = ({
   perPage,
   deleteBtnText,
   deleteFunction,
+  searchPlaceholder,
 }: TableUtitlityProps) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -62,7 +64,7 @@ const TableUtitlity = ({
         <Searchbar
           query={query}
           setQuery={setQuery}
-          placeholder="Search jobs"
+          placeholder={searchPlaceholder}
         />
       </div>
     </div>

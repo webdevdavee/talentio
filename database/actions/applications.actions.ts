@@ -10,6 +10,7 @@ import { revalidatePath } from "next/cache";
 export const createApplication = async (
   application: z.infer<typeof jobApplicationFormSchema>,
   jobId: string,
+  companyId: string,
   userId: string
 ) => {
   const validatedFields = jobApplicationFormSchema.safeParse(application);
@@ -20,13 +21,14 @@ export const createApplication = async (
   try {
     await connectToDatabase();
 
-    const newApplication = await Applications.create({
+    await Applications.create({
       ...application,
+      companyId,
       jobId,
       userId,
+      score: 0.0,
+      stage: "submission",
     });
-
-    console.log(newApplication);
   } catch (error: any) {
     handleError(error);
   }
@@ -63,10 +65,10 @@ export const getUserApplications = async (
   }
 };
 
-export const getUserApplicationByJobId = async (jobId: string) => {
+export const getUserApplicationById = async (id: string) => {
   try {
     await connectToDatabase();
-    const application = await Applications.findOne({ jobId });
+    const application = await Applications.findById(id);
     if (!application) {
       throw new Error("Application not found");
     }
@@ -88,11 +90,42 @@ export const deleteApplication = async (
 
     // Perform the deletion
     await Applications.deleteMany({
-      jobId: { $in: idsToDelete },
+      _id: { $in: idsToDelete },
     });
 
     revalidatePath(path);
-  } catch (error) {
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const getApplicants = async (
+  companyId: string,
+  page = 1,
+  limit = 10
+) => {
+  try {
+    await connectToDatabase();
+
+    // Calculate the number of documents to skip
+    const skips = limit * (page - 1);
+
+    if (companyId) {
+      // find all the items that match the company id
+      const applicants = await Applications.find({ companyId })
+        .skip(skips >= 0 ? skips : 0)
+        .limit(limit > 0 ? limit : 10);
+
+      // Get the total number of applications
+      const applicantsCount = await Applications.find({}).countDocuments();
+      const totalPages = Math.ceil(applicantsCount / limit);
+
+      return {
+        applicants: JSON.parse(JSON.stringify(applicants)),
+        totalPages,
+      };
+    }
+  } catch (error: any) {
     handleError(error);
   }
 };

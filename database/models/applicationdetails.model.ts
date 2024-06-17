@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
-const ApplicationsSchema = new Schema(
+const ApplicationDetailsSchema = new Schema(
   {
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
@@ -8,17 +8,13 @@ const ApplicationsSchema = new Schema(
     phone: { type: String, required: true },
     nationality: { type: String, required: true },
     coverletter: { type: String, required: true },
-    resume: { type: String, required: true },
-    jobId: { type: String, required: true },
-    companyId: { type: String, required: true },
     userId: { type: String, required: true },
-    score: { type: Number, required: true },
-    stage: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-const Applications =
-  models.Applications || model("Applications", ApplicationsSchema);
+const ApplicationDetails =
+  models.ApplicationDetails ||
+  model("ApplicationDetails", ApplicationDetailsSchema);
 
-export default Applications;
+export default ApplicationDetails;

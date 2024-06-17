@@ -1,5 +1,7 @@
 import { auth } from "@/auth";
 import JobApplicationForm from "@/components/JobApplicationForm";
+import { findApplicationDetails } from "@/database/actions/applicationdetails.actions";
+import { findIndividualById } from "@/database/actions/individual.action";
 import { getJobById } from "@/database/actions/job.actions";
 import { redirect } from "next/navigation";
 
@@ -18,10 +20,17 @@ const page = async ({ searchParams }: SearchParamProps) => {
   const userId = session?.user.id;
 
   const job: Job = await getJobById(jobToApply);
+
+  const user = await findIndividualById(session?.user.id as string);
+  const applicationDetails = await findApplicationDetails(user.userId);
   return (
     <section>
       <div className="w-full flex justify-center p-10">
-        <JobApplicationForm job={job} userId={userId} />
+        <JobApplicationForm
+          job={job}
+          userId={userId}
+          applicationDetails={applicationDetails}
+        />
       </div>
     </section>
   );

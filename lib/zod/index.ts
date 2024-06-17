@@ -90,3 +90,17 @@ export const PostJobFormSchema = z.object({
 });
 
 export type TPostJobFormSchema = z.infer<typeof PostJobFormSchema>;
+
+// UPDATE APPLICATION DETAILS FORM SCHEMA
+export const updateApplicationDetailsFormSchema = z.object({
+  firstname: z.string().min(3, "Use 3 characters or more"),
+  lastname: z.string().min(3, "Use 3 characters or more"),
+  email: z.string().email(),
+  phone: z.string().regex(/^(0|\+?[1-9])[0-9]{7,14}$/, "Invalid phone number"),
+  nationality: z.string().min(3, "Use 3 characters or more"),
+  coverletter: z.string().min(3, "Use 3 characters or more"),
+});
+
+export type TUpdateApplicationDetailsFormSchema = z.infer<
+  typeof updateApplicationDetailsFormSchema
+>;

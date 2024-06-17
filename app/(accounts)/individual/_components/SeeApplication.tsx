@@ -4,21 +4,21 @@ import { convertDateFormat } from "@/lib/utils";
 import Link from "next/link";
 import { useRef } from "react";
 
-type showMyApplicationProps = {
+type seeApplicationProps = {
   applicationToShow: UserApplication | undefined;
   showMyApplication: boolean;
   setShowMyApplication: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SeeMyApplication = ({
+const SeeApplication = ({
   applicationToShow,
   showMyApplication,
   setShowMyApplication,
-}: showMyApplicationProps) => {
-  const seeMyApplicationRef = useRef<HTMLDivElement>(null);
+}: seeApplicationProps) => {
+  const seeApplicationRef = useRef<HTMLDivElement>(null);
 
   // Handle clicks outside profile dialog
-  useClickOutside(seeMyApplicationRef, () => {
+  useClickOutside(seeApplicationRef, () => {
     setShowMyApplication(false);
     useOverlayStore.setState({ overlay: false });
   });
@@ -29,7 +29,7 @@ const SeeMyApplication = ({
     <>
       {showMyApplication && applicationToShow && (
         <section
-          ref={seeMyApplicationRef}
+          ref={seeApplicationRef}
           className="w-[30%] max-h-[60%] modal z-[36] border-[1px] border-gray-300 p-6 bg-white overflow-y-auto custom-scrollbar"
         >
           <div className="flex flex-col gap-4">
@@ -74,4 +74,4 @@ const SeeMyApplication = ({
   );
 };
 
-export default SeeMyApplication;
+export default SeeApplication;

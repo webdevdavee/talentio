@@ -10,7 +10,7 @@ type TableUtitlityProps = {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   title: string;
-  filteredSearch?: UserApplication[];
+  filteredSearch?: UserApplication[] | Job[];
   perPage: number;
   deleteBtnText: string;
   deleteFunction: () => Promise<void>;

@@ -71,7 +71,7 @@ const EditApplicantCard = ({
   return (
     <>
       {showEditApplicant && applicantToBeEdited && (
-        <div ref={seeApplicationRef}>
+        <section ref={seeApplicationRef}>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="w-[30%] max-h-[55%] modal z-[36] border-[1px] border-gray-300 p-6 bg-white overflow-y-auto custom-scrollbar flex flex-col justify-between gap-6"
@@ -100,8 +100,9 @@ const EditApplicantCard = ({
               </button>
               {showStages && (
                 <div className="mt-4 bg-white w-full border">
-                  {hiringStages.map((stage) => (
+                  {hiringStages.map((stage, index) => (
                     <p
+                      key={index}
                       className="p-2 hover:bg-gray-100 capitalize cursor-pointer"
                       onClick={() => handleSelectStage(stage)}
                     >
@@ -140,7 +141,7 @@ const EditApplicantCard = ({
               )}
             </button>
           </form>
-        </div>
+        </section>
       )}
     </>
   );

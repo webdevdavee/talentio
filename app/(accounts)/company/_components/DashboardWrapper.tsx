@@ -12,9 +12,14 @@ import useClickOutside from "@/hooks/useClickOutside";
 type DashboardWrapperProps = {
   company: Company;
   pageViews: number;
+  newCandidatesCount: number | undefined;
 };
 
-const DashboardWrapper = ({ company, pageViews }: DashboardWrapperProps) => {
+const DashboardWrapper = ({
+  company,
+  pageViews,
+  newCandidatesCount,
+}: DashboardWrapperProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -97,7 +102,10 @@ const DashboardWrapper = ({ company, pageViews }: DashboardWrapperProps) => {
           </div>
         </div>
       </div>
-      <MetricCards pageViews={pageViews} />
+      <MetricCards
+        pageViews={pageViews}
+        newCandidatesCount={newCandidatesCount}
+      />
       <JobsStats />
     </section>
   );

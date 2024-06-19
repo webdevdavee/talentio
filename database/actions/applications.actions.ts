@@ -6,6 +6,7 @@ import Applications from "../models/applications.model";
 import { z } from "zod";
 import { jobApplicationFormSchema } from "@/lib/zod";
 import { revalidatePath } from "next/cache";
+import Newcandidate from "../models/newcandidates.model";
 
 export const createApplication = async (
   application: z.infer<typeof jobApplicationFormSchema>,
@@ -21,7 +22,7 @@ export const createApplication = async (
   try {
     await connectToDatabase();
 
-    await Applications.create({
+    const newApplication = await Applications.create({
       ...application,
       companyId,
       jobId,
@@ -29,6 +30,12 @@ export const createApplication = async (
       score: 0.0,
       stage: "in review",
     });
+
+    if (newApplication)
+      await Newcandidate.create({
+        applicationId: newApplication._id,
+        companyId,
+      });
   } catch (error: any) {
     handleError(error);
   }
@@ -85,12 +92,17 @@ export const deleteApplication = async (
   try {
     await connectToDatabase();
 
-    // Construct an array of ids from products
+    // Construct an array of ids from applications
     const idsToDelete = applications.map((application) => application.id);
 
     // Perform the deletion
     await Applications.deleteMany({
       _id: { $in: idsToDelete },
+    });
+
+    // Perform the deletion
+    await Newcandidate.deleteMany({
+      applicationId: { $in: idsToDelete },
     });
 
     revalidatePath(path);
@@ -139,6 +151,37 @@ export const updateUserApplication = async (
     await connectToDatabase();
 
     await Applications.updateOne({ userId, jobId }, { $set: updateFields });
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const getNewCandidatesCount = async (
+  companyId: string,
+  applicationId?: string
+) => {
+  try {
+    await connectToDatabase();
+
+    // Retrieve new candidates count
+    const newCandidatesCount = await Newcandidate.find({
+      companyId,
+    }).countDocuments();
+
+    return newCandidatesCount;
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const deleteNewCandidate = async (applicationId: string) => {
+  try {
+    await connectToDatabase();
+
+    // Perform the deletion
+    await Newcandidate.deleteOne({
+      applicationId,
+    });
   } catch (error: any) {
     handleError(error);
   }

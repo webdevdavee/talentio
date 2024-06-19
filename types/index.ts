@@ -61,6 +61,7 @@ type Job = {
   applied: number;
   companyId: string;
   companylogo: string;
+  createdAt: Date;
 };
 
 type Category = {
@@ -139,6 +140,11 @@ type GetJob = {
   jobs: Job[];
   totalPages: number;
   jobsNoLimit: Job[];
+};
+
+type GetJob2 = {
+  jobs: Job[];
+  totalPages: number;
 };
 
 type GetCompanies = {

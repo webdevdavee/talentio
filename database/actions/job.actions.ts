@@ -9,6 +9,7 @@ import {
 import Jobs from "../models/job.model";
 import { PostJobFormSchema } from "@/lib/zod";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 export const createJob = async (
   data: z.infer<typeof PostJobFormSchema>,
@@ -249,6 +250,34 @@ export const getUniquePropertyValue = async (field: string) => {
   }
 };
 
+export const getJobsByCompanyId = async (
+  companyId: string,
+  page = 1,
+  limit = 10
+) => {
+  try {
+    await connectToDatabase();
+
+    // Calculate the number of documents to skip
+    const skips = limit * (page - 1);
+
+    const jobs = await Jobs.find({ companyId })
+      .skip(skips >= 0 ? skips : 0)
+      .limit(limit > 0 ? limit : 10);
+
+    // Get the total number of jobs
+    const jobCount = await Jobs.find({ companyId }).countDocuments();
+    const totalPages = Math.ceil(jobCount / limit);
+
+    return {
+      jobs: JSON.parse(JSON.stringify(jobs)),
+      totalPages,
+    };
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
 export const getJobsByCompany = async (company: string) => {
   try {
     await connectToDatabase();
@@ -276,6 +305,24 @@ export const updateJob = async (
 
     return JSON.parse(JSON.stringify(updatedUser));
   } catch (error) {
+    handleError(error);
+  }
+};
+
+export const deleteJobs = async (jobs: { id: string }[], path: string) => {
+  try {
+    await connectToDatabase();
+
+    // Construct an array of ids from jobs
+    const idsToDelete = jobs.map((job) => job.id);
+
+    // Perform the deletion
+    await Jobs.deleteMany({
+      _id: { $in: idsToDelete },
+    });
+
+    revalidatePath(path);
+  } catch (error: any) {
     handleError(error);
   }
 };

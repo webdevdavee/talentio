@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import TableUtitlity from "../../individual/_components/TableUtitlity";
 import {
   deleteApplication,
+  deleteNewCandidate,
   getApplicants,
   getUserApplicationById,
 } from "@/database/actions/applications.actions";
@@ -74,7 +75,7 @@ const ApplicantsWrapper = ({
       setIsLoading(false);
     };
     fetchApplicants();
-  }, [page, perPage, refetchData]);
+  }, [page, perPage, company.userId, refetchData]);
 
   // Create a new array (newCheckedApplicants) off of checkedItems
   useEffect(() => {
@@ -136,21 +137,26 @@ const ApplicantsWrapper = ({
 
   // Get the application to display on modal from the applicantId
   const handleShowApplication = async (applicantId: string) => {
+    setShowApplication(true);
+    useOverlayStore.setState({ overlay: true });
     const application = await getUserApplicationById(applicantId);
     if (application) {
+      // Delete application from the new candidate database collection.
+      // The new candidates collection is used to hold the applications the company or hiring team has not yet reviewed
+      await deleteNewCandidate(applicantId);
       setApplicationToShow(application);
-      setShowApplication(true);
-      useOverlayStore.setState({ overlay: true });
     }
   };
 
   // Get the applicant to display on modal from the applicantId
   const handleShowEditApplicant = async (applicantId: string) => {
+    setShowEditApplicant(true);
+    useOverlayStore.setState({ overlay: true });
     const applicant = await getUserApplicationById(applicantId);
     if (applicant) {
+      // Delete application from the new candidate database collection.
+      await deleteNewCandidate(applicantId);
       setApplicantToBeEdited(applicant);
-      setShowEditApplicant(true);
-      useOverlayStore.setState({ overlay: true });
     }
   };
 

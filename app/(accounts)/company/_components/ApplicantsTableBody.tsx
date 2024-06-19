@@ -8,10 +8,11 @@ type ApplicationTableBodyProps = {
   checkedItems: CheckedItems;
   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setSingleApplicationToBeDeleted: React.Dispatch<
+  setSingleApplicantToBeDeleted: React.Dispatch<
     React.SetStateAction<string | undefined>
   >;
   handleShowApplication: (applicantId: string) => Promise<void>;
+  handleShowEditApplicant: (applicantId: string) => Promise<void>;
 };
 
 const ApplicantsTableBody = ({
@@ -19,13 +20,14 @@ const ApplicantsTableBody = ({
   checkedItems,
   handleCheckboxChange,
   setShowDeleteModal,
-  setSingleApplicationToBeDeleted,
+  setSingleApplicantToBeDeleted,
   handleShowApplication,
+  handleShowEditApplicant,
 }: ApplicationTableBodyProps) => {
   const openDeleteModal = (applicantId: string) => {
     useOverlayStore.setState({ overlay: true });
     setShowDeleteModal(true);
-    setSingleApplicationToBeDeleted(applicantId);
+    setSingleApplicantToBeDeleted(applicantId);
   };
 
   return (
@@ -42,13 +44,49 @@ const ApplicantsTableBody = ({
             />
           </td>
           <td className="text-sm w-max p-3">
-            <p>John Towel</p>
+            <p>
+              {applicant.firstname} {applicant.lastname}
+            </p>
           </td>
-          <td className="text-sm w-max p-3">4.6</td>
-          <td className="text-sm w-max p-3">16th June 2024</td>
-          <td className="text-sm w-max p-3">Cyber security</td>
           <td className="text-sm w-max p-3">
-            <p>Interview</p>
+            <Link
+              href={`mailto:${applicant.email}`}
+              className="flex items-center gap-1 underline text-purple-500"
+            >
+              <Image src="/link.svg" width={20} height={20} alt="link" />
+              {applicant.email}
+            </Link>
+          </td>
+          <td className="text-sm w-max p-3">
+            <div className="flex items-center gap-3">
+              {applicant.score > 0 ? (
+                <Image src="/star-fill.svg" width={20} height={20} alt="img" />
+              ) : (
+                <Image src="/star.svg" width={20} height={20} alt="img" />
+              )}
+              <p>{applicant.score}%</p>
+            </div>
+          </td>
+          <td className="text-sm w-max p-3">
+            {convertDateFormat(applicant.createdAt as Date)}
+          </td>
+          <td className="text-sm w-max p-3">{applicant.job.title}</td>
+          <td className="text-sm w-max p-3">
+            <p
+              className={`flex items-center justify-center gap-1 border rounded-2xl text-center p-2 capitalize font-medium ${
+                applicant.stage === "in review"
+                  ? "border-[#FEBC43] text-[#FEBC43]"
+                  : applicant.stage === "shortlisted"
+                  ? "border-[#6C67E5] text-[#6C67E5]"
+                  : applicant.stage === "interviewed"
+                  ? "border-[#3BACFF] text-[#3BACFF]"
+                  : applicant.stage === "hired"
+                  ? "border-green-500 text-green-500"
+                  : "border-[#FF6550] text-[#FF6550]"
+              }`}
+            >
+              {applicant.stage}
+            </p>
           </td>
           <td className="text-sm w-max p-3">
             <button
@@ -60,12 +98,20 @@ const ApplicantsTableBody = ({
             </button>
           </td>
           <td className="text-sm w-max p-3">
-            <button
-              type="button"
-              onClick={() => openDeleteModal(applicant._id)}
-            >
-              <Image src="/trash.svg" width={20} height={20} alt="delete" />
-            </button>
+            <div className="flex items-center gap-5">
+              <button
+                type="button"
+                onClick={() => handleShowEditApplicant(applicant._id)}
+              >
+                <Image src="/edit.svg" width={20} height={20} alt="edit" />
+              </button>
+              <button
+                type="button"
+                onClick={() => openDeleteModal(applicant._id)}
+              >
+                <Image src="/trash.svg" width={20} height={20} alt="delete" />
+              </button>
+            </div>
           </td>
         </tr>
       ))}

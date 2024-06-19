@@ -104,3 +104,17 @@ export const updateApplicationDetailsFormSchema = z.object({
 export type TUpdateApplicationDetailsFormSchema = z.infer<
   typeof updateApplicationDetailsFormSchema
 >;
+
+// EDIT APPLICANT DETAILS FORM SCHEMA
+export const editApplicantDetailsFormSchema = z.object({
+  score: z
+    .string()
+    .min(1, "Required")
+    .refine((val) => !Number.isNaN(Number(val)) && parseInt(val, 10) <= 100, {
+      message: "Score must be less than or equal to 100",
+    }),
+});
+
+export type TEditApplicantDetailsFormSchema = z.infer<
+  typeof editApplicantDetailsFormSchema
+>;

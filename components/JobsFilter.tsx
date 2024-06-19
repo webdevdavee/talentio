@@ -34,11 +34,11 @@ const JobsFilter = ({
           width={22}
           height={22}
           alt={filter.title}
-          className={`${
+          className={
             filter.showFilter
               ? "rotate-180 transition duration-150"
               : "transition duration-150"
-          }`}
+          }
         />
       </span>
       {filter.showFilter &&

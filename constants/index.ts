@@ -295,3 +295,11 @@ export const initialApplicationDetails = {
   nationality: "",
   coverletter: "",
 };
+
+export const hiringStages = [
+  "in review",
+  "shortlisted",
+  "interviewed",
+  "hired",
+  "declined",
+];

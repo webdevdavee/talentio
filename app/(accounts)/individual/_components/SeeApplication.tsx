@@ -23,8 +23,6 @@ const SeeApplication = ({
     useOverlayStore.setState({ overlay: false });
   });
 
-  console.log(applicationToShow);
-
   return (
     <>
       {showMyApplication && applicationToShow && (

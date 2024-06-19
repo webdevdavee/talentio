@@ -228,7 +228,7 @@ type UserApplication = {
   resume: string;
   jobId: string;
   userId: string;
-  score: string;
+  score: number;
   stage: string;
   job: Job;
   createdAt: Date;

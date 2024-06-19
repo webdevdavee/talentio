@@ -27,7 +27,7 @@ export const createApplication = async (
       jobId,
       userId,
       score: 0.0,
-      stage: "submission",
+      stage: "in review",
     });
   } catch (error: any) {
     handleError(error);
@@ -125,6 +125,20 @@ export const getApplicants = async (
         totalPages,
       };
     }
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const updateUserApplication = async (
+  updateFields: any,
+  userId: string,
+  jobId: string
+) => {
+  try {
+    await connectToDatabase();
+
+    await Applications.updateOne({ userId, jobId }, { $set: updateFields });
   } catch (error: any) {
     handleError(error);
   }

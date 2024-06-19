@@ -9,11 +9,13 @@ import {
 } from "@/database/actions/applications.actions";
 import { getJobById } from "@/database/actions/job.actions";
 import { useOverlayStore } from "@/lib/store/OverlayStore";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import DeletePopup from "@/components/DeletePopup";
 import SeeApplication from "../../individual/_components/SeeApplication";
 import Pagination from "@/components/Pagination";
 import ApplicantsTable from "./ApplicantsTable";
+import { createURL } from "@/lib/utils";
+import EditApplicantCard from "./EditApplicantCard";
 
 type ApplicantsWrapperProps = {
   company: Company;
@@ -27,6 +29,9 @@ const ApplicantsWrapper = ({
   perPage,
 }: ApplicantsWrapperProps) => {
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pageParam = new URLSearchParams(searchParams.toString());
 
   const [query, setQuery] = useState("");
   const [applicants, setApplicants] = useState<UserApplication[]>([]);
@@ -41,19 +46,23 @@ const ApplicantsWrapper = ({
   >([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showApplication, setShowApplication] = useState(false);
-  const [singleApplicationToBeDeleted, setSingleApplicationToBeDeleted] =
+  const [singleApplicantToBeDeleted, setSingleApplicantToBeDeleted] =
     useState<string>();
+  const [showEditApplicant, setShowEditApplicant] = useState(false);
+  const [applicantToBeEdited, setApplicantToBeEdited] =
+    useState<UserApplication>();
+  const [refetchData, setRefetchData] = useState(false);
 
   useEffect(() => {
     const fetchApplicants = async () => {
       // Fetch the company's applicants
-      const theApplicant = await getApplicants(company.userId, page, perPage);
+      const applicants = await getApplicants(company.userId, page, perPage);
 
-      setTotalPages(theApplicant?.totalPages);
+      setTotalPages(applicants?.totalPages);
 
       // Fetch the applicants details for each application
       const applicantsDetails: UserApplication[] = await Promise.all(
-        theApplicant?.applicants.map(async (application: UserApplication) => {
+        applicants?.applicants.map(async (application: UserApplication) => {
           const job: Job = await getJobById(application.jobId);
           return {
             ...application,
@@ -65,7 +74,7 @@ const ApplicantsWrapper = ({
       setIsLoading(false);
     };
     fetchApplicants();
-  }, [page, perPage]);
+  }, [page, perPage, refetchData]);
 
   // Create a new array (newCheckedApplicants) off of checkedItems
   useEffect(() => {
@@ -84,30 +93,48 @@ const ApplicantsWrapper = ({
       applicant.lastname.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Delete applicants(s) function
+  // Function to delete applicants
   const deleteApplicants = async () => {
-    if (applicants && applicants.length <= 1) setIsLoading(true);
+    // Prevent unnecessary state updates if refetchData is already false
+    if (refetchData) setRefetchData(false);
 
-    // Ready the application(s) to be deleted
-    const idToArray = singleApplicationToBeDeleted
-      ? [{ id: singleApplicationToBeDeleted }]
-      : [];
+    // Prepare the applicant(s) to be deleted
+    const applicantsToDelete = singleApplicantToBeDeleted
+      ? [{ id: singleApplicantToBeDeleted }]
+      : checkedApplicants;
 
-    if (checkedApplicants.length > 0) {
-      await deleteApplication(checkedApplicants, pathname);
-    }
-
-    if (idToArray.length > 0) {
-      await deleteApplication(idToArray, pathname);
-    }
-
+    // Close the delete modal and remove overlay
     setShowDeleteModal(false);
     useOverlayStore.setState({ overlay: false });
 
-    location.reload();
+    // Perform the delete operation
+    if (applicantsToDelete.length > 0) {
+      await deleteApplication(applicantsToDelete, pathname);
+      setSingleApplicantToBeDeleted(undefined);
+    }
+
+    // Adjust pagination if necessary
+    if (
+      applicants &&
+      page === totalPages &&
+      (applicants.length <= 1 ||
+        applicantsToDelete.length === applicants.length)
+    ) {
+      totalPages - 1;
+      const newPage = Math.max(page - 1, 1);
+      pageParam.set("page", newPage.toString());
+
+      // Update the URL with the new page number
+      const url = createURL(pathname, pageParam);
+      router.push(url);
+    }
+
+    // Refetch data and indicate loading is complete
+    setRefetchData(true);
+    setIsLoading(false);
   };
 
-  // Get the application to display on modal from the jobId
+  // Get the application to display on modal from the applicantId
   const handleShowApplication = async (applicantId: string) => {
     const application = await getUserApplicationById(applicantId);
     if (application) {
@@ -117,8 +144,18 @@ const ApplicantsWrapper = ({
     }
   };
 
+  // Get the applicant to display on modal from the applicantId
+  const handleShowEditApplicant = async (applicantId: string) => {
+    const applicant = await getUserApplicationById(applicantId);
+    if (applicant) {
+      setApplicantToBeEdited(applicant);
+      setShowEditApplicant(true);
+      useOverlayStore.setState({ overlay: true });
+    }
+  };
+
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex flex-col gap-6 mb-6">
       <DeletePopup
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
@@ -128,6 +165,11 @@ const ApplicantsWrapper = ({
         applicationToShow={applicationToShow}
         showMyApplication={showApplication}
         setShowMyApplication={setShowApplication}
+      />
+      <EditApplicantCard
+        applicantToBeEdited={applicantToBeEdited}
+        showEditApplicant={showEditApplicant}
+        setShowEditApplicant={setShowEditApplicant}
       />
       <TableUtitlity
         query={query}
@@ -145,9 +187,10 @@ const ApplicantsWrapper = ({
         checkedItems={checkedItems}
         setCheckedItems={setCheckedItems}
         setShowDeleteModal={setShowDeleteModal}
-        setSingleApplicationToBeDeleted={setSingleApplicationToBeDeleted}
+        setSingleApplicantToBeDeleted={setSingleApplicantToBeDeleted}
         isLoading={isLoading}
         handleShowApplication={handleShowApplication}
+        handleShowEditApplicant={handleShowEditApplicant}
       />
       <Pagination page={page} totalPages={totalPages} />
     </section>

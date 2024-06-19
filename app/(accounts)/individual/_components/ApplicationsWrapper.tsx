@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ApplicationsTable from "./ApplicationsTable";
 import TableUtitlity from "./TableUtitlity";
 import Pagination from "../../../../components/Pagination";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import DeletePopup from "../../../../components/DeletePopup";
 import {
   deleteApplication,
@@ -14,6 +14,7 @@ import {
 import { useOverlayStore } from "@/lib/store/OverlayStore";
 import { getJobById } from "@/database/actions/job.actions";
 import SeeApplication from "./SeeApplication";
+import { createURL } from "@/lib/utils";
 
 type ApplicationsWrapperProps = {
   userId: string | undefined;
@@ -27,6 +28,9 @@ const ApplicationsWrapper = ({
   perPage,
 }: ApplicationsWrapperProps) => {
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pageParam = new URLSearchParams(searchParams.toString());
 
   const [query, setQuery] = useState("");
   const [applications, setApplications] = useState<UserApplication[]>([]);
@@ -43,9 +47,11 @@ const ApplicationsWrapper = ({
   const [showMyApplication, setShowMyApplication] = useState(false);
   const [singleApplicationToBeDeleted, setSingleApplicationToBeDeleted] =
     useState<string>();
+  const [refetchData, setRefetchData] = useState(false);
 
   useEffect(() => {
     const fetchApplications = async () => {
+      setIsLoading(true);
       // Fetch the user's applications
       const getApplications = await getUserApplications(userId, page, perPage);
 
@@ -67,7 +73,7 @@ const ApplicationsWrapper = ({
       setIsLoading(false);
     };
     fetchApplications();
-  }, [page, perPage]);
+  }, [page, perPage, refetchData]);
 
   // Create a new array (newCheckedApplications) off of checkedItems
   useEffect(() => {
@@ -84,27 +90,45 @@ const ApplicationsWrapper = ({
       application.job.company.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Delete appliaction(s) function
+  // Function to delete applications
   const deleteApplications = async () => {
-    setIsLoading(true);
+    // Prevent unnecessary state updates if refetchData is already false
+    if (refetchData) setRefetchData(false);
 
-    // Ready the application(s) to be deleted
-    const idToArray = singleApplicationToBeDeleted
+    // Prepare the application(s) to be deleted
+    const applicationsToDelete = singleApplicationToBeDeleted
       ? [{ id: singleApplicationToBeDeleted }]
-      : [];
+      : checkedApplications;
 
-    if (checkedApplications.length > 0) {
-      await deleteApplication(checkedApplications, pathname);
-    }
-
-    if (idToArray.length > 0) {
-      await deleteApplication(idToArray, pathname);
-    }
-
+    // Close the delete modal and remove overlay
     setShowDeleteModal(false);
     useOverlayStore.setState({ overlay: false });
 
-    location.reload();
+    // Perform the delete operation
+    if (applicationsToDelete.length > 0) {
+      await deleteApplication(applicationsToDelete, pathname);
+      setSingleApplicationToBeDeleted(undefined);
+    }
+
+    // Adjust pagination if necessary
+    if (
+      applications &&
+      page === totalPages &&
+      (applications.length <= 1 ||
+        applicationsToDelete.length === applications.length)
+    ) {
+      totalPages - 1;
+      const newPage = Math.max(page - 1, 1);
+      pageParam.set("page", newPage.toString());
+
+      // Update the URL with the new page number
+      const url = createURL(pathname, pageParam);
+      router.push(url);
+    }
+
+    // Refetch data and indicate loading is complete
+    setRefetchData(true);
+    setIsLoading(false);
   };
 
   // Get the application to display on modal from the applicationId
@@ -118,7 +142,7 @@ const ApplicationsWrapper = ({
   };
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex flex-col gap-6 mb-6">
       <DeletePopup
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}

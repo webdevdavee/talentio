@@ -4,15 +4,15 @@ import { useEffect, useState } from "react";
 import TableUtitlity from "./TableUtitlity";
 import SavedJobsTable from "./SavedJobsTable";
 import Pagination from "../../../../components/Pagination";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useOverlayStore } from "@/lib/store/OverlayStore";
 import {
   deleteSavedJobs,
   getUserSavedJobs,
 } from "@/database/actions/savedjobs.actions";
 import DeletePopup from "../../../../components/DeletePopup";
-import Loader from "../../../../components/Loader";
 import { getJobById } from "@/database/actions/job.actions";
+import { createURL } from "@/lib/utils";
 
 type SavedJobsWrapperProps = {
   userId: string | undefined;
@@ -22,6 +22,9 @@ type SavedJobsWrapperProps = {
 
 const SavedJobsWrapper = ({ userId, page, perPage }: SavedJobsWrapperProps) => {
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pageParam = new URLSearchParams(searchParams.toString());
 
   const [query, setQuery] = useState("");
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -35,6 +38,7 @@ const SavedJobsWrapper = ({ userId, page, perPage }: SavedJobsWrapperProps) => {
   >([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [singleJobToBeDeleted, setSingleJobToBeDeleted] = useState<string>();
+  const [refetchData, setRefetchData] = useState(false);
 
   useEffect(() => {
     const fetchSavedJobs = async () => {
@@ -49,7 +53,7 @@ const SavedJobsWrapper = ({ userId, page, perPage }: SavedJobsWrapperProps) => {
       setIsLoading(false);
     };
     fetchSavedJobs();
-  }, [page, perPage]);
+  }, [page, perPage, refetchData]);
 
   // Create a new array (newCheckedJobs) off of checkedItems
   useEffect(() => {
@@ -69,30 +73,46 @@ const SavedJobsWrapper = ({ userId, page, perPage }: SavedJobsWrapperProps) => {
 
   // Delete saved job(s) function
   const deleteSavedJob = async () => {
-    if (jobs && jobs.length <= 1) setIsLoading(true);
+    // Prevent unnecessary state updates if refetchData is already false
+    if (refetchData) setRefetchData(false);
 
-    // Ready the saved job(s) to be deleted
-    const idToArray = singleJobToBeDeleted
+    // Prepare the job(s) to be deleted
+    const jobsToDelete = singleJobToBeDeleted
       ? [{ id: singleJobToBeDeleted }]
-      : [];
+      : checkedJobs;
 
-    if (checkedJobs.length > 0) {
-      await deleteSavedJobs(checkedJobs, pathname);
-    }
-
-    if (idToArray.length > 0) {
-      await deleteSavedJobs(idToArray, pathname);
-    }
-
+    // Close the delete modal and remove overlay
     setShowDeleteModal(false);
     useOverlayStore.setState({ overlay: false });
 
-    if (jobs && jobs.length <= 1) setIsLoading(false);
-    if (jobs && jobs.length > 1) window.location.reload();
+    // Perform the delete operation
+    if (jobsToDelete.length > 0) {
+      await deleteSavedJobs(jobsToDelete, pathname);
+      setSingleJobToBeDeleted(undefined);
+    }
+
+    // Adjust pagination if necessary
+    if (
+      jobs &&
+      page === totalPages &&
+      (jobs.length <= 1 || jobsToDelete.length === jobs.length)
+    ) {
+      totalPages - 1;
+      const newPage = Math.max(page - 1, 1);
+      pageParam.set("page", newPage.toString());
+
+      // Update the URL with the new page number
+      const url = createURL(pathname, pageParam);
+      router.push(url);
+    }
+
+    // Refetch data and indicate loading is complete
+    setRefetchData(true);
+    setIsLoading(false);
   };
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex flex-col gap-6 mb-6">
       <DeletePopup
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}

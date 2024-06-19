@@ -8,11 +8,12 @@ type ApplicantsTableBodyProps = {
   checkedItems: CheckedItems;
   setCheckedItems: React.Dispatch<React.SetStateAction<CheckedItems>>;
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setSingleApplicationToBeDeleted: React.Dispatch<
+  setSingleApplicantToBeDeleted: React.Dispatch<
     React.SetStateAction<string | undefined>
   >;
   isLoading: boolean;
   handleShowApplication: (jobId: string) => Promise<void>;
+  handleShowEditApplicant: (applicantId: string) => Promise<void>;
 };
 
 const ApplicantsTable = ({
@@ -21,9 +22,10 @@ const ApplicantsTable = ({
   checkedItems,
   setCheckedItems,
   setShowDeleteModal,
-  setSingleApplicationToBeDeleted,
+  setSingleApplicantToBeDeleted,
   isLoading,
   handleShowApplication,
+  handleShowEditApplicant,
 }: ApplicantsTableBodyProps) => {
   // Function to handle individual checkbox toggle
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,10 +84,9 @@ const ApplicantsTable = ({
                 checkedItems={checkedItems}
                 handleCheckboxChange={handleCheckboxChange}
                 setShowDeleteModal={setShowDeleteModal}
-                setSingleApplicationToBeDeleted={
-                  setSingleApplicationToBeDeleted
-                }
+                setSingleApplicantToBeDeleted={setSingleApplicantToBeDeleted}
                 handleShowApplication={handleShowApplication}
+                handleShowEditApplicant={handleShowEditApplicant}
               />
             )}
           </table>

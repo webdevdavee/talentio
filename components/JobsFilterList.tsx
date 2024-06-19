@@ -56,6 +56,7 @@ const JobsFilterList = ({
     // Send the created query to the URL
     router.push(url, { scroll: false });
 
+    setShowLoader(true);
     // Fetch the updated URL keys and values from the URL and save the data in the respective variables
     const [type, category, level, salary, search] = [
       "type",
@@ -104,7 +105,10 @@ const JobsFilterList = ({
 
     // Set the appropriate jobsFrequency based on whether filters are empty
     setJobsFrequency(areFiltersEmpty ? newFrequencyNoLimit : newFrequency);
+    setShowLoader(false);
   };
+
+  // console.log("jobsFrequency:", jobsFrequency);
 
   // Function to set the URL params keys and values
   const handleFilterChange = async (
@@ -112,7 +116,6 @@ const JobsFilterList = ({
     filterType: string,
     filterValue: string
   ) => {
-    setShowLoader(true);
     // Extract the checked and name variables from the e.target object
     const { checked, name } = e.target;
 
@@ -133,7 +136,6 @@ const JobsFilterList = ({
 
     // Call the updateFilters function and pass the updated URL keys and values
     await updateFilters(updatedParams);
-    setShowLoader(false);
   };
 
   // Filters' data and actions

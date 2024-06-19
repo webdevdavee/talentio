@@ -68,6 +68,7 @@ const ApplicantsTableHead = ({
           />
         </th>
         <th className="text-left text-gray-800 font-normal p-3">Full name</th>
+        <th className="text-left text-gray-800 font-normal p-3">Email</th>
         <th className="text-left text-gray-800 font-normal p-3">
           <div ref={sortingScoreModalRef} className="w-fit text-left relative">
             <div

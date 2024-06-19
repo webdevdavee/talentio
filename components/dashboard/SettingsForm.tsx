@@ -13,6 +13,7 @@ import Loader2 from "../Loader2";
 import ProfileImageUploader from "./ProfileImageUploader";
 import { updateIndividual } from "@/database/actions/individual.action";
 import { useUploadThing } from "@/lib/utils/uploadthing";
+import { deleteIndividualAccount } from "@/database/actions/users.actions";
 
 type SettingsFormProps = {
   user: User;
@@ -71,6 +72,16 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
     }
   };
 
+  const deleteUserAccount = async () => {
+    const response = await deleteIndividualAccount(
+      user.userId,
+      user.accountType
+    );
+    if (response?.error) {
+      setError(response.error);
+    }
+  };
+
   return (
     <section className="w-[50%]">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -125,7 +136,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
             <>
               <button
                 type="button"
-                className="w-fit p-3 bg-red-600 text-white mt-2"
+                className="w-[40%] p-3 bg-red-600 text-white mt-2"
                 onClick={() => SetShowPasswordForm((prev) => !prev)}
               >
                 Change password?
@@ -151,6 +162,19 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
               <p>Update profile</p>
             )}
           </button>
+          <div className="flex flex-col gap-3 mt-8">
+            <h3>
+              Deleting your account clears all your data. This action is not
+              reversible.
+            </h3>
+            <button
+              type="button"
+              className="w-[40%] p-3 bg-red-600 text-white"
+              onClick={deleteUserAccount}
+            >
+              Delete account
+            </button>
+          </div>
         </div>
       </form>
     </section>

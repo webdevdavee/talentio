@@ -12,11 +12,14 @@ export const getPageViews = async (companyId: string) => {
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
     const companyPage = await Pageview.findOne({ companyId });
-    const weeklyViews = companyPage.views.filter(
-      (view: any) => view.date > oneWeekAgo
-    );
-
-    return JSON.parse(JSON.stringify(weeklyViews.length)); // This is the number of views in the last week
+    if (companyPage) {
+      const weeklyViews = companyPage.views.filter(
+        (view: any) => view.date > oneWeekAgo
+      );
+      return weeklyViews.length || 0; // This is the number of views in the last week
+    } else {
+      return 0;
+    }
   } catch (error: any) {
     handleError(error);
   }

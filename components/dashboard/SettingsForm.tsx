@@ -136,7 +136,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
             <>
               <button
                 type="button"
-                className="w-[40%] p-3 bg-red-600 text-white mt-2"
+                className="w-[40%] p-3 bg-red-500 text-white mt-2"
                 onClick={() => SetShowPasswordForm((prev) => !prev)}
               >
                 Change password?

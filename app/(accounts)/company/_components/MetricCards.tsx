@@ -1,4 +1,5 @@
 import MetricCard from "./MetricCard";
+import { formatNumberWithCommas } from "@/lib/utils";
 
 type MetricCardsProps = {
   pageViews: number;
@@ -11,14 +12,17 @@ const MetricCards = ({ pageViews, newCandidatesCount }: MetricCardsProps) => {
       <div className="grid grid-cols-3 gap-5">
         <MetricCard
           colour="bg-[#219C90]"
-          data={newCandidatesCount}
+          data={
+            newCandidatesCount &&
+            formatNumberWithCommas(newCandidatesCount.toString())
+          }
           label="New candidates to review"
         />
         <MetricCard colour="bg-[#FF8F00]" data={57} label="Messages received" />
         <MetricCard
           type="visits"
           colour="bg-[#5A72A0]"
-          data={pageViews}
+          data={pageViews ? formatNumberWithCommas(pageViews.toString()) : "0"}
           label="Profile visits"
         />
       </div>

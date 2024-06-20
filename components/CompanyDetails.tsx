@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { getJobsByCompany } from "@/database/actions/job.actions";
 import JobCard2 from "./JobCard2";
 import { socialsIconPaths } from "@/constants";
+import { fromhttpPrefix } from "@/lib/utils";
 
 type CompanyDetailsProps = {
   company: Company;
@@ -58,7 +59,7 @@ const CompanyDetails = ({ company }: CompanyDetailsProps) => {
                       height={18}
                       alt={`${platform} Logo`}
                     />
-                    <p className="text-[0.9rem]">{contact}</p>
+                    <p className="text-[0.9rem]">{fromhttpPrefix(contact)}</p>
                   </button>
                 );
               })}

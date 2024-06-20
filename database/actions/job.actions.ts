@@ -278,6 +278,19 @@ export const getJobsByCompanyId = async (
   }
 };
 
+export const getJobsCountByCompanyId = async (companyId: string) => {
+  try {
+    await connectToDatabase();
+
+    // Get the total number of jobs
+    const jobCount = await Jobs.find({ companyId }).countDocuments();
+
+    return JSON.parse(JSON.stringify(jobCount ?? 0));
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
 export const getJobsByCompany = async (company: string) => {
   try {
     await connectToDatabase();
@@ -322,6 +335,91 @@ export const deleteJobs = async (jobs: { id: string }[], path: string) => {
     });
 
     revalidatePath(path);
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const getCompanyJobsAppliedCount = async (companyId: string) => {
+  const startOfWeek = new Date(); // Get the current date
+  startOfWeek.setHours(0, 0, 0, 0); // Set time to midnight
+  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Go back to Sunday
+
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 6); // Go forward 6 days to Saturday
+
+  const startOfLastWeek = new Date(startOfWeek);
+  startOfLastWeek.setDate(startOfLastWeek.getDate() - 7); // Go back 7 days to the start of last week
+
+  const endOfLastWeek = new Date(startOfWeek);
+  endOfLastWeek.setDate(endOfLastWeek.getDate() - 1); // Go back 1 day from the start of the current week to get to the end of last week
+
+  const thisWeekPipeline = [
+    {
+      $match: {
+        companyId,
+        createdAt: {
+          $gte: startOfWeek,
+          $lte: new Date(), // Use current date for this week
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalAppliedThisWeek: { $sum: "$applied" },
+      },
+    },
+  ];
+
+  const lastWeekPipeline = [
+    {
+      $match: {
+        companyId,
+        createdAt: {
+          $gte: startOfLastWeek,
+          $lte: endOfLastWeek, // Use end of last week for range
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalAppliedLastWeek: { $sum: "$applied" },
+      },
+    },
+  ];
+
+  try {
+    await connectToDatabase();
+
+    const [thisWeekResult, lastWeekResult] = await Promise.all([
+      Jobs.aggregate(thisWeekPipeline),
+      Jobs.aggregate(lastWeekPipeline),
+    ]);
+
+    const totalAppliedThisWeek =
+      thisWeekResult.length > 0
+        ? thisWeekResult[0].totalAppliedThisWeek || 0
+        : 0;
+    const totalAppliedLastWeek =
+      lastWeekResult.length > 0
+        ? lastWeekResult[0].totalAppliedLastWeek || 0
+        : 0;
+
+    // Calculate percentage change (handle division by zero)
+    const percentageChange =
+      totalAppliedLastWeek === 0
+        ? 100 // Handle division by zero
+        : Number(
+            (
+              ((totalAppliedThisWeek - totalAppliedLastWeek) /
+                totalAppliedLastWeek) *
+              100
+            ).toFixed(2)
+          );
+
+    return { totalAppliedThisWeek, percentageChange };
   } catch (error: any) {
     handleError(error);
   }

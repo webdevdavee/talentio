@@ -58,7 +58,11 @@ const SecurityQuestionsForm = ({
       // Handle error
       setError(updateUser?.error);
       reset();
-      router.push("/individual/dashboard");
+      router.push(
+        accountType === "individual"
+          ? "/individual/dashboard"
+          : "/company/dashboard"
+      );
     } else {
       setError("Select a question.");
     }

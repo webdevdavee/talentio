@@ -106,6 +106,12 @@ export const isValidUrl = (url: string) => {
   }
 };
 
+// url protocol
+export const fromhttpPrefix = (url: string) => {
+  const urlNoProtocol = url.replace(/^https?:\/\//i, "");
+  return urlNoProtocol;
+};
+
 // Utility function to convert date format
 export const convertDateFormat = (dateString: string | Date) => {
   // Create a new Date object from the given string

@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import JobDetails from "@/components/JobDetails";
 import { getCompanyByName } from "@/database/actions/company.actions";
 import { getJobById, getJobs } from "@/database/actions/job.actions";
+import { incrementJobView } from "@/database/actions/jobview.action";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -26,6 +27,9 @@ const page = async ({ params: { id } }: Params) => {
   if (session?.user.accountType === "company") redirect("/company/dashboard");
   const job: Job = await getJobById(id);
   const company: Company = await getCompanyByName(job.company);
+
+  // Increment company's jobs view count
+  await incrementJobView(company.userId);
   return (
     <section className="px-16 my-8">
       <JobDetails job={job} company={company} userId={session?.user.id} />

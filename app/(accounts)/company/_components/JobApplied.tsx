@@ -1,6 +1,14 @@
 import Image from "next/image";
 
-const JobApplied = () => {
+type JobAppliedProps = {
+  companyAppliedCount: number;
+  companyAppliedCountPercentage: number | undefined;
+};
+
+const JobApplied = ({
+  companyAppliedCount,
+  companyAppliedCountPercentage,
+}: JobAppliedProps) => {
   return (
     <section className="border border-gray-200 p-4 h-fit">
       <div className="flex flex-col gap-3">
@@ -14,9 +22,30 @@ const JobApplied = () => {
             className="bg-[#102C57] p-2 rounded-full"
           />
         </div>
-        <p className="text-3xl font-medium">45</p>
+        <p className="text-3xl font-medium">{companyAppliedCount}</p>
         <p>
-          This week <span className="text-red-600">0.5% down</span>
+          <span
+            className={
+              companyAppliedCountPercentage && companyAppliedCountPercentage > 0
+                ? "text-green-600"
+                : companyAppliedCountPercentage &&
+                  companyAppliedCountPercentage < 0
+                ? "text-red-600"
+                : "text-[#272829]"
+            }
+          >
+            {companyAppliedCountPercentage && companyAppliedCountPercentage < 0
+              ? Math.abs(companyAppliedCountPercentage)
+              : companyAppliedCountPercentage}
+            %{" "}
+            {companyAppliedCountPercentage && companyAppliedCountPercentage > 0
+              ? "up"
+              : companyAppliedCountPercentage &&
+                companyAppliedCountPercentage < 0
+              ? "down"
+              : "No change this week"}
+          </span>{" "}
+          {companyAppliedCountPercentage === 0 ? "" : "This week"}
         </p>
       </div>
     </section>

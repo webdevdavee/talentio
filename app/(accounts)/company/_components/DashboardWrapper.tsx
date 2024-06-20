@@ -13,12 +13,22 @@ type DashboardWrapperProps = {
   company: Company;
   pageViews: number;
   newCandidatesCount: number | undefined;
+  jobViews: number;
+  jobViewsPercentageChange: number | undefined;
+  companyJobCount: number;
+  companyAppliedCount: number;
+  companyAppliedCountPercentage: number | undefined;
 };
 
 const DashboardWrapper = ({
   company,
   pageViews,
   newCandidatesCount,
+  jobViews,
+  jobViewsPercentageChange,
+  companyJobCount,
+  companyAppliedCount,
+  companyAppliedCountPercentage,
 }: DashboardWrapperProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -106,7 +116,13 @@ const DashboardWrapper = ({
         pageViews={pageViews}
         newCandidatesCount={newCandidatesCount}
       />
-      <JobsStats />
+      <JobsStats
+        jobViews={jobViews}
+        jobViewsPercentageChange={jobViewsPercentageChange}
+        companyJobCount={companyJobCount}
+        companyAppliedCount={companyAppliedCount}
+        companyAppliedCountPercentage={companyAppliedCountPercentage}
+      />
     </section>
   );
 };

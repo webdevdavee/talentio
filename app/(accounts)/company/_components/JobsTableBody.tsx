@@ -50,8 +50,6 @@ const JobsTableBody = ({
           <td className="text-sm w-max p-3">
             {convertDateFormat(job.createdAt as Date)}
           </td>
-          <td className="text-sm w-max p-3">{job.category}</td>
-          <td className="text-sm w-max p-3">{job.location}</td>
           <td className="text-sm w-max p-3">{job.salary}</td>
           <td className="text-sm w-max p-3">{job.capacity}</td>
           <td className="text-sm w-max p-3">{job.applied}</td>

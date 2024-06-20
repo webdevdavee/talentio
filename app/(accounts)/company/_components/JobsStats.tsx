@@ -7,11 +7,23 @@ import JobViews from "./JobViews";
 import StatsOption from "./StatsOption";
 import { format } from "date-fns";
 
-const JobsStats = () => {
+type JobsStatsProps = {
+  jobViews: number;
+  jobViewsPercentageChange: number | undefined;
+  companyJobCount: number;
+  companyAppliedCount: number;
+  companyAppliedCountPercentage: number | undefined;
+};
+
+const JobsStats = ({
+  jobViews,
+  jobViewsPercentageChange,
+  companyJobCount,
+  companyAppliedCount,
+  companyAppliedCountPercentage,
+}: JobsStatsProps) => {
   const startDate = useDateRangeStore((state) => state.startDate);
   const endDate = useDateRangeStore((state) => state.endDate);
-
-  console.log(startDate, endDate);
 
   return (
     <section className="border border-gray-200 p-4">
@@ -35,9 +47,15 @@ const JobsStats = () => {
       <div className="grid grid-cols-3 gap-4 mt-10">
         <JobStatsChart />
         <div className="flex flex-col gap-4">
-          <JobViews />
-          <JobApplied />
-          <JobOpen />
+          <JobViews
+            jobViews={jobViews}
+            jobViewsPercentageChange={jobViewsPercentageChange}
+          />
+          <JobApplied
+            companyAppliedCount={companyAppliedCount}
+            companyAppliedCountPercentage={companyAppliedCountPercentage}
+          />
+          <JobOpen companyJobCount={companyJobCount} />
         </div>
       </div>
     </section>

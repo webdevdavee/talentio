@@ -58,7 +58,7 @@ const SidebarNav = () => {
           }`}
         >
           <Image src="/building.svg" width={20} height={20} alt="logo" />
-          <p>Browse companies</p>
+          <p>Companies</p>
         </Link>
         <Link
           href="/individual/dashboard/settings"

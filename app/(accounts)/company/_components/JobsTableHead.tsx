@@ -104,8 +104,6 @@ const JobsTableHead = ({
             )}
           </div>
         </th>
-        <th className="text-left text-gray-800 font-normal p-3">Category</th>
-        <th className="text-left text-gray-800 font-normal p-3">Location</th>
         <th className="text-left text-gray-800 font-normal p-3">
           <div ref={sortingSalaryModalRef} className="w-fit text-left relative">
             <div

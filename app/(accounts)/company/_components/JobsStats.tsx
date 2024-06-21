@@ -57,7 +57,7 @@ const JobsStats = ({
         <StatsOption statOption={statOption} setStatOption={setStatOption} />
       </div>
       <div className="grid grid-cols-3 gap-4 mt-10">
-        <JobStatsChart />
+        <JobStatsChart selectedTimeFrame={selectedTimeFrame} />
         <div className="flex flex-col gap-4">
           <JobViews
             jobViews={jobViews}

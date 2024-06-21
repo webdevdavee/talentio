@@ -73,48 +73,71 @@ export const incrementJobView = async (companyId: string) => {
   }
 };
 
-// export const getJobViews = async (companyId: string) => {
-//   try {
-//     await connectToDatabase();
+// Get the total number of views made in each month
+export const getEachMonthViewsCount = async (
+  companyId: string,
+  year?: number
+) => {
+  try {
+    await connectToDatabase();
 
-//     const startOfWeek = new Date(); // Get the current date
-//     startOfWeek.setHours(0, 0, 0, 0); // Set time to midnight
-//     startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Go back to Sunday
+    // Get the current year
+    const currentYear = year
+      ? new Date().getFullYear() - year
+      : new Date().getFullYear();
 
-//     const endOfWeek = new Date(startOfWeek);
-//     endOfWeek.setDate(endOfWeek.getDate() + 7); // Go forward to next Sunday
+    // Initialize an array of months
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
-//     // Rest of the aggregation pipeline remains the same
+    // Initialize an array to store views count
+    const viewsCount = new Array(12).fill(0);
 
-//     const pipeline = [
-//       {
-//         $match: {
-//           companyId,
-//           views: {
-//             $elemMatch: { date: { $gte: startOfWeek, $lte: endOfWeek } },
-//           },
-//         },
-//       },
-//       {
-//         $unwind: "$views",
-//       },
-//       {
-//         $group: {
-//           _id: null,
-//           totalViews: { $sum: 1 },
-//         },
-//       },
-//     ];
+    // Aggregate views by month
+    const aggregationPipeline = [
+      {
+        $match: {
+          companyId,
+          "views.date": {
+            $gte: new Date(`${currentYear}-01-01`),
+            $lt: new Date(`${currentYear + 1}-01-01`),
+          },
+        },
+      },
+      {
+        $unwind: "$views",
+      },
+      {
+        $group: {
+          _id: { $month: "$views.date" },
+          count: { $sum: 1 },
+        },
+      },
+    ];
 
-//     const result = await Jobview.aggregate(pipeline);
+    const result = await Jobview.aggregate(aggregationPipeline);
 
-//     if (result.length > 0) {
-//       const totalViewsThisWeek = result[0].totalViews;
-//       return totalViewsThisWeek;
-//     } else {
-//       return 0;
-//     }
-//   } catch (error: any) {
-//     handleError(error);
-//   }
-// };
+    // Update viewsCount array
+    result.forEach((entry) => {
+      const monthIndex = entry._id - 1;
+      viewsCount[monthIndex] = entry.count;
+    });
+
+    console.log(months, viewsCount);
+    return { months, viewsCount };
+  } catch (error) {
+    handleError(error);
+  }
+};

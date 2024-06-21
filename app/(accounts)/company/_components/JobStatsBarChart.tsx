@@ -12,10 +12,13 @@ import {
   ChartData,
   ChartOptions,
 } from "chart.js";
-import Image from "next/image";
 import { useState } from "react";
-import { week } from "@/constants";
+import { week, year } from "@/constants";
 import Loader from "@/components/Loader";
+
+type JobStatsBarChartProps = {
+  selectedTimeFrame: string;
+};
 
 ChartJS.register(
   BarElement,
@@ -26,18 +29,25 @@ ChartJS.register(
   Tooltip
 );
 
-const JobStatsBarChart = () => {
+const JobStatsBarChart = ({ selectedTimeFrame }: JobStatsBarChartProps) => {
   const [showLoader, setShowLoader] = useState(false);
   const [isScreenWidth, setIsScreenWidth] = useState(0);
 
   const data: ChartData<"bar"> = {
-    labels: week,
+    labels: selectedTimeFrame === "Week" ? week : year,
     datasets: [
       {
-        label: "Orders",
+        label: "Job views",
         data: [45, 21, 12, 11, 10, 36, 59],
-        backgroundColor: "#272829",
-        borderRadius: 5,
+        backgroundColor: "#4F6F52",
+        barPercentage: 0.8,
+        // barThickness: 22,
+        minBarLength: 7,
+      },
+      {
+        label: "Jobs applied",
+        data: [45, 21, 12, 11, 10, 36, 59],
+        backgroundColor: "#FF8F00",
         barPercentage: 0.8,
         // barThickness: 22,
         minBarLength: 7,
@@ -83,9 +93,10 @@ const JobStatsBarChart = () => {
 
         ticks: {
           font: {
-            family: "'Poppins', sans-serif",
+            family: "'DM Sans', sans-serif",
           },
         },
+        stacked: true,
       },
 
       y: {
@@ -94,20 +105,19 @@ const JobStatsBarChart = () => {
           display: false,
           dash: [8, 4],
         },
-
         ticks: {
           // callback: (value: any) => value + "k",
           stepSize: 1,
           font: {
-            family: "'Poppins', sans-serif",
+            family: "'DM Sans', sans-serif",
           },
         },
-
         grid: {
           display: true,
           tickLength: 17,
           tickColor: "transparent",
         },
+        stacked: true,
       },
     },
   };
@@ -120,11 +130,11 @@ const JobStatsBarChart = () => {
           <div className="flex gap-4 mt-8 pl-4">
             <div className="flex items-center gap-3">
               <span className="w-4 h-4 bg-[#FF8F00]"></span>
-              <p className="text-gray-600">Job view</p>
+              <p className="text-gray-600">Job views</p>
             </div>
             <div className="flex items-center gap-3">
               <span className="w-4 h-4 bg-primary"></span>
-              <p className="text-gray-600">Job applied</p>
+              <p className="text-gray-600">Jobs applied</p>
             </div>
           </div>
         </section>

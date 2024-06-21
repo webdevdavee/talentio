@@ -5,7 +5,10 @@ import DashboardWrapper from "../_components/DashboardWrapper";
 import { getCompanyByUserId } from "@/database/actions/company.actions";
 import { getPageViews } from "@/database/actions/pageview.actions";
 import { getNewCandidatesCount } from "@/database/actions/applications.actions";
-import { getJobViews } from "@/database/actions/jobview.action";
+import {
+  getEachMonthViewsCount,
+  getJobViews,
+} from "@/database/actions/jobview.action";
 import {
   getCompanyJobsAppliedCount,
   getJobsCountByCompanyId,
@@ -43,6 +46,8 @@ const page = async () => {
   const newCandidatesCount: number | undefined = await getNewCandidatesCount(
     company.userId
   );
+
+  await getEachMonthViewsCount(company.userId);
 
   return (
     <section>

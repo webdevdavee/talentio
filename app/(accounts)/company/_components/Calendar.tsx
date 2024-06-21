@@ -14,10 +14,10 @@ import { Toaster, toast } from "sonner";
 import { useDateRangeStore } from "@/lib/store/DateRangeStore";
 
 type CalendarProps = {
-  startDate: Date | null;
-  setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
-  endDate: Date | null;
-  setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  startDate: Date | null | string;
+  setStartDate: React.Dispatch<React.SetStateAction<Date | null | string>>;
+  endDate: Date | null | string;
+  setEndDate: React.Dispatch<React.SetStateAction<Date | null | string>>;
 };
 
 const Calendar = ({
@@ -44,14 +44,14 @@ const Calendar = ({
       const dayDifference = differenceInCalendarDays(date, startDate);
 
       // Check if the difference is at least 7 days.
-      if (dayDifference >= 7) {
+      if (dayDifference === 6) {
         setEndDate(date);
         useDateRangeStore.setState({
           endDate: date,
         });
       } else {
         // If the range is less than 7 days, prompt the user or handle as needed.
-        toast.error("Please select a range of at least 7 days.");
+        toast.error("Please select a range of 7 days.");
       }
     }
   };

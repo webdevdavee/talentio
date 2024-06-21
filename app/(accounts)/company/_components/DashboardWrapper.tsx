@@ -31,9 +31,10 @@ const DashboardWrapper = ({
   companyAppliedCountPercentage,
 }: DashboardWrapperProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null | string>(null);
+  const [endDate, setEndDate] = useState<Date | null | string>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
+  const [selectedTimeFrame, setSelectedTimeFrame] = useState("Week");
 
   // Retrieve the date range from localStorage
   useEffect(() => {
@@ -77,7 +78,9 @@ const DashboardWrapper = ({
           <h1 className="font-semibold text-xl">{getGreeting()}</h1>
           <p className="text-gray-600 text-sm">
             Here is your job listing statistic report from{" "}
-            {startDate && endDate ? (
+            {selectedTimeFrame === "Year" ? (
+              "Jan - Dec"
+            ) : startDate && endDate ? (
               `${format(startDate, "MMMM d")} - ${format(endDate, "MMMM d")}`
             ) : (
               <span className="font-semibold">Select Date Range</span>
@@ -122,6 +125,8 @@ const DashboardWrapper = ({
         companyJobCount={companyJobCount}
         companyAppliedCount={companyAppliedCount}
         companyAppliedCountPercentage={companyAppliedCountPercentage}
+        selectedTimeFrame={selectedTimeFrame}
+        setSelectedTimeFrame={setSelectedTimeFrame}
       />
     </section>
   );

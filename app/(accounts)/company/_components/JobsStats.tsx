@@ -6,6 +6,7 @@ import JobStatsChart from "./JobStatsBarChart";
 import JobViews from "./JobViews";
 import StatsOption from "./StatsOption";
 import { format } from "date-fns";
+import { useState } from "react";
 
 type JobsStatsProps = {
   jobViews: number;
@@ -13,6 +14,8 @@ type JobsStatsProps = {
   companyJobCount: number;
   companyAppliedCount: number;
   companyAppliedCountPercentage: number | undefined;
+  selectedTimeFrame: string;
+  setSelectedTimeFrame: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const JobsStats = ({
@@ -21,9 +24,13 @@ const JobsStats = ({
   companyJobCount,
   companyAppliedCount,
   companyAppliedCountPercentage,
+  selectedTimeFrame,
+  setSelectedTimeFrame,
 }: JobsStatsProps) => {
   const startDate = useDateRangeStore((state) => state.startDate);
   const endDate = useDateRangeStore((state) => state.endDate);
+
+  const [statOption, setStatOption] = useState("Overview");
 
   return (
     <section className="border border-gray-200 p-4">
@@ -33,16 +40,21 @@ const JobsStats = ({
             <h2 className="font-semibold text-xl">Job statistics</h2>
             <p className="text-gray-600 text-sm">
               Showcasing job statistics from{" "}
-              {startDate && endDate ? (
+              {selectedTimeFrame === "Year" ? (
+                "Jan - Dec"
+              ) : startDate && endDate ? (
                 `${format(startDate, "MMMM d")} - ${format(endDate, "MMMM d")}`
               ) : (
                 <span className="font-semibold">Select Date Range</span>
               )}
             </p>
           </div>
-          <ChartTimeFrame />
+          <ChartTimeFrame
+            selectedTimeFrame={selectedTimeFrame}
+            setSelectedTimeFrame={setSelectedTimeFrame}
+          />
         </div>
-        <StatsOption />
+        <StatsOption statOption={statOption} setStatOption={setStatOption} />
       </div>
       <div className="grid grid-cols-3 gap-4 mt-10">
         <JobStatsChart />

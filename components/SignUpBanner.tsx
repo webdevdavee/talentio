@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const SignUpBanner = () => {
   return (
     <section className="mt-10">
@@ -6,15 +8,12 @@ const SignUpBanner = () => {
           Start posting <br />
           jobs today
         </h2>
-        <p className="text-white text-center font-medium">
-          Start posting jobs for only $10.
-        </p>
-        <button
-          type="button"
+        <Link
+          href="/company/sign-up"
           className="w-fit capitalize px-3 py-2 bg-white font-medium text-primary"
         >
           Sign up for free
-        </button>
+        </Link>
       </div>
     </section>
   );

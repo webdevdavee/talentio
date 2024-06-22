@@ -30,8 +30,8 @@ export type TJobApplicationFormSchema = z.infer<
   typeof jobApplicationFormSchema
 >;
 
-// INDIVIDUAL SETTINGS FORM
-export const individualSettingsFormSchema = z.object({
+// SETTINGS FORM
+export const SettingsFormSchema = z.object({
   name: z.string().min(3, "Use 3 characters or more"),
   email: z.string().email(),
   currentPassword: z
@@ -48,7 +48,6 @@ export const individualSettingsFormSchema = z.object({
     .optional(),
   newPassord: z
     .string()
-    .min(8, "Should be at least 8 characters long.")
     .regex(/[a-zA-Z]/, "Should have at least one letter")
     .regex(/[0-9]/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
@@ -60,7 +59,6 @@ export const individualSettingsFormSchema = z.object({
     .optional(),
   confirmPassword: z
     .string()
-    .min(8, "Should be at least 8 characters long.")
     .regex(/[a-zA-Z]/, "Should have at least one letter")
     .regex(/[0-9]/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
@@ -73,9 +71,7 @@ export const individualSettingsFormSchema = z.object({
   image: z.string(),
 });
 
-export type TIndividualSettingsFormSchema = z.infer<
-  typeof individualSettingsFormSchema
->;
+export type TSettingsFormSchema = z.infer<typeof SettingsFormSchema>;
 
 // POST JOB FORM
 export const PostJobFormSchema = z.object({

@@ -13,7 +13,7 @@ const JobApplied = ({
     <section className="border border-gray-200 p-4 h-fit">
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <h2 className="font-medium">Job applied</h2>
+          <h2 className="font-medium">Jobs applied</h2>
           <Image
             src="/card-list-white.svg"
             width={30}

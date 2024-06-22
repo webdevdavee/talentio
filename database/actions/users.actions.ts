@@ -94,10 +94,7 @@ export const addNewUserField = async ({
   }
 };
 
-export const deleteIndividualAccount = async (
-  userId: string,
-  accountType: string
-) => {
+export const deleteAccount = async (userId: string, accountType: string) => {
   const updateOperations = [];
   try {
     await connectToDatabase();

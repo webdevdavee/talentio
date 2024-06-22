@@ -16,9 +16,11 @@ export default async function Home() {
       <Hero />
       <CompaniesHelped />
       <FeaturedCategories />
-      <div className="px-16">
-        <SignUpBanner />
-      </div>
+      {!session && (
+        <div className="px-16">
+          <SignUpBanner />
+        </div>
+      )}
       <FeaturedJobs />
       <LatestJobs />
     </section>

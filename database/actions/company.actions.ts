@@ -8,6 +8,7 @@ import bcrypt from "bcryptjs";
 import { CompanySignUpFormSchema } from "@/lib/zod/authZod";
 import Users from "../models/users.model";
 import { v4 as uuidv4 } from "uuid";
+import { SettingsFormSchema } from "@/lib/zod";
 
 export const createCompany = async (
   data: z.infer<typeof CompanySignUpFormSchema>
@@ -261,6 +262,62 @@ export const handleCompanyFilter = async (
       totalPages,
       companiesNoLimit: JSON.parse(JSON.stringify(companiesNoLimit)),
     };
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const updateCompany = async (
+  data: z.infer<typeof SettingsFormSchema>,
+  company: Company
+) => {
+  const validatedFields = SettingsFormSchema.safeParse(data);
+  if (!validatedFields.success) {
+    return { error: "Invalid credentials." };
+  }
+
+  let hashedPassword: string | undefined;
+
+  if (data.currentPassword && data.newPassord && data.confirmPassword) {
+    const passwordMatch = await bcrypt.compare(
+      data.currentPassword as string,
+      company.password as string
+    );
+
+    if (!passwordMatch)
+      return { error: "Current password does not match user password." };
+
+    if (data.newPassord === data.confirmPassword) {
+      // Hash new password
+      hashedPassword = await bcrypt.hash(data.confirmPassword as string, 7);
+    } else {
+      return { error: "Passwords do not match." };
+    }
+  }
+
+  try {
+    await connectToDatabase();
+
+    // Fields to update
+    const updateFields: {
+      company: string | undefined;
+      email: string | undefined;
+      password: string | undefined;
+      logo: string | undefined;
+    } = {
+      company: data.name,
+      email: data.email,
+      password: hashedPassword ? hashedPassword : company.password,
+      logo: data.image,
+    };
+
+    // Save company in all users collection and company collection
+    const updatedCompany = await Promise.all([
+      Companies.updateOne({ userId: company.userId }, { $set: updateFields }),
+      Users.updateOne({ userId: company.userId }, { $set: updateFields }),
+    ]);
+
+    return JSON.parse(JSON.stringify(updatedCompany));
   } catch (error) {
     handleError(error);
   }

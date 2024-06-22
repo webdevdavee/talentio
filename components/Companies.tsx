@@ -9,6 +9,7 @@ import { handleCompanyFilter } from "@/database/actions/company.actions";
 import { countPropertyValues, handleError } from "@/lib/utils";
 import CompaniesFilterBar from "./CompaniesFilterBar";
 import CompaniesFromFilter from "./CompaniesFromFilter";
+import { useSession } from "next-auth/react";
 
 type CompaniesProps = {
   pageType?: string;
@@ -23,6 +24,7 @@ const Companies = ({
   page,
   industryFrequency,
 }: CompaniesProps) => {
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const companiesParams = new URLSearchParams(searchParams.toString());
 
@@ -117,9 +119,11 @@ const Companies = ({
             pageType={pageType}
             companies={companies?.companies}
           />
-          <div className={`px-16 ${pageType && "px-0"}`}>
-            <SignUpBanner />
-          </div>
+          {!session && (
+            <div className={`px-16 ${pageType && "px-0"}`}>
+              <SignUpBanner />
+            </div>
+          )}
           <CompanyIndustry
             pageType={pageType}
             companiesParams={companiesParams}

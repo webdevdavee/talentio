@@ -1,24 +1,28 @@
 "use client";
 
-import { TSettingsFormSchema, SettingsFormSchema } from "@/lib/zod";
+import { SettingsFormSchema, TSettingsFormSchema } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import InputBox from "../InputBox";
-import ChangePassword from "./ChangePassword";
-import Loader2 from "../Loader2";
-import ProfileImageUploader from "./ProfileImageUploader";
-import { updateIndividual } from "@/database/actions/individual.action";
+import InputBox from "@/components/InputBox";
+import ChangePassword from "@/components/dashboard/ChangePassword";
+import Loader2 from "@/components/Loader2";
+import ProfileImageUploader from "@/components/dashboard/ProfileImageUploader";
 import { useUploadThing } from "@/lib/utils/uploadthing";
 import { deleteAccount } from "@/database/actions/users.actions";
+import { updateCompany } from "@/database/actions/company.actions";
 
 type SettingsFormProps = {
-  user: User;
+  company: Company;
 };
 
-const SettingsForm = ({ user }: SettingsFormProps) => {
+const SettingsForm = ({ company }: SettingsFormProps) => {
   // Set initial form values.
-  const initialValues = { ...user };
+  const initialValues = {
+    ...company,
+    name: company.company,
+    image: company.logo,
+  };
 
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState<string | undefined>("");
@@ -54,9 +58,9 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
         uploadedFileUrl = uploadedImage[0].url;
       }
       // Update user
-      const response = await updateIndividual(
+      const response = await updateCompany(
         { ...data, image: uploadedFileUrl },
-        user
+        company
       );
       setError(response.error);
       // If no errors, refresh page
@@ -70,7 +74,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
   };
 
   const deleteUserAccount = async () => {
-    const response = await deleteAccount(user.userId, user.accountType);
+    const response = await deleteAccount(company.userId, company.accountType);
     if (response?.error) {
       setError(response.error);
     }
@@ -126,20 +130,16 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
               )
             }
           />
-          {user.provider === "credentials" && (
-            <>
-              <button
-                type="button"
-                className="w-[40%] p-3 bg-red-500 text-white mt-2"
-                onClick={() => SetShowPasswordForm((prev) => !prev)}
-              >
-                Change password?
-              </button>
-              {error && <p className="p-2 bg-red-200 text-red-500">{error}</p>}
-              {showChangePasswordForm && (
-                <ChangePassword register={register} errors={errors} />
-              )}
-            </>
+          <button
+            type="button"
+            className="w-[40%] p-3 bg-red-500 text-white mt-2"
+            onClick={() => SetShowPasswordForm((prev) => !prev)}
+          >
+            Change password?
+          </button>
+          {error && <p className="p-2 bg-red-200 text-red-500">{error}</p>}
+          {showChangePasswordForm && (
+            <ChangePassword register={register} errors={errors} />
           )}
           <button
             type="submit"

@@ -388,8 +388,10 @@ export const getCompanyJobsAppliedCountForCurrentWeek = async (
 
     // Calculate percentage change (handle division by zero)
     const percentageChange =
-      totalAppliedLastWeek === 0
-        ? 100 // Handle division by zero
+      totalAppliedLastWeek === 0 && totalAppliedThisWeek === 0
+        ? 0 // Handle division by zero
+        : totalAppliedLastWeek === 0
+        ? 100
         : Number(
             (
               ((totalAppliedThisWeek - totalAppliedLastWeek) /
@@ -398,6 +400,7 @@ export const getCompanyJobsAppliedCountForCurrentWeek = async (
             ).toFixed(2)
           );
 
+    console.log({ totalAppliedThisWeek, percentageChange });
     return { totalAppliedThisWeek, percentageChange };
   } catch (error: any) {
     handleError(error);

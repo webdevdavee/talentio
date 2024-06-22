@@ -7,6 +7,8 @@ import JobViews from "./JobViews";
 import StatsOption from "./StatsOption";
 import { format } from "date-fns";
 import { useState } from "react";
+import JobsViewChart from "./JobsViewChart";
+import JobsAppliedChart from "./JobsAppliedChart";
 
 type JobsStatsProps = {
   jobViews: number;
@@ -84,15 +86,33 @@ const JobsStats = ({
         <StatsOption statOption={statOption} setStatOption={setStatOption} />
       </div>
       <div className="grid grid-cols-3 gap-4 mt-10">
-        <JobStatsChart
-          selectedTimeFrame={selectedTimeFrame}
-          jobViewsByYear={jobViewsByYear}
-          appliedJobsByYear={appliedJobsByYear}
-          jobViewsByDaysOfWeekData={jobViewsByDaysOfWeekData}
-          appliedJobsByDaysOfWeekData={appliedJobsByDaysOfWeekData}
-          daysOfTheWeek={daysOfTheWeek}
-          showLoader={showLoader}
-        />
+        {statOption === "Overview" ? (
+          <JobStatsChart
+            selectedTimeFrame={selectedTimeFrame}
+            jobViewsByYear={jobViewsByYear}
+            appliedJobsByYear={appliedJobsByYear}
+            jobViewsByDaysOfWeekData={jobViewsByDaysOfWeekData}
+            appliedJobsByDaysOfWeekData={appliedJobsByDaysOfWeekData}
+            daysOfTheWeek={daysOfTheWeek}
+            showLoader={showLoader}
+          />
+        ) : statOption === "Jobs view" ? (
+          <JobsViewChart
+            selectedTimeFrame={selectedTimeFrame}
+            jobViewsByYear={jobViewsByYear}
+            jobViewsByDaysOfWeekData={jobViewsByDaysOfWeekData}
+            daysOfTheWeek={daysOfTheWeek}
+            showLoader={showLoader}
+          />
+        ) : (
+          <JobsAppliedChart
+            selectedTimeFrame={selectedTimeFrame}
+            appliedJobsByYear={appliedJobsByYear}
+            appliedJobsByDaysOfWeekData={appliedJobsByDaysOfWeekData}
+            daysOfTheWeek={daysOfTheWeek}
+            showLoader={showLoader}
+          />
+        )}
         <div className="flex flex-col gap-4">
           <JobViews
             jobViews={jobViews}

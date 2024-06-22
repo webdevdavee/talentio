@@ -16,25 +16,13 @@ import { useState } from "react";
 import { week, year } from "@/constants";
 import Loader from "@/components/Loader";
 
-type JobStatsBarChartProps = {
+type JobsAppliedChartProps = {
   selectedTimeFrame: string;
-  jobViewsByYear:
-    | {
-        months: string[];
-        viewsCount: number[];
-      }
-    | undefined;
   appliedJobsByYear:
     | {
         months: string[];
         applicationCount: number[];
       }
-    | undefined;
-  jobViewsByDaysOfWeekData:
-    | {
-        date: string;
-        count: number;
-      }[]
     | undefined;
   appliedJobsByDaysOfWeekData: any[] | undefined;
   daysOfTheWeek: string[];
@@ -50,19 +38,14 @@ ChartJS.register(
   Tooltip
 );
 
-const JobStatsBarChart = ({
+const JobsAppliedChart = ({
   selectedTimeFrame,
-  jobViewsByYear,
   appliedJobsByYear,
-  jobViewsByDaysOfWeekData,
   appliedJobsByDaysOfWeekData,
   daysOfTheWeek,
   showLoader,
-}: JobStatsBarChartProps) => {
+}: JobsAppliedChartProps) => {
   const [isScreenWidth, setIsScreenWidth] = useState(0);
-  const jobViewsByDaysOfWeekDataCount = jobViewsByDaysOfWeekData?.map(
-    (data) => data.count
-  );
 
   const data: ChartData<"bar"> = {
     labels:
@@ -72,17 +55,6 @@ const JobStatsBarChart = ({
           : week
         : year,
     datasets: [
-      {
-        label: "Job views",
-        data:
-          selectedTimeFrame === "Week"
-            ? (jobViewsByDaysOfWeekDataCount as number[])
-            : (jobViewsByYear?.viewsCount as number[]),
-        backgroundColor: "#4F6F52",
-        barPercentage: 0.8,
-        // barThickness: 22,
-        minBarLength: 7,
-      },
       {
         label: "Jobs applied",
         data:
@@ -169,16 +141,6 @@ const JobStatsBarChart = ({
       {!showLoader ? (
         <section>
           <Bar data={data} options={options}></Bar>
-          <div className="flex gap-4 mt-8 pl-4">
-            <div className="flex items-center gap-3">
-              <span className="w-4 h-4 bg-[#FF8F00]"></span>
-              <p className="text-gray-600">Jobs applied</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-4 h-4 bg-primary"></span>
-              <p className="text-gray-600">Job views</p>
-            </div>
-          </div>
         </section>
       ) : (
         <section className="h-[100%] flex items-center justify-center">
@@ -189,4 +151,4 @@ const JobStatsBarChart = ({
   );
 };
 
-export default JobStatsBarChart;
+export default JobsAppliedChart;

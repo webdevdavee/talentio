@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 type JobAppliedProps = {
-  companyAppliedCount: number;
+  companyAppliedCount: number | undefined;
   companyAppliedCountPercentage: number | undefined;
 };
 

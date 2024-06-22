@@ -202,3 +202,42 @@ export const sortSalaryRanges = (
 
   return sortedSalaries;
 };
+
+export const generateDaysOfWeek = (startDate: Date) => {
+  const weekdays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const result = [];
+
+  if (startDate) {
+    // Parse the input date
+    const inputDate = new Date(startDate);
+
+    // Get the day of the week for the input date
+    const inputDayOfWeek = weekdays[inputDate.getDay()];
+    result.push(inputDayOfWeek);
+
+    // Generate the next 6 days
+    for (let i = 1; i <= 6; i++) {
+      const nextDate = new Date(inputDate);
+      nextDate.setDate(nextDate.getDate() + i);
+      const nextDayOfWeek = weekdays[nextDate.getDay()];
+      result.push(nextDayOfWeek);
+    }
+
+    return result;
+  } else {
+    return [];
+  }
+};
+
+// Example usage:
+// const startDate = "2024-06-14T00:00:00.000Z";
+// const daysOfWeekArray = generateDaysOfWeek(startDate);
+// console.log(daysOfWeekArray);

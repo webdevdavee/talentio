@@ -10,7 +10,8 @@ import {
   getJobViews,
 } from "@/database/actions/jobview.action";
 import {
-  getCompanyJobsAppliedCount,
+  getApplicationsSumByMonth,
+  getCompanyJobsAppliedCountForCurrentWeek,
   getJobsCountByCompanyId,
 } from "@/database/actions/job.actions";
 
@@ -39,15 +40,20 @@ const page = async () => {
   // Retrieve company job count
   const companyJobCount = await getJobsCountByCompanyId(company.userId);
 
-  // Retrieve company applied job count
-  const companyAppliedCount = await getCompanyJobsAppliedCount(company.userId);
+  // Retrieve company applied job count for current week only
+  const companyAppliedCount = await getCompanyJobsAppliedCountForCurrentWeek(
+    company.userId
+  );
 
   // Retrieve and filter new candidates by the company
   const newCandidatesCount: number | undefined = await getNewCandidatesCount(
     company.userId
   );
 
-  await getEachMonthViewsCount(company.userId);
+  // Retrieve company job views for each in the current year
+  const jobViewsByYear = await getEachMonthViewsCount(company.userId);
+  // Retrieve company applied jobs for each in the current year
+  const appliedJobsByYear = await getApplicationsSumByMonth(company.userId);
 
   return (
     <section>
@@ -60,6 +66,8 @@ const page = async () => {
         companyJobCount={companyJobCount}
         companyAppliedCount={companyAppliedCount?.totalAppliedThisWeek}
         companyAppliedCountPercentage={companyAppliedCount?.percentageChange}
+        jobViewsByYear={jobViewsByYear}
+        appliedJobsByYear={appliedJobsByYear}
       />
     </section>
   );

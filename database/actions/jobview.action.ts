@@ -112,7 +112,7 @@ export const getEachMonthViewsCount = async (
           companyId,
           "views.date": {
             $gte: new Date(`${currentYear}-01-01`),
-            $lt: new Date(`${currentYear + 1}-01-01`),
+            $lte: new Date(`${currentYear + 1}-01-01`),
           },
         },
       },
@@ -135,9 +135,61 @@ export const getEachMonthViewsCount = async (
       viewsCount[monthIndex] = entry.count;
     });
 
-    console.log(months, viewsCount);
     return { months, viewsCount };
   } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getJobViewsByWeekDays = async (
+  companyId: string,
+  customStartDate?: Date
+) => {
+  customStartDate?.setHours(customStartDate?.getHours() + 1); // Adjust for timezone difference
+
+  const today = new Date();
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay()); // Go back to Sunday
+
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 6); // Go forward 6 days to Saturday
+
+  try {
+    await connectToDatabase();
+
+    const companyJobPage = await Jobview.findOne({ companyId });
+
+    if (companyJobPage) {
+      const viewsByDay = new Map<string, number>(); // Map to store views by day
+
+      // Initialize views count for each day
+      for (let i = 0; i < 7; i++) {
+        const currentDate = new Date(
+          customStartDate ? customStartDate : startOfWeek
+        );
+        currentDate.setDate(currentDate.getDate() + i);
+        viewsByDay.set(currentDate.toISOString().slice(0, 10), 0);
+      }
+
+      // Update views count based on actual data
+      companyJobPage.views?.forEach((view: any) => {
+        const viewDate = view.date.toISOString().slice(0, 10);
+        if (viewsByDay.has(viewDate)) {
+          viewsByDay.set(viewDate, viewsByDay.get(viewDate)! + 1);
+        }
+      });
+
+      // Convert map to an array of objects
+      const result = Array.from(viewsByDay, ([date, count]) => ({
+        date,
+        count,
+      }));
+
+      return result;
+    } else {
+      return [];
+    }
+  } catch (error: any) {
     handleError(error);
   }
 };

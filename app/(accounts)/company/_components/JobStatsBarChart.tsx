@@ -18,6 +18,26 @@ import Loader from "@/components/Loader";
 
 type JobStatsBarChartProps = {
   selectedTimeFrame: string;
+  jobViewsByYear:
+    | {
+        months: string[];
+        viewsCount: number[];
+      }
+    | undefined;
+  appliedJobsByYear:
+    | {
+        months: string[];
+        applicationCount: number[];
+      }
+    | undefined;
+  jobViewsByDaysOfWeekData:
+    | {
+        date: string;
+        count: number;
+      }[]
+    | undefined;
+  appliedJobsByDaysOfWeekData: any[] | undefined;
+  daysOfTheWeek: string[];
 };
 
 ChartJS.register(
@@ -29,16 +49,34 @@ ChartJS.register(
   Tooltip
 );
 
-const JobStatsBarChart = ({ selectedTimeFrame }: JobStatsBarChartProps) => {
+const JobStatsBarChart = ({
+  selectedTimeFrame,
+  jobViewsByYear,
+  appliedJobsByYear,
+  jobViewsByDaysOfWeekData,
+  appliedJobsByDaysOfWeekData,
+  daysOfTheWeek,
+}: JobStatsBarChartProps) => {
   const [showLoader, setShowLoader] = useState(false);
   const [isScreenWidth, setIsScreenWidth] = useState(0);
+  const jobViewsByDaysOfWeekDataCount = jobViewsByDaysOfWeekData?.map(
+    (data) => data.count
+  );
 
   const data: ChartData<"bar"> = {
-    labels: selectedTimeFrame === "Week" ? week : year,
+    labels:
+      selectedTimeFrame === "Week"
+        ? daysOfTheWeek.length > 0
+          ? daysOfTheWeek
+          : week
+        : year,
     datasets: [
       {
         label: "Job views",
-        data: [45, 21, 12, 11, 10, 36, 59],
+        data:
+          selectedTimeFrame === "Week"
+            ? (jobViewsByDaysOfWeekDataCount as number[])
+            : (jobViewsByYear?.viewsCount as number[]),
         backgroundColor: "#4F6F52",
         barPercentage: 0.8,
         // barThickness: 22,
@@ -46,7 +84,10 @@ const JobStatsBarChart = ({ selectedTimeFrame }: JobStatsBarChartProps) => {
       },
       {
         label: "Jobs applied",
-        data: [45, 21, 12, 11, 10, 36, 59],
+        data:
+          selectedTimeFrame === "Week"
+            ? (appliedJobsByDaysOfWeekData as any[])
+            : (appliedJobsByYear?.applicationCount as number[]),
         backgroundColor: "#FF8F00",
         barPercentage: 0.8,
         // barThickness: 22,

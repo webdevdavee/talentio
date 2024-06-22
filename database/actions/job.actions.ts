@@ -10,6 +10,7 @@ import Jobs from "../models/job.model";
 import { PostJobFormSchema } from "@/lib/zod";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import Applications from "../models/applications.model";
 
 export const createJob = async (
   data: z.infer<typeof PostJobFormSchema>,
@@ -340,7 +341,9 @@ export const deleteJobs = async (jobs: { id: string }[], path: string) => {
   }
 };
 
-export const getCompanyJobsAppliedCount = async (companyId: string) => {
+export const getCompanyJobsAppliedCountForCurrentWeek = async (
+  companyId: string
+) => {
   const startOfWeek = new Date(); // Get the current date
   startOfWeek.setHours(0, 0, 0, 0); // Set time to midnight
   startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Go back to Sunday
@@ -354,58 +357,34 @@ export const getCompanyJobsAppliedCount = async (companyId: string) => {
   const endOfLastWeek = new Date(startOfWeek);
   endOfLastWeek.setDate(endOfLastWeek.getDate() - 1); // Go back 1 day from the start of the current week to get to the end of last week
 
-  const thisWeekPipeline = [
-    {
-      $match: {
-        companyId,
-        createdAt: {
-          $gte: startOfWeek,
-          $lte: new Date(), // Use current date for this week
-        },
-      },
+  // Query the Applications collection for applications made in the current week
+  const thisWeekApplications = {
+    companyId: companyId,
+    createdAt: {
+      $gte: startOfWeek,
+      $lte: new Date(), // Use current date for this week
     },
-    {
-      $group: {
-        _id: null,
-        totalAppliedThisWeek: { $sum: "$applied" },
-      },
-    },
-  ];
+  };
 
-  const lastWeekPipeline = [
-    {
-      $match: {
-        companyId,
-        createdAt: {
-          $gte: startOfLastWeek,
-          $lte: endOfLastWeek, // Use end of last week for range
-        },
-      },
+  // Query the Applications collection for applications made last week
+  const lastWeekApplications = {
+    companyId,
+    createdAt: {
+      $gte: startOfLastWeek,
+      $lte: endOfLastWeek, // Use end of last week for range
     },
-    {
-      $group: {
-        _id: null,
-        totalAppliedLastWeek: { $sum: "$applied" },
-      },
-    },
-  ];
+  };
 
   try {
     await connectToDatabase();
 
     const [thisWeekResult, lastWeekResult] = await Promise.all([
-      Jobs.aggregate(thisWeekPipeline),
-      Jobs.aggregate(lastWeekPipeline),
+      Applications.find(thisWeekApplications).countDocuments(),
+      Applications.find(lastWeekApplications).countDocuments(),
     ]);
 
-    const totalAppliedThisWeek =
-      thisWeekResult.length > 0
-        ? thisWeekResult[0].totalAppliedThisWeek || 0
-        : 0;
-    const totalAppliedLastWeek =
-      lastWeekResult.length > 0
-        ? lastWeekResult[0].totalAppliedLastWeek || 0
-        : 0;
+    const totalAppliedThisWeek = thisWeekResult > 0 ? thisWeekResult || 0 : 0;
+    const totalAppliedLastWeek = lastWeekResult > 0 ? lastWeekResult || 0 : 0;
 
     // Calculate percentage change (handle division by zero)
     const percentageChange =
@@ -420,6 +399,101 @@ export const getCompanyJobsAppliedCount = async (companyId: string) => {
           );
 
     return { totalAppliedThisWeek, percentageChange };
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const getApplicationsSumByMonth = async (companyId: string) => {
+  try {
+    await connectToDatabase();
+
+    // Get the current year
+    const currentYear = new Date().getFullYear();
+
+    // Initialize an array of months
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    // Initialize an array of application counts
+    const applicationCount = new Array(12).fill(0);
+
+    // Loop through the months
+    for (let i = 0; i < months.length; i++) {
+      // Get the start and end date of the month
+      const startDate = new Date(`${currentYear}-${i + 1}-01`);
+      const endDate = new Date(startDate);
+      endDate.setMonth(endDate.getMonth() + 1);
+
+      // Query the Applications collection for applications made in the month
+      const applicationsInMonth = await Applications.find({
+        companyId: companyId,
+        createdAt: {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      }).countDocuments();
+
+      // Update the application count array
+      applicationCount[i] = applicationsInMonth;
+    }
+
+    // Return the months and application count arrays
+    return { months, applicationCount: applicationCount as number[] };
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const getAppliedCountByDayOfWeek = async (
+  companyId: string,
+  customStartDate?: Date,
+  customEndDate?: Date
+) => {
+  customStartDate?.setHours(customStartDate?.getHours() + 1); // Adjust for timezone difference
+  customEndDate?.setHours(customEndDate?.getHours() + 1); // Adjust for timezone difference
+  try {
+    await connectToDatabase();
+
+    // Initialize an array for daily application counts (0 by default)
+    const dailyCounts = new Array(7).fill(0);
+
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the start of the current week (Sunday by default)
+    const startOfWeek = new Date(currentDate);
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+
+    // Query the Applications collection for applications made in the current week
+    const thisWeekApplications = await Applications.find({
+      companyId: companyId,
+      createdAt: {
+        $gte: customStartDate ? customStartDate : startOfWeek,
+        $lte: customEndDate ? customEndDate : currentDate,
+      },
+    });
+
+    // Update daily counts based on applications
+    thisWeekApplications.forEach((application) => {
+      const dayOfWeek = application.createdAt.getDay();
+      dailyCounts[dayOfWeek] += 1;
+    });
+
+    // Return daily counts
+    return dailyCounts;
   } catch (error: any) {
     handleError(error);
   }

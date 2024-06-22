@@ -9,15 +9,17 @@ import {
   addMonths,
   subMonths,
   differenceInCalendarDays,
+  startOfWeek,
+  endOfWeek,
 } from "date-fns";
 import { Toaster, toast } from "sonner";
 import { useDateRangeStore } from "@/lib/store/DateRangeStore";
 
 type CalendarProps = {
-  startDate: Date | null | string;
-  setStartDate: React.Dispatch<React.SetStateAction<Date | null | string>>;
-  endDate: Date | null | string;
-  setEndDate: React.Dispatch<React.SetStateAction<Date | null | string>>;
+  startDate: Date | null;
+  setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  endDate: Date | null;
+  setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
 };
 
 const Calendar = ({
@@ -28,7 +30,7 @@ const Calendar = ({
 }: CalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const handleDateSelect = (date: Date) => {
+  const handleDateSelect = async (date: Date) => {
     // If there is no start date or an end date is already selected, set the new date as the start date.
     if (!startDate || endDate) {
       setStartDate(date);
@@ -54,6 +56,13 @@ const Calendar = ({
         toast.error("Please select a range of 7 days.");
       }
     }
+    // Deselect the date if it's the same as the current start date.
+    if (isSameDay(date, startDate as Date)) {
+      setStartDate(null);
+      useDateRangeStore.setState({
+        startDate: null,
+      });
+    }
   };
 
   // Save date range in local storage
@@ -74,10 +83,14 @@ const Calendar = ({
     setCurrentMonth(subMonths(currentMonth, 1));
   };
 
-  const daysInMonth = eachDayOfInterval({
-    start: startOfMonth(currentMonth),
-    end: endOfMonth(currentMonth),
-  });
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
+  const startDate1 = startOfWeek(monthStart);
+  const endDate1 = endOfWeek(monthEnd);
+
+  const calendarDays = eachDayOfInterval({ start: startDate1, end: endDate1 });
+
+  const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
     <div className="w-full bg-white drop-shadow-2xl p-4">
@@ -92,12 +105,17 @@ const Calendar = ({
         </button>
       </div>
       <div className="grid grid-cols-7 gap-4">
-        {daysInMonth.map((day, index) => (
+        {dayLabels.map((label, index) => (
+          <div key={index} className="text-center font-bold">
+            {label}
+          </div>
+        ))}
+        {calendarDays.map((day, index) => (
           <button
             key={index}
             onClick={() => handleDateSelect(day)}
             className={`flex items-center justify-center py-2 px-4 border text-sm ${
-              !isSameMonth(day, currentMonth) ? "text-gray-500" : ""
+              !isSameMonth(day, currentMonth) ? "text-gray-300" : ""
             } ${
               (startDate && isSameDay(day, startDate)) ||
               (endDate && isSameDay(day, endDate))

@@ -8,6 +8,9 @@ import { useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 import { useDateRangeStore } from "@/lib/store/DateRangeStore";
 import useClickOutside from "@/hooks/useClickOutside";
+import { getJobViewsByWeekDays } from "@/database/actions/jobview.action";
+import { getAppliedCountByDayOfWeek } from "@/database/actions/job.actions";
+import { generateDaysOfWeek } from "@/lib/utils";
 
 type DashboardWrapperProps = {
   company: Company;
@@ -16,8 +19,20 @@ type DashboardWrapperProps = {
   jobViews: number;
   jobViewsPercentageChange: number | undefined;
   companyJobCount: number;
-  companyAppliedCount: number;
+  companyAppliedCount: number | undefined;
   companyAppliedCountPercentage: number | undefined;
+  jobViewsByYear:
+    | {
+        months: string[];
+        viewsCount: number[];
+      }
+    | undefined;
+  appliedJobsByYear:
+    | {
+        months: string[];
+        applicationCount: number[];
+      }
+    | undefined;
 };
 
 const DashboardWrapper = ({
@@ -29,12 +44,24 @@ const DashboardWrapper = ({
   companyJobCount,
   companyAppliedCount,
   companyAppliedCountPercentage,
+  jobViewsByYear,
+  appliedJobsByYear,
 }: DashboardWrapperProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const [startDate, setStartDate] = useState<Date | null | string>(null);
-  const [endDate, setEndDate] = useState<Date | null | string>(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState("Week");
+  const [jobViewsByDaysOfWeekData, setJobViewsByDaysOfWeekData] = useState<
+    | {
+        date: string;
+        count: number;
+      }[]
+    | undefined
+  >();
+  const [appliedJobsByDaysOfWeekData, setAppliedJobsByDaysOfWeekData] =
+    useState<any[] | undefined>();
+  const [daysOfTheWeek, setDaysOfTheWeek] = useState<string[]>([]);
 
   // Retrieve the date range from localStorage
   useEffect(() => {
@@ -52,6 +79,26 @@ const DashboardWrapper = ({
       }
     }
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const [jobViewsByDaysOfWeek, appliedJobsByDaysOfWeek] = await Promise.all(
+        [
+          getJobViewsByWeekDays(company.userId, startDate as Date),
+          getAppliedCountByDayOfWeek(
+            company.userId,
+            startDate as Date,
+            endDate as Date
+          ),
+        ]
+      );
+      setJobViewsByDaysOfWeekData(jobViewsByDaysOfWeek);
+      setAppliedJobsByDaysOfWeekData(appliedJobsByDaysOfWeek);
+    };
+    fetchData();
+    const daysOfWeek = generateDaysOfWeek(startDate as Date);
+    setDaysOfTheWeek(daysOfWeek);
+  }, [startDate, endDate]);
 
   //greeting with respect to time of the day
   const getGreeting = () => {
@@ -127,6 +174,11 @@ const DashboardWrapper = ({
         companyAppliedCountPercentage={companyAppliedCountPercentage}
         selectedTimeFrame={selectedTimeFrame}
         setSelectedTimeFrame={setSelectedTimeFrame}
+        jobViewsByYear={jobViewsByYear}
+        appliedJobsByYear={appliedJobsByYear}
+        jobViewsByDaysOfWeekData={jobViewsByDaysOfWeekData}
+        appliedJobsByDaysOfWeekData={appliedJobsByDaysOfWeekData}
+        daysOfTheWeek={daysOfTheWeek}
       />
     </section>
   );

@@ -12,10 +12,30 @@ type JobsStatsProps = {
   jobViews: number;
   jobViewsPercentageChange: number | undefined;
   companyJobCount: number;
-  companyAppliedCount: number;
+  companyAppliedCount: number | undefined;
   companyAppliedCountPercentage: number | undefined;
   selectedTimeFrame: string;
   setSelectedTimeFrame: React.Dispatch<React.SetStateAction<string>>;
+  jobViewsByYear:
+    | {
+        months: string[];
+        viewsCount: number[];
+      }
+    | undefined;
+  appliedJobsByYear:
+    | {
+        months: string[];
+        applicationCount: number[];
+      }
+    | undefined;
+  jobViewsByDaysOfWeekData:
+    | {
+        date: string;
+        count: number;
+      }[]
+    | undefined;
+  appliedJobsByDaysOfWeekData: any[] | undefined;
+  daysOfTheWeek: string[];
 };
 
 const JobsStats = ({
@@ -26,6 +46,11 @@ const JobsStats = ({
   companyAppliedCountPercentage,
   selectedTimeFrame,
   setSelectedTimeFrame,
+  jobViewsByYear,
+  appliedJobsByYear,
+  jobViewsByDaysOfWeekData,
+  appliedJobsByDaysOfWeekData,
+  daysOfTheWeek,
 }: JobsStatsProps) => {
   const startDate = useDateRangeStore((state) => state.startDate);
   const endDate = useDateRangeStore((state) => state.endDate);
@@ -57,7 +82,14 @@ const JobsStats = ({
         <StatsOption statOption={statOption} setStatOption={setStatOption} />
       </div>
       <div className="grid grid-cols-3 gap-4 mt-10">
-        <JobStatsChart selectedTimeFrame={selectedTimeFrame} />
+        <JobStatsChart
+          selectedTimeFrame={selectedTimeFrame}
+          jobViewsByYear={jobViewsByYear}
+          appliedJobsByYear={appliedJobsByYear}
+          jobViewsByDaysOfWeekData={jobViewsByDaysOfWeekData}
+          appliedJobsByDaysOfWeekData={appliedJobsByDaysOfWeekData}
+          daysOfTheWeek={daysOfTheWeek}
+        />
         <div className="flex flex-col gap-4">
           <JobViews
             jobViews={jobViews}

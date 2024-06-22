@@ -47,6 +47,7 @@ const DashboardWrapper = ({
   jobViewsByYear,
   appliedJobsByYear,
 }: DashboardWrapperProps) => {
+  const [showLoader, setShowLoader] = useState(true);
   const [showCalendar, setShowCalendar] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -80,6 +81,7 @@ const DashboardWrapper = ({
     }
   }, []);
 
+  // Fetch chart data when user selects custom date
   useEffect(() => {
     const fetchData = async () => {
       const [jobViewsByDaysOfWeek, appliedJobsByDaysOfWeek] = await Promise.all(
@@ -98,6 +100,9 @@ const DashboardWrapper = ({
     fetchData();
     const daysOfWeek = generateDaysOfWeek(startDate as Date);
     setDaysOfTheWeek(daysOfWeek);
+    setTimeout(() => {
+      setShowLoader(false);
+    }, 2200);
   }, [startDate, endDate]);
 
   //greeting with respect to time of the day
@@ -179,6 +184,7 @@ const DashboardWrapper = ({
         jobViewsByDaysOfWeekData={jobViewsByDaysOfWeekData}
         appliedJobsByDaysOfWeekData={appliedJobsByDaysOfWeekData}
         daysOfTheWeek={daysOfTheWeek}
+        showLoader={showLoader}
       />
     </section>
   );

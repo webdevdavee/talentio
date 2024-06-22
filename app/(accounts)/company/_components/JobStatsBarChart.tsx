@@ -38,6 +38,7 @@ type JobStatsBarChartProps = {
     | undefined;
   appliedJobsByDaysOfWeekData: any[] | undefined;
   daysOfTheWeek: string[];
+  showLoader: boolean;
 };
 
 ChartJS.register(
@@ -56,8 +57,8 @@ const JobStatsBarChart = ({
   jobViewsByDaysOfWeekData,
   appliedJobsByDaysOfWeekData,
   daysOfTheWeek,
+  showLoader,
 }: JobStatsBarChartProps) => {
-  const [showLoader, setShowLoader] = useState(false);
   const [isScreenWidth, setIsScreenWidth] = useState(0);
   const jobViewsByDaysOfWeekDataCount = jobViewsByDaysOfWeekData?.map(
     (data) => data.count
@@ -180,7 +181,7 @@ const JobStatsBarChart = ({
           </div>
         </section>
       ) : (
-        <section className="h-[70%] flex items-center justify-center">
+        <section className="h-[100%] flex items-center justify-center">
           <Loader className="loader" />
         </section>
       )}

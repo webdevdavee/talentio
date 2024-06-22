@@ -36,6 +36,7 @@ type JobsStatsProps = {
     | undefined;
   appliedJobsByDaysOfWeekData: any[] | undefined;
   daysOfTheWeek: string[];
+  showLoader: boolean;
 };
 
 const JobsStats = ({
@@ -51,6 +52,7 @@ const JobsStats = ({
   jobViewsByDaysOfWeekData,
   appliedJobsByDaysOfWeekData,
   daysOfTheWeek,
+  showLoader,
 }: JobsStatsProps) => {
   const startDate = useDateRangeStore((state) => state.startDate);
   const endDate = useDateRangeStore((state) => state.endDate);
@@ -89,6 +91,7 @@ const JobsStats = ({
           jobViewsByDaysOfWeekData={jobViewsByDaysOfWeekData}
           appliedJobsByDaysOfWeekData={appliedJobsByDaysOfWeekData}
           daysOfTheWeek={daysOfTheWeek}
+          showLoader={showLoader}
         />
         <div className="flex flex-col gap-4">
           <JobViews

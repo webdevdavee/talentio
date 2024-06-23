@@ -52,28 +52,33 @@ const ApplicationsTableBody = ({
               <p>{application.job.company}</p>
             </div>
           </td>
-          <td className="text-sm w-max p-3">
+          <td className="text-sm p-3">
             <Link href={`/job/${application.jobId}`} className="underline">
-              {application.job.title}
+              <p className="w-max">{application.job.title}</p>
             </Link>
           </td>
-          <td className="text-sm w-max p-3">
-            {convertDateFormat(application.createdAt as Date)}
+          <td className="text-sm p-3">
+            <p className="w-max">
+              {convertDateFormat(application.createdAt as Date)}
+            </p>
           </td>
-          <td className="text-sm w-max p-3">{application.job.salary}</td>
-          <td className="text-sm w-max p-3">
+          <td className="text-sm p-3">
+            <p className="w-max">{application.job.salary}</p>
+          </td>
+          <td className="text-sm p-3">
             <button
               type="button"
-              className="bg-primary text-white p-2"
+              className="bg-primary text-white p-2 w-max"
               onClick={() => handleShowApplication(application._id)}
             >
               See application
             </button>
           </td>
-          <td className="text-sm w-max p-3">
+          <td className="text-sm p-3">
             <button
               type="button"
               onClick={() => openDeleteModal(application._id)}
+              className="w-max"
             >
               <Image src="/trash.svg" width={20} height={20} alt="delete" />
             </button>

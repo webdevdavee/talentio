@@ -15,14 +15,14 @@ const ResetPasswordWrapper = () => {
 
   return (
     <section className="w-full h-screen flex items-center justify-center overflow-hidden">
-      <div className="w-[50%] py-12 px-24 sm:w-full sm:p-4">
+      <div className="w-[50%] py-12 px-24 m:w-full m:p-4">
         {error && (
-          <p className="w-full p-2 bg-red-200 text-red-500 mb-6 sm:text-center">
+          <p className="w-full p-2 bg-red-200 text-red-500 mb-6 m:text-center">
             {error}
           </p>
         )}
         {success && (
-          <p className="w-full p-2 bg-green-100 text-green-600 mb-6 sm:text-center">
+          <p className="w-full p-2 bg-green-100 text-green-600 mb-6 m:text-center">
             {success}
           </p>
         )}
@@ -48,7 +48,7 @@ const ResetPasswordWrapper = () => {
           />
         )}
       </div>
-      <picture className="w-[50%] h-screen reset-pwd-img sm:hidden"></picture>
+      <picture className="w-[50%] h-screen reset-pwd-img m:hidden"></picture>
     </section>
   );
 };

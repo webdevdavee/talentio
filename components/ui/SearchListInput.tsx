@@ -20,7 +20,7 @@ const SearchListInput = ({
   setShowList,
 }: SearchListInputProps) => {
   return (
-    <div className="w-fit flex items-start gap-4 sm:w-full">
+    <div className="w-fit flex items-start gap-4 m:w-full">
       <Image src="/location.svg" width={18} height={18} alt="search" />
       <button
         type="button"
@@ -31,7 +31,7 @@ const SearchListInput = ({
             {...inputRegister}
             type="text"
             placeholder="Search country"
-            className="w-fit pb-1 focus:transition focus:outline-none sm:text-sm"
+            className="w-fit pb-1 focus:transition focus:outline-none m:text-sm"
             value={listInputValue}
             onChange={(e) => handleListInput(e)}
           />

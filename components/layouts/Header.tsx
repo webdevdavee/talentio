@@ -21,10 +21,10 @@ const Header = ({ session }: HeaderProps) => {
   };
 
   return (
-    <header className="w-full bg-white px-16 py-4 border-b border-b-gray-200 sticky top-0 z-30 drop-shadow-sm sm:px-4">
+    <header className="w-full bg-white px-16 py-4 border-b border-b-gray-200 sticky top-0 z-30 drop-shadow-sm m:px-4">
       <nav className="w-full">
-        <div className="flex items-center justify-between sm:block">
-          <div className="flex items-center gap-16 sm:justify-between">
+        <div className="flex items-center justify-between m:block">
+          <div className="flex items-center gap-16 m:justify-between">
             <button
               type="button"
               onClick={handleShowMobileMenu}
@@ -53,7 +53,7 @@ const Header = ({ session }: HeaderProps) => {
                 />
               </Link>
             )}
-            <div className="flex items-center gap-8 sm:hidden">
+            <div className="flex items-center gap-8 m:hidden">
               <Link
                 href="/jobs"
                 className={`transition duration-200 hover:text-primary ${
@@ -72,7 +72,7 @@ const Header = ({ session }: HeaderProps) => {
               </Link>
             </div>
           </div>
-          <UserProfileBtn session={session} className="sm:hidden" />
+          <UserProfileBtn session={session} className="m:hidden" />
         </div>
       </nav>
     </header>

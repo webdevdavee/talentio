@@ -59,7 +59,7 @@ const CompanyIndustry = ({ companiesParams }: CompanyIndustryProps) => {
   };
 
   return (
-    <section className="w-full px-16 mt-8 py-8 bg-slate-50 sm:px-4">
+    <section className="w-full px-16 mt-8 py-8 bg-slate-50 m:px-4">
       <h1 className="text-3xl font-bold">Companies by Industry</h1>
       <CompaniesList
         type="from_industry"

@@ -88,11 +88,11 @@ const JobApplicationForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-[50%] bg-white sm:w-full"
+      className="w-[50%] bg-white m:w-full"
     >
       {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
       {job ? (
-        <h1 className="mb-10 w-full text-center text-xl font-semibold sm:mb-6 sm:text-lg">
+        <h1 className="mb-10 w-full text-center text-xl font-semibold m:mb-6 m:text-lg">
           Apply to{" "}
           <Link
             href={`/job/${job._id}`}
@@ -100,13 +100,13 @@ const JobApplicationForm = ({
           >{`${job?.title} (${job?.level}) at ${job?.company}`}</Link>
         </h1>
       ) : (
-        <p className="mb-10 w-full text-center text-xl font-semibold sm:mb-6 sm:text-lg">
+        <p className="mb-10 w-full text-center text-xl font-semibold m:mb-6 m:text-lg">
           Loading...
         </p>
       )}
 
       <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-4 sm:flex-col">
+        <div className="flex items-center gap-4 m:flex-col">
           <InputBox
             inputRegister={register("firstname")}
             label="First Name"

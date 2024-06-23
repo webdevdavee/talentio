@@ -45,10 +45,10 @@ const CompanySignUpForm = () => {
   };
   return (
     <section className="w-full h-screen flex items-center justify-center overflow-hidden">
-      <div className="w-[50%] flex flex-col gap-6 items-center justify-center py-12 px-24 sm:w-full sm:p-4">
+      <div className="w-[50%] flex flex-col gap-6 items-center justify-center py-12 px-24 m:w-full m:p-4">
         {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
         <h1
-          className="text-2xl font-medium mb-4 sm:text-center"
+          className="text-2xl font-medium mb-4 m:text-center"
           style={{ display: step === 2 || step === 3 ? "none" : "block" }}
         >
           Create company account
@@ -74,7 +74,7 @@ const CompanySignUpForm = () => {
           />
         )}
       </div>
-      <picture className="w-[50%] h-screen comp-sign-up sm:hidden"></picture>
+      <picture className="w-[50%] h-screen comp-sign-up m:hidden"></picture>
     </section>
   );
 };

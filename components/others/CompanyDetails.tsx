@@ -27,15 +27,15 @@ const CompanyDetails = ({ company }: CompanyDetailsProps) => {
   return (
     <section className="w-full">
       <CompanyDetailsHeader company={company} />
-      <div className="flex gap-12 mt-4 sm:flex-col">
-        <div className="w-[60%] flex flex-col gap-8 sm:w-full">
+      <div className="flex gap-12 mt-4 m:flex-col">
+        <div className="w-[60%] flex flex-col gap-8 m:w-full">
           <div className="flex flex-col gap-5 pb-8 border-b border-b-gray-200">
             <h2 className="text-2xl font-semibold">Company Profile</h2>
             <p>{company.about}</p>
           </div>
           <CompanyTeam />
         </div>
-        <div className="w-[40%] flex flex-col gap-8 sm:w-full">
+        <div className="w-[40%] flex flex-col gap-8 m:w-full">
           <div className="flex flex-col gap-5">
             <h3 className="text-2xl font-semibold">Contact</h3>
             <span className="flex gap-4 flex-wrap">

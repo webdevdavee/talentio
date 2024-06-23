@@ -15,14 +15,14 @@ const SearchTitleInput = ({
   type,
 }: SearchTitleInputProps) => {
   return (
-    <div className="flex items-start gap-4 sm:w-full">
+    <div className="flex items-start gap-4 m:w-full">
       <Image src="/search.svg" width={18} height={18} alt="search" />
-      <div className="flex flex-col gap-2 sm:w-full">
+      <div className="flex flex-col gap-2 m:w-full">
         <input
           {...inputRegister}
           type="text"
           placeholder={placeholderText}
-          className={`w-44 border-b border-b-zinc-300 pb-3 focus:border-b focus:transition focus:outline-none sm:text-sm sm:w-full ${
+          className={`w-44 border-b border-b-zinc-300 pb-3 focus:border-b focus:transition focus:outline-none m:text-sm m:w-full ${
             type === "companies" && "w-[20rem]"
           }`}
         />

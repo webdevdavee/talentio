@@ -25,7 +25,7 @@ const CompaniesFilterBar = ({
     });
 
   return (
-    <section className="w-[20%] sm:hidden">
+    <section className="w-[20%] m:hidden">
       <CompaniesFilterList
         propertyValueFrequency={
           newPropertyValueCount ? newPropertyValueCount : propertyValueFrequency

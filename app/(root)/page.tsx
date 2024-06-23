@@ -17,7 +17,7 @@ export default async function Home() {
       <CompaniesHelped />
       <FeaturedCategories />
       {!session && (
-        <div className="px-16 sm:px-4">
+        <div className="px-16 m:px-4">
           <SignUpBanner />
         </div>
       )}

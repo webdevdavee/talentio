@@ -38,19 +38,33 @@ const SavedJobsTableBody = ({
               onChange={handleCheckboxChange}
             />
           </th>
-          <td className="text-sm w-max p-3 underline">
-            <Link href={`/job/${job._id}`}>{job.title}</Link>
+          <td className="text-sm p-3 underline">
+            <Link href={`/job/${job._id}`}>
+              <p className="w-max">{job.title}</p>
+            </Link>
           </td>
-          <td className="text-sm w-max p-3">{job.type}</td>
-          <td className="text-sm w-max p-3">{job.level}</td>
-          <td className="text-sm w-max p-3">{job.salary}</td>
-          <td className="text-sm w-max p-3">
-            <p>{job.location}</p>
+          <td>
+            <p className="text-sm w-max p-3">{job.type}</p>
           </td>
-          <td className="text-sm w-max p-3">
-            <div className="flex items-center gap-3">
-              <Image src={job.companylogo} width={20} height={20} alt="img" />
-              <p>{job.company}</p>
+          <td>
+            <p className="text-sm w-max p-3">{job.level}</p>
+          </td>
+          <td>
+            <p className="text-sm w-max p-3">{job.salary}</p>
+          </td>
+          <td>
+            <p className="text-sm w-max p-3">{job.location}</p>
+          </td>
+          <td>
+            <div className="flex items-center gap-3 w-max">
+              <Image
+                src={job.companylogo}
+                width={20}
+                height={20}
+                alt="img"
+                className="sm:hidden"
+              />
+              <p className="text-sm w-max p-3">{job.company}</p>
             </div>
           </td>
           <td className="text-sm w-max p-3">
@@ -58,8 +72,12 @@ const SavedJobsTableBody = ({
               {job.applied} / {job.capacity}
             </p>
           </td>
-          <td className="text-sm w-max p-3">
-            <button type="button" onClick={() => openDeleteModal(job._id)}>
+          <td className="text-sm p-3">
+            <button
+              type="button"
+              className="w-max"
+              onClick={() => openDeleteModal(job._id)}
+            >
               <Image src="/trash.svg" width={20} height={20} alt="delete" />
             </button>
           </td>

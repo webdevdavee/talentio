@@ -58,8 +58,8 @@ const JobDetails = ({ job, company, userId }: JobProps) => {
     <section>
       {!isLoading ? (
         <>
-          <div className="flex gap-4 sm:flex-col">
-            <div className="w-[70%] sm:w-full">
+          <div className="flex gap-4 m:flex-col">
+            <div className="w-[70%] m:w-full">
               <JobDetailHeader
                 job={job}
                 userSavedJobs={userSavedJobs ? userSavedJobs.jobs : undefined}

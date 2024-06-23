@@ -36,10 +36,10 @@ const Onboarding = () => {
 
   return (
     <section className="w-full h-screen flex items-center justify-center overflow-hidden">
-      <div className="w-[50%] flex flex-col gap-10 items-center justify-center py-12 px-24 sm:w-full sm:p-4">
+      <div className="w-[50%] flex flex-col gap-10 items-center justify-center py-12 px-24 m:w-full m:p-4">
         <article className="flex flex-col gap-3 items-center justify-center">
           <h1 className="text-2xl font-medium">Welcome to Talentio!</h1>
-          <p className="sm:text-center">
+          <p className="m:text-center">
             Find your dream job and grow your career.
           </p>
         </article>
@@ -79,7 +79,7 @@ const Onboarding = () => {
           </button>
         </form>
       </div>
-      <picture className="w-[50%] h-screen onboarding-img sm:hidden"></picture>
+      <picture className="w-[50%] h-screen onboarding-img m:hidden"></picture>
     </section>
   );
 };

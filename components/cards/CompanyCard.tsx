@@ -14,7 +14,7 @@ const CompanyCard = ({ company, type, layout }: CompanyCardProps) => {
       className="border border-zinc-300 p-5 duration-200 transition cursor-pointer hover:scale-105"
     >
       <div className="flex flex-col items-start justify-between h-full gap-3">
-        <div className="w-full h-[4.2rem] overflow-hidden sm:h-[3.2rem]">
+        <div className="w-full h-[4.2rem] overflow-hidden m:h-[3.2rem]">
           <Image
             src={company.logo}
             width={50}

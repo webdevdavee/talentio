@@ -25,7 +25,7 @@ const MobileCompaniesFilterBar = ({
     });
 
   return (
-    <section className="w-[20%] sm:w-full">
+    <section className="w-[20%] m:w-full">
       <CompaniesFilterList
         propertyValueFrequency={
           newPropertyValueCount ? newPropertyValueCount : propertyValueFrequency

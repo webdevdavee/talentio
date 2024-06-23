@@ -68,7 +68,10 @@ const ApplicationDetailsForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-[50%] bg-white">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-[50%] bg-white m:w-full"
+    >
       {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
       <h2>
         Update your application details{" "}

@@ -25,7 +25,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
   const applicationDetails = await findApplicationDetails(user.userId);
   return (
     <section>
-      <div className="w-full flex justify-center p-10 sm:p-4">
+      <div className="w-full flex justify-center p-10 m:p-4">
         <JobApplicationForm
           job={job}
           userId={userId}

@@ -14,13 +14,13 @@ const JobList = ({ type, jobs, layout }: JobListProps) => {
       {jobs &&
         jobs.length > 0 &&
         (type === "featured" ? (
-          <section className="w-full grid grid-cols-4 gap-6 sm:flex sm:gap-4 sm:overflow-x-scroll sm:overflow-y-hidden">
+          <section className="w-full grid grid-cols-4 gap-6 m:flex m:gap-4 m:overflow-x-scroll m:overflow-y-hidden">
             {jobs.slice(0, 8).map((job) => (
               <JobCard key={job._id} job={job} />
             ))}
           </section>
         ) : type === "latest" ? (
-          <section className="w-full grid grid-cols-2 gap-6 sm:grid-cols-1">
+          <section className="w-full grid grid-cols-2 gap-6 m:grid-cols-1">
             {jobs.slice(4, 16).map((job) => (
               <JobCard2 key={job._id} job={job} />
             ))}

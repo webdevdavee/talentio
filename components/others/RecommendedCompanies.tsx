@@ -6,7 +6,7 @@ type RecommendedCompaniesProps = {
 
 const RecommendedCompanies = ({ companies }: RecommendedCompaniesProps) => {
   return (
-    <section className="w-full px-16 mt-16 sm:px-4">
+    <section className="w-full px-16 mt-16 m:px-4">
       <div className="flex flex-col items-start gap-1 mb-10">
         <h1 className="text-3xl font-bold">
           Recommended <span className="text-primary">Companies</span>

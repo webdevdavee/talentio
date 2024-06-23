@@ -31,7 +31,7 @@ const DeletePopup = ({
       {showDeleteModal && (
         <section
           ref={popupRef}
-          className="modal z-[36] border-[1px] border-gray-300 p-6 bg-white"
+          className="modal z-[36] border-[1px] border-gray-300 p-6 bg-white m:w-[90%]"
         >
           <p className="mb-8">
             This action is irreversible. Do you want to proceed?

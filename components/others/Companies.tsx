@@ -11,7 +11,7 @@ import CompaniesFilterBar from "./CompaniesFilterBar";
 import CompaniesFromFilter from "./CompaniesFromFilter";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import MobileCompaniesFilterBar from "../Responsiveness/MobileCompaniesFilterBar";
+import MobileCompaniesFilterBar from "../responsiveness/MobileCompaniesFilterBar";
 
 type CompaniesProps = {
   companies: GetCompanies | undefined;
@@ -93,7 +93,7 @@ const Companies = ({ companies, page, industryFrequency }: CompaniesProps) => {
   return (
     <>
       {industry.length > 0 || search.length > 0 ? (
-        <div className="w-full flex items-start justify-start gap-8 p-16 sm:flex-col sm:px-4 sm:py-6">
+        <div className="w-full flex items-start justify-start gap-8 p-16 m:flex-col m:px-4 m:py-6">
           <button
             className="w-full p-3 border flex items-center justify-center gap-2 drop-shadow-xl"
             onClick={() => setShowMobileFilterBar((prev) => !prev)}
@@ -128,7 +128,7 @@ const Companies = ({ companies, page, industryFrequency }: CompaniesProps) => {
         <div>
           <RecommendedCompanies companies={companies?.companies} />
           {!session && (
-            <div className="px-16 sm:px-4">
+            <div className="px-16 m:px-4">
               <SignUpBanner />
             </div>
           )}

@@ -33,7 +33,7 @@ const page = async ({ params: { id } }: Params) => {
   await incrementPageView(company.userId);
 
   return (
-    <section className="px-16 my-8 sm:px-4">
+    <section className="px-16 my-8 m:px-4">
       <CompanyDetails company={company} />
     </section>
   );

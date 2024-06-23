@@ -83,8 +83,8 @@ const JobDetailHeader = ({
     <section className="flex flex-col gap-3 border-b border-b-gray-200 pb-3">
       <span className="flex items-start justify-between gap-3">
         <span className="w-full flex flex-col gap-5">
-          <div className="flex items-start justify-between sm:flex-col sm:gap-8">
-            <div className="flex items-center justify-between sm:w-full">
+          <div className="flex items-start justify-between m:flex-col m:gap-8">
+            <div className="flex items-center justify-between m:w-full">
               <h1 className="text-2xl font-bold capitalize">{job.title}</h1>
               <SaveJobBtn
                 isLoading={isLoading}
@@ -93,17 +93,17 @@ const JobDetailHeader = ({
                 className="xl:hidden xxl:hidden xxxl:hidden ultra:hidden"
               />
             </div>
-            <div className="flex items-start gap-8 sm:w-full">
+            <div className="flex items-start gap-8 m:w-full">
               <SaveJobBtn
                 isLoading={isLoading}
                 savedJob={savedJob}
                 saveAJob={saveAJob}
-                className="sm:hidden"
+                className="m:hidden"
               />
-              <div className="flex flex-col items-center gap-1 sm:w-full">
+              <div className="flex flex-col items-center gap-1 m:w-full">
                 <button
                   type="button"
-                  className={`text-white text-sm px-6 py-2 sm:w-full ${
+                  className={`text-white text-sm px-6 py-2 m:w-full ${
                     job.applied === job.capacity ||
                     appliedJob?.jobId === job._id
                       ? "bg-[gray]"
@@ -121,13 +121,13 @@ const JobDetailHeader = ({
                     ? "Applied"
                     : "Apply now"}
                 </button>
-                <p className="text-sm font-medium sm:mt-2">
+                <p className="text-sm font-medium m:mt-2">
                   {job.applied} applied of {job.capacity} applicants
                 </p>
               </div>
             </div>
           </div>
-          <span className="flex items-center gap-6 sm:flex-wrap sm:gap-4">
+          <span className="flex items-center gap-6 m:flex-wrap m:gap-4">
             <span className="flex items-center gap-2">
               <Image src="/briefcase2.svg" width={20} height={20} alt="level" />
               <p>{job.level}</p>

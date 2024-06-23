@@ -15,7 +15,7 @@ const JobCard = ({ job }: JobCardProps) => {
   return (
     <Link
       href={`/job/${job._id}`}
-      className="border border-zinc-300 p-5 hover:scale-105 duration-200 transition sm:flex-none sm:w-56"
+      className="border border-zinc-300 p-5 hover:scale-105 duration-200 transition m:flex-none m:w-56"
     >
       <div className="flex flex-col items-start justify-between h-full gap-4">
         <div className="w-full flex items-center justify-between">
@@ -26,16 +26,16 @@ const JobCard = ({ job }: JobCardProps) => {
             quality={100}
             alt={job.title}
           />
-          <span className="py-1 px-2 text-sm border border-primary sm:text-xs sm:p-1">
+          <span className="py-1 px-2 text-sm border border-primary m:text-xs m:p-1">
             {job.type}
           </span>
         </div>
-        <p className="text-lg font-bold text-left sm:text-base">{job.title}</p>
-        <p className="text-left font-medium sm:text-base">
+        <p className="text-lg font-bold text-left m:text-base">{job.title}</p>
+        <p className="text-left font-medium m:text-base">
           {job.company} - {job.location}
         </p>
         <p
-          className="text-left sm:text-sm"
+          className="text-left m:text-sm"
           dangerouslySetInnerHTML={{
             __html:
               cleanDescription.length > 55
@@ -43,8 +43,8 @@ const JobCard = ({ job }: JobCardProps) => {
                 : cleanDescription,
           }}
         ></p>
-        <div className="w-full flex items-center justify-between sm:flex-col sm:justify-start sm:gap-2 sm:items-start">
-          <span className="px-3 py-2 border border-gray-300 sm:p-1 sm:text-sm">
+        <div className="w-full flex items-center justify-between m:flex-col m:justify-start m:gap-2 m:items-start">
+          <span className="px-3 py-2 border border-gray-300 m:p-1 m:text-sm">
             {job.category}
           </span>
           <span className="flex items-center gap-2">

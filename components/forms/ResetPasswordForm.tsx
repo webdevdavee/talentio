@@ -69,10 +69,10 @@ const ResetPasswordForm = ({
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-6 items-center justify-center"
     >
-      <h1 className="text-2xl font-medium mb-4 sm:text-center">
+      <h1 className="text-2xl font-medium mb-4 m:text-center">
         Reset password
       </h1>
-      <p className="sm:text-center">Enter a new password for your account.</p>
+      <p className="m:text-center">Enter a new password for your account.</p>
       <div className="w-full flex flex-col gap-4">
         <PasswordInput
           inputRegister={register("newPassword")}

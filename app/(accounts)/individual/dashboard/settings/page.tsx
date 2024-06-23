@@ -22,12 +22,12 @@ const page = async () => {
   const applicationDetails = await findApplicationDetails(user.userId);
 
   return (
-    <section className="px-8 mb-6">
+    <section className="px-8 mb-6 m:px-4">
       <div className="border-b border-b-gray-200 pb-4">
         <h1 className="text-2xl font-medium">Profile</h1>
         <p className="text-sm">Manage your profile settings</p>
       </div>
-      <div className="flex gap-24 mt-5">
+      <div className="flex gap-24 mt-5 m:flex-col m:gap-10">
         <SettingsForm user={user} />
         <ApplicationDetailsForm
           user={user}

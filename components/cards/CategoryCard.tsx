@@ -29,17 +29,17 @@ const CategoryCard = ({
 
   return (
     <div
-      className="border border-zinc-300 p-8 hover:scale-105 duration-200 transition cursor-pointer sm:p-3"
+      className="border border-zinc-300 p-8 hover:scale-105 duration-200 transition cursor-pointer m:p-3"
       onClick={() => viewJobsByCategory(category.category)}
     >
-      <div className="flex flex-col items-start justify-center gap-3 sm:flex-row sm:items-center sm:justify-start">
+      <div className="flex flex-col items-start justify-center gap-3 m:flex-row m:items-center m:justify-start">
         <Image
           src={category.icon}
           width={30}
           height={30}
           alt={category.category}
         />
-        <div className="flex flex-col gap-3 sm:gap-1">
+        <div className="flex flex-col gap-3 m:gap-1">
           <p className="text-lg font-bold">{category.category}</p>
           <span className="flex items-center gap-1">
             <p className="text-gray-500">

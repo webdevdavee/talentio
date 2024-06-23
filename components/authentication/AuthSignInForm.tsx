@@ -34,7 +34,7 @@ const AuthSignInForm = () => {
     <section className="w-full h-screen flex items-center justify-center overflow-hidden">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-[50%] flex flex-col gap-6 items-center justify-center py-12 px-24 sm:w-full sm:p-4"
+        className="w-[50%] flex flex-col gap-6 items-center justify-center py-12 px-24 m:w-full m:p-4"
       >
         {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
         <h1 className="text-2xl font-medium mb-4">Sign into your account</h1>
@@ -105,7 +105,7 @@ const AuthSignInForm = () => {
           </Link>
         </div>
       </form>
-      <picture className="w-[50%] h-screen auth-img sm:hidden"></picture>
+      <picture className="w-[50%] h-screen auth-img m:hidden"></picture>
     </section>
   );
 };

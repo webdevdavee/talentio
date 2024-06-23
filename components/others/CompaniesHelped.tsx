@@ -2,11 +2,11 @@ import Image from "next/image";
 
 const CompaniesHelped = () => {
   return (
-    <section className="mt-10 px-16 sm:px-4">
-      <p className="text-gray-500 sm:text-sm">
+    <section className="mt-10 px-16 m:px-4">
+      <p className="text-gray-500 m:text-sm">
         Companies we&apos;ve helped grow
       </p>
-      <div className="w-full flex items-center justify-between gap-3 sm:flex-wrap">
+      <div className="w-full flex items-center justify-between gap-3 m:flex-wrap">
         <Image src="/companies/Ibm.svg" width={110} height={110} alt="ibm" />
         <Image src="/companies/Amd.svg" width={130} height={130} alt="amd" />
         <Image

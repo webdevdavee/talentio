@@ -9,7 +9,7 @@ type ProfileDialogBoxProps = {
 
 const ProfileDialogBox = ({ session }: ProfileDialogBoxProps) => {
   return (
-    <section className="absolute right-14 top-16 bg-white drop-shadow-xl z-10 sm:right-3">
+    <section className="absolute right-14 top-16 bg-white drop-shadow-xl z-10 m:right-3">
       <div className="flex flex-col">
         <div className="flex justify-center items-center gap-3 p-2 mb-2 border-b border-b-gray-200">
           <Image

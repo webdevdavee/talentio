@@ -31,7 +31,7 @@ const page = async ({ params: { id } }: Params) => {
   // Increment company's jobs view count
   await incrementJobView(company.userId);
   return (
-    <section className="px-16 my-8 sm:px-4">
+    <section className="px-16 my-8 m:px-4">
       <JobDetails job={job} company={company} userId={session?.user.id} />
     </section>
   );

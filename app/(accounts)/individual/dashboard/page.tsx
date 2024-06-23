@@ -21,7 +21,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
   if (session?.user.accountType === "company") redirect("/company/dashboard");
 
   return (
-    <section className="px-8 flex flex-col gap-6">
+    <section className="px-8 flex flex-col gap-6 m:px-4">
       <ApplicationsWrapper
         userId={session?.user.id}
         page={page}

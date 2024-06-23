@@ -103,22 +103,6 @@ type User = {
   updatedAt: Date;
 };
 
-type CompanyUser = {
-  _id: string;
-  userId: string;
-  name: string;
-  email: string;
-  password: string;
-  image: string;
-  accountType: string;
-  companyId: string;
-  securityQuestion: { question: string; answer: string };
-  provider: string;
-  role: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
 type Company = {
   _id: string;
   userId: string;

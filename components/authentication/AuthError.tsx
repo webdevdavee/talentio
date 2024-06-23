@@ -4,7 +4,7 @@ const AuthError = () => {
   return (
     <section className="w-full h-screen">
       <div className="flex h-screen">
-        <span className="w-[50%] flex flex-col items-center justify-center gap-10 flex-wrap p-8">
+        <span className="w-[50%] flex flex-col items-center justify-center gap-10 flex-wrap p-8 m:w-full">
           <h1 className="text-5xl text-center">Oh no! Something went wrong!</h1>
           <Link
             href="/sign-in"
@@ -13,7 +13,7 @@ const AuthError = () => {
             Back to log in
           </Link>
         </span>
-        <span className="auth-error w-[50%]"></span>
+        <picture className="auth-error w-[50%] m:hidden"></picture>
       </div>
     </section>
   );

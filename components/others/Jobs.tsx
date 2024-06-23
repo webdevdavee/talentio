@@ -7,7 +7,7 @@ import { handleJobFilter } from "@/database/actions/job.actions";
 import { useSearchParams } from "next/navigation";
 import { countPropertyValues, handleError } from "@/lib/utils";
 import Image from "next/image";
-import MobileJobsFilterBar from "../Responsiveness/MobileJobsFilterBar";
+import MobileJobsFilterBar from "../responsiveness/MobileJobsFilterBar";
 
 type JobsProps = {
   page: number;
@@ -107,7 +107,7 @@ const Jobs = ({
   const [showMobileFilterBar, setShowMobileFilterBar] = useState(false);
 
   return (
-    <div className="w-full flex items-start justify-start gap-8 p-16 sm:flex-col sm:px-4 sm:py-6">
+    <div className="w-full flex items-start justify-start gap-8 p-16 m:flex-col m:px-4 m:py-6">
       <button
         className="w-full p-3 border flex items-center justify-center gap-2 drop-shadow-xl"
         onClick={() => setShowMobileFilterBar((prev) => !prev)}

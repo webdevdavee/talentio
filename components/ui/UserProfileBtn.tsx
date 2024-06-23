@@ -22,7 +22,7 @@ const UserProfileBtn = ({ session, className }: UserProfileBtnProps) => {
   return (
     <section className={className}>
       {!session ? (
-        <div className="sm:hidden">
+        <div className="m:hidden">
           <Link href="/sign-in" className="px-4 py-3">
             Login
           </Link>

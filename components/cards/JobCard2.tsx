@@ -15,8 +15,8 @@ const JobCard2 = ({ job, type }: JobCard2Props) => {
         type && "border border-gray-300"
       }`}
     >
-      <div className="flex items-start justify-between sm:flex-col">
-        <div className="flex items-start justify-start gap-10 sm:flex-col sm:gap-6">
+      <div className="flex items-start justify-between m:flex-col">
+        <div className="flex items-start justify-start gap-10 m:flex-col m:gap-6">
           <Image
             src={job.companylogo}
             width={50}
@@ -34,7 +34,7 @@ const JobCard2 = ({ job, type }: JobCard2Props) => {
             </span>
           </div>
         </div>
-        <span className="flex items-center gap-2 sm:mt-3">
+        <span className="flex items-center gap-2 m:mt-3">
           <Image src="/clock.svg" width={13} height={13} alt="clock" />
           <p className="text-sm text-[gray]">
             {getRelativeTime(new Date(job.createdAt))}

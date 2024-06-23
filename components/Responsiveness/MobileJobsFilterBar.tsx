@@ -33,7 +33,7 @@ const MobileJobsFilterBar = ({
   });
 
   return (
-    <section className="w-[20%] sm:w-full xl:hidden xxl:hidden xxxl:hidden ultra:hidden">
+    <section className="w-[20%] m:w-full xl:hidden xxl:hidden xxxl:hidden ultra:hidden">
       <JobsFilterList
         jobsFrequency={
           newJobsPropertyCount ? newJobsPropertyCount : jobsFrequency

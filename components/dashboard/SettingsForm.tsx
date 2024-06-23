@@ -77,7 +77,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
   };
 
   return (
-    <section className="w-[50%]">
+    <section className="w-[50%] m:w-full">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex flex-col gap-6">
           <div className="flex flex-col gap-4">
@@ -143,7 +143,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
           )}
           <button
             type="submit"
-            className={`w-[40%] p-3 text-white transition duration-150 ${
+            className={`w-[40%] p-3 text-white transition duration-150 m:w-full ${
               isSubmitting
                 ? "bg-gray-200"
                 : "bg-primary transition duration-150"
@@ -163,7 +163,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
             </h3>
             <button
               type="button"
-              className="w-[40%] p-3 bg-red-600 text-white"
+              className="w-[40%] p-3 bg-red-600 text-white m:w-full"
               onClick={deleteUserAccount}
             >
               Delete account

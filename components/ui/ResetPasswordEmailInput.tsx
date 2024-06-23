@@ -48,14 +48,14 @@ const ResetPasswordEmailInput = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-6 items-center justify-center sm:gap-4"
+      className="w-full flex flex-col gap-6 items-center justify-center m:gap-4"
       style={{
         display:
           moveToAnswerSecurityQuestion || moveToResetPasword ? "none" : "flex",
       }}
     >
       <h1 className="text-2xl font-medium mb-4">Enter your email</h1>
-      <p className="sm:text-center">
+      <p className="m:text-center">
         To begin your account recovery process, please enter the email you
         registered with.
       </p>

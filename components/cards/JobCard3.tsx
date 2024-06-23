@@ -47,14 +47,14 @@ const JobCard3 = ({ job, layout }: JobCard3Props) => {
   return (
     <Link
       href={`/job/${job._id}`}
-      className="bg-white p-8 border border-gray-400 cursor-pointer sm:p-4"
+      className="bg-white p-8 border border-gray-400 cursor-pointer m:p-4"
     >
       <div
-        className={`w-full flex justify-between sm:flex-col ${
+        className={`w-full flex justify-between m:flex-col ${
           layout === "column" && "flex-col gap-6"
         }`}
       >
-        <div className="flex items-start justify-start gap-10 sm:flex-col sm:mb-4">
+        <div className="flex items-start justify-start gap-10 m:flex-col m:mb-4">
           <Image
             src={job.companylogo}
             width={50}
@@ -90,7 +90,7 @@ const JobCard3 = ({ job, layout }: JobCard3Props) => {
             <span className="font-semibold">{job.applied} applied</span> of{" "}
             {job.capacity} capacity
           </p>
-          <span className="w-full flex items-center justify-center gap-2 mt-4 sm:mt-1">
+          <span className="w-full flex items-center justify-center gap-2 mt-4 m:mt-1">
             <Image src="/clock.svg" width={13} height={13} alt="clock" />
             <p className="text-sm text-[gray]">
               {getRelativeTime(new Date(job.createdAt))}

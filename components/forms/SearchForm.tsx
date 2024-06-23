@@ -84,7 +84,7 @@ const SearchForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white w-fit p-4 flex items-start gap-4 drop-shadow sm:flex-col sm:w-full"
+      className="bg-white w-fit p-4 flex items-start gap-4 drop-shadow m:flex-col m:w-full"
     >
       <SearchTitleInput
         inputRegister={register("title")}
@@ -96,7 +96,7 @@ const SearchForm = ({
         placeholderText={placeholderText}
         type={type}
       />
-      <div ref={searchListRef} className="relative sm:w-full">
+      <div ref={searchListRef} className="relative m:w-full">
         {type !== "companies" && (
           <SearchListInput
             inputRegister={register("list")}
@@ -122,7 +122,7 @@ const SearchForm = ({
       </div>
       <button
         type="submit"
-        className="bg-primary text-white px-4 py-2 sm:w-full"
+        className="bg-primary text-white px-4 py-2 m:w-full"
       >
         {buttonText}
       </button>

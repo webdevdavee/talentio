@@ -62,14 +62,14 @@ const ConfirmSecurityQuestionForm = ({
       className="flex flex-col gap-6 items-center justify-center"
     >
       {error && (
-        <p className="w-full p-2 bg-red-200 text-red-500 sm:text-center">
+        <p className="w-full p-2 bg-red-200 text-red-500 m:text-center">
           {error}
         </p>
       )}
-      <h1 className="text-2xl font-medium mb-4 sm:text-center">
+      <h1 className="text-2xl font-medium mb-4 m:text-center">
         Answer the question below
       </h1>
-      <p className="sm:text-center">
+      <p className="m:text-center">
         To make sure this email belongs to you, please answer the below
         question.
       </p>

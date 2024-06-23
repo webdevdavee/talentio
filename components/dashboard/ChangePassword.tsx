@@ -5,18 +5,30 @@ type ChangePasswordProps = {
   register: UseFormRegister<{
     name: string;
     email: string;
-    currentPassword?: string;
-    newPassord?: string;
-    confirmPassword?: string;
+    about: string;
+    company_size: string;
+    twitter: string;
+    facebook: string;
+    linkedin: string;
+    mail: string;
     image: string;
+    currentPassword?: string | undefined;
+    newPassord?: string | undefined;
+    confirmPassword?: string | undefined;
   }>;
   errors: FieldErrors<{
     name: string;
     email: string;
-    currentPassword?: string;
-    newPassord?: string;
-    confirmPassword?: string;
+    about: string;
+    company_size: string;
+    twitter: string;
+    facebook: string;
+    linkedin: string;
+    mail: string;
     image: string;
+    currentPassword?: string | undefined;
+    newPassord?: string | undefined;
+    confirmPassword?: string | undefined;
   }>;
 };
 

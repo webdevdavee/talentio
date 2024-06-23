@@ -237,7 +237,26 @@ export const generateDaysOfWeek = (startDate: Date) => {
   }
 };
 
-// Example usage:
-// const startDate = "2024-06-14T00:00:00.000Z";
-// const daysOfWeekArray = generateDaysOfWeek(startDate);
-// console.log(daysOfWeekArray);
+// Separate string number like: $271,937 - $461,083
+export const separateSalaryNumbers = (string: string | undefined) => {
+  if (string) {
+    const numbers = string
+      .replace(/\$/g, "")
+      .split("-")
+      .map((num) => parseInt(num.replace(/,/g, "").trim()));
+    return numbers;
+  } else {
+    return;
+  }
+};
+
+export const extractEmployeeCount = (string: string | undefined) => {
+  if (string) {
+    const employeeCount = parseInt(
+      string.replace(/,/g, "").replace(/\+.*/, "")
+    );
+    return employeeCount;
+  } else {
+    return;
+  }
+};

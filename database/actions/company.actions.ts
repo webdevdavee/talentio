@@ -269,7 +269,8 @@ export const handleCompanyFilter = async (
 
 export const updateCompany = async (
   data: z.infer<typeof SettingsFormSchema>,
-  company: Company
+  company: Company,
+  industry: string[]
 ) => {
   const validatedFields = SettingsFormSchema.safeParse(data);
   if (!validatedFields.success) {
@@ -295,6 +296,9 @@ export const updateCompany = async (
     }
   }
 
+  // Format size with commas
+  const formattedSize = formatNumberWithCommas(data.company_size);
+
   try {
     await connectToDatabase();
 
@@ -304,11 +308,19 @@ export const updateCompany = async (
       email: string | undefined;
       password: string | undefined;
       logo: string | undefined;
+      company_size: string | undefined;
+      about: string | undefined;
+      industry: string[] | undefined;
+      contact: string[] | undefined;
     } = {
       company: data.name,
       email: data.email,
       password: hashedPassword ? hashedPassword : company.password,
       logo: data.image,
+      company_size: `${formattedSize}+ employees`,
+      about: data.about,
+      industry: industry,
+      contact: [data.twitter, data.facebook, data.linkedin, data.mail],
     };
 
     // Save company in all users collection and company collection

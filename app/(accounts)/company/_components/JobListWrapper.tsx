@@ -27,17 +27,13 @@ const JobListWrapper = ({ company, page, perPage }: JobListWrapperProps) => {
   const [totalPages, setTotalPages] = useState<number>();
   const [isLoading, setIsLoading] = useState(true);
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
-  const [jobToShow, setJobToShow] = useState<Job>();
   const [checkedJobs, setCheckedJobs] = useState<
     {
       id: string;
     }[]
   >([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showJob, setShowJob] = useState(false);
   const [singleJobToBeDeleted, setSingleJobToBeDeleted] = useState<string>();
-  const [showEditJob, setShowEditJob] = useState(false);
-  const [jobToBeEdited, setJobToBeEdited] = useState<UserApplication>();
   const [refetchData, setRefetchData] = useState(false);
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { useOverlayStore } from "@/lib/store/OverlayStore";
-import { convertDateFormat } from "@/lib/utils";
+import { convertDateFormat, createURL } from "@/lib/utils";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type ApplicationTableBodyProps = {
   jobs: Job[];
@@ -23,6 +24,16 @@ const JobsTableBody = ({
     useOverlayStore.setState({ overlay: true });
     setShowDeleteModal(true);
     setSingleJobToBeDeleted(jobId);
+  };
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const jobParam = new URLSearchParams(searchParams.toString());
+
+  const handleJobToEdit = (jobId: string) => {
+    jobParam.set("job", jobId.toString());
+    const url = createURL("/company/dashboard/edit-job", jobParam);
+    router.push(url);
   };
 
   return (
@@ -55,7 +66,7 @@ const JobsTableBody = ({
           <td className="text-sm w-max p-3">{job.applied}</td>
           <td className="text-sm w-max p-3">
             <div className="flex items-center gap-5">
-              <button type="button">
+              <button type="button" onClick={() => handleJobToEdit(job._id)}>
                 <Image src="/edit.svg" width={20} height={20} alt="edit" />
               </button>
               <button type="button" onClick={() => openDeleteModal(job._id)}>

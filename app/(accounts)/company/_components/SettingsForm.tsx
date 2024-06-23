@@ -11,6 +11,10 @@ import ProfileImageUploader from "@/components/dashboard/ProfileImageUploader";
 import { useUploadThing } from "@/lib/utils/uploadthing";
 import { deleteAccount } from "@/database/actions/users.actions";
 import { updateCompany } from "@/database/actions/company.actions";
+import TextArea from "@/components/TextArea";
+import { extractEmployeeCount } from "@/lib/utils";
+import DropdownListInput from "@/components/DropdownListInput";
+import { industries } from "@/constants";
 
 type SettingsFormProps = {
   company: Company;
@@ -22,9 +26,16 @@ const SettingsForm = ({ company }: SettingsFormProps) => {
     ...company,
     name: company.company,
     image: company.logo,
+    company_size: extractEmployeeCount(company.company_size)?.toString(),
+    twitter: company.contact[0],
+    facebook: company.contact[1],
+    linkedin: company.contact[2],
+    mail: company.contact[3],
   };
 
   const [files, setFiles] = useState<File[]>([]);
+  const [industry, setIndustry] = useState<string[]>([...company.industry]);
+  const [industryError, setIndustryError] = useState<string>("");
   const [error, setError] = useState<string | undefined>("");
   const [showChangePasswordForm, SetShowPasswordForm] = useState(false);
 
@@ -43,6 +54,14 @@ const SettingsForm = ({ company }: SettingsFormProps) => {
 
   const onSubmit = async (data: TSettingsFormSchema) => {
     setError("");
+    setIndustryError("");
+
+    // Check if industry was provided, if not throw an error and break the onSubmit function
+    if (industry.length < 1) {
+      setIndustryError("Required");
+      return;
+    }
+
     // Initialize the URL for the resume.
     let uploadedFileUrl = data.image;
 
@@ -60,7 +79,8 @@ const SettingsForm = ({ company }: SettingsFormProps) => {
       // Update user
       const response = await updateCompany(
         { ...data, image: uploadedFileUrl },
-        company
+        company,
+        industry
       );
       setError(response.error);
       // If no errors, refresh page
@@ -130,6 +150,97 @@ const SettingsForm = ({ company }: SettingsFormProps) => {
               )
             }
           />
+          <TextArea
+            inputRegister={register("about")}
+            label="About"
+            htmlFor="about"
+            inputType="text"
+            style="max-h-[10rem] min-h-[6rem] overflow-y-auto"
+            required
+            error={
+              errors.about && (
+                <p className="text-red-500">{errors.about.message}</p>
+              )
+            }
+          />
+          <InputBox
+            inputRegister={register("company_size")}
+            label="Size"
+            htmlFor="company_size"
+            inputType="number"
+            inputMode="email"
+            required
+            error={
+              errors.company_size && (
+                <p className="text-red-500">{errors.company_size.message}</p>
+              )
+            }
+          />
+          <div>
+            <DropdownListInput
+              dropdownData={industries.map((industry) => industry.industry)}
+              data={industry}
+              setData={setIndustry}
+              label="Industry"
+              secondaryText="Select your industry"
+              required
+            />
+            <p className="text-red-500">{industryError}</p>
+          </div>
+          <div>
+            <h2 className="text-xl font-medium mb-4">Contacts</h2>
+            <div className="w-full flex flex-col gap-4">
+              <InputBox
+                inputRegister={register("twitter")}
+                label="Twitter (must be a url)"
+                htmlFor="twitter"
+                inputType="text"
+                required
+                error={
+                  errors.twitter && (
+                    <p className="text-red-500">{errors.twitter.message}</p>
+                  )
+                }
+              />
+              <InputBox
+                inputRegister={register("facebook")}
+                label="Facebook (must be a url)"
+                htmlFor="facebook"
+                inputType="text"
+                required
+                error={
+                  errors.facebook && (
+                    <p className="text-red-500">{errors.facebook.message}</p>
+                  )
+                }
+              />
+              <InputBox
+                inputRegister={register("linkedin")}
+                label="Linkedin (must be a url)"
+                htmlFor="linkedin"
+                inputType="text"
+                required
+                error={
+                  errors.linkedin && (
+                    <p className="text-red-500">{errors.linkedin.message}</p>
+                  )
+                }
+              />
+              <InputBox
+                inputRegister={register("mail")}
+                label="Mail"
+                htmlFor="mail"
+                inputType="text"
+                inputMode="email"
+                required
+                error={
+                  errors.mail && (
+                    <p className="text-red-500">{errors.mail.message}</p>
+                  )
+                }
+              />
+            </div>
+          </div>
           <button
             type="button"
             className="w-[40%] p-3 bg-red-500 text-white mt-2"

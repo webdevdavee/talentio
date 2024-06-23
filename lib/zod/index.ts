@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isValidUrl } from "../utils";
 
 // SEARCH SCHEMA
 export const searchSchema = z.object({
@@ -34,6 +35,33 @@ export type TJobApplicationFormSchema = z.infer<
 export const SettingsFormSchema = z.object({
   name: z.string().min(3, "Use 3 characters or more"),
   email: z.string().email(),
+  about: z.string().min(3, "Use 3 characters or more"),
+  company_size: z.string().min(3, "Use 3 characters or more"),
+  twitter: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .url()
+    .trim()
+    .refine((data) => isValidUrl(data), {
+      message: "Please enter a valid URL",
+    }),
+  facebook: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .url()
+    .trim()
+    .refine((data) => isValidUrl(data), {
+      message: "Please enter a valid URL",
+    }),
+  linkedin: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .url()
+    .trim()
+    .refine((data) => isValidUrl(data), {
+      message: "Please enter a valid URL",
+    }),
+  mail: z.string().email().toLowerCase().trim(),
   currentPassword: z
     .string()
     .min(8, "Should be at least 8 characters long.")

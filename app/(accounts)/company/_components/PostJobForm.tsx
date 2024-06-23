@@ -4,7 +4,7 @@ import InputBox from "@/components/InputBox";
 import { toolbarOptions } from "@/lib/react-quill";
 import { PostJobFormSchema, TPostJobFormSchema } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import { categories } from "@/constants";
@@ -14,15 +14,17 @@ import DropdownButton from "@/components/DropdownButton";
 import DropdownList from "@/components/DropdownList";
 import useClickOutside from "@/hooks/useClickOutside";
 import Loader2 from "@/components/Loader2";
-import { createJob } from "@/database/actions/job.actions";
+import { createJob, editAJob } from "@/database/actions/job.actions";
 import { useRouter } from "next/navigation";
-import { capitalizeFirstLetter } from "@/lib/utils";
+import { capitalizeFirstLetter, separateSalaryNumbers } from "@/lib/utils";
 
 type PostJobFormProps = {
+  type: string;
+  job?: Job;
   company: Company;
 };
 
-const PostJobForm = ({ company }: PostJobFormProps) => {
+const PostJobForm = ({ type, job, company }: PostJobFormProps) => {
   const router = useRouter();
 
   const [error, setError] = useState<string | undefined>("");
@@ -54,6 +56,31 @@ const PostJobForm = ({ company }: PostJobFormProps) => {
     }));
   };
 
+  // Get the job to edit salary
+  const salary = separateSalaryNumbers(job ? job?.salary : "");
+
+  // Set initial form values based on the operation type.
+  const initialValues =
+    job && type === "edit" && salary
+      ? {
+          ...job,
+          salary: { from: salary[0].toString(), to: salary[1].toString() },
+        }
+      : {};
+
+  // Initialize form state if editing job
+  useEffect(() => {
+    // Check if job is being edited
+    if (job && type === "edit") {
+      setSelectedCategory(job.category);
+      setRadioSelections({
+        // Setting the job to edit type and level to lowercase, as that is what the state expects to receive
+        jobType: job.type.toLowerCase(),
+        jobLevel: job.level.toLowerCase(),
+      });
+    }
+  }, []);
+
   const {
     control,
     register,
@@ -62,8 +89,10 @@ const PostJobForm = ({ company }: PostJobFormProps) => {
     reset,
   } = useForm<TPostJobFormSchema>({
     resolver: zodResolver(PostJobFormSchema),
+    defaultValues: initialValues,
   });
 
+  // Submit form
   const onSubmit = async (data: TPostJobFormSchema) => {
     setCategoryError("");
     setJobTypeError("");
@@ -87,18 +116,39 @@ const PostJobForm = ({ company }: PostJobFormProps) => {
       return;
     }
 
-    // Create job
-    const response = await createJob(
-      data,
-      capitalizeFirstLetter(selectedCategory),
-      radioSelections,
-      company
-    );
+    // Initialize the response variable
+    let response;
 
-    // If no error, send user to job-list page, if an error occured, get error response and show the user
+    if (type === "create") {
+      // Create job
+      response = await createJob(
+        data,
+        capitalizeFirstLetter(selectedCategory),
+        radioSelections,
+        company
+      );
+    }
+
+    if (type === "edit") {
+      // If the job to edit doesn't exist, navigate back.
+      if (!job) {
+        router.back();
+        return;
+      }
+
+      // edit job
+      response = await editAJob(
+        job._id,
+        data,
+        capitalizeFirstLetter(selectedCategory),
+        radioSelections
+      );
+    }
+
+    // If no error, send user to job-list page, if an error occured, get error response and display to user
     if (!response?.error) {
-      router.push("/company/dashboard/job-list");
       reset();
+      router.push("/company/dashboard/job-list");
     } else {
       setError(response.error);
     }
@@ -296,7 +346,7 @@ const PostJobForm = ({ company }: PostJobFormProps) => {
         {isSubmitting ? (
           <Loader2 className="second-loader" />
         ) : (
-          <p>Create job</p>
+          <p>{type === "create" ? "Create job" : "Edit job"}</p>
         )}
       </button>
     </form>

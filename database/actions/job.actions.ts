@@ -53,6 +53,47 @@ export const createJob = async (
   }
 };
 
+export const editAJob = async (
+  jobId: string,
+  data: z.infer<typeof PostJobFormSchema>,
+  selectedCategory: string,
+  radioSelections: {
+    jobType: string;
+    jobLevel: string;
+  }
+) => {
+  try {
+    await connectToDatabase();
+
+    const validatedFields = PostJobFormSchema.safeParse(data);
+    if (!validatedFields.success) {
+      return { error: "Invalid credentials." };
+    }
+
+    const { from, to } = validatedFields.data.salary;
+
+    const jobData = {
+      ...data,
+      capacity: Number(data.capacity),
+      salary: `$${formatNumberWithCommas(from)} - $${formatNumberWithCommas(
+        to
+      )}`,
+      category: selectedCategory,
+      type: capitalizeFirstLetter(radioSelections.jobType),
+      level: capitalizeFirstLetter(radioSelections.jobLevel),
+    };
+
+    const updatedJob = await Jobs.findByIdAndUpdate(
+      { _id: jobId },
+      { ...jobData },
+      { new: true }
+    );
+    console.log(updatedJob);
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
 export const getJobs = async (page = 1, limit = 10) => {
   try {
     await connectToDatabase();

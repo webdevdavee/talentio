@@ -1,4 +1,4 @@
-import AuthSignUpForm from "@/components/AuthSignUpForm";
+import AuthSignUpForm from "@/components/authentication/AuthSignUpForm";
 
 export async function generateMetadata() {
   return {

@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
-import Jobs from "@/components/Jobs";
-import SubHero from "@/components/SubHero";
+import Jobs from "@/components/others/Jobs";
+import SubHero from "@/components/ui/SubHero";
 import {
   getJobs,
   getJobsPropertyValueCount,

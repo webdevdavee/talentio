@@ -21,16 +21,6 @@ const SidebarNav = () => {
           <p>Dashboard</p>
         </Link>
         <Link
-          href="/company/dashboard/messages"
-          className={`flex items-center gap-3 cursor-pointer py-2 px-3 hover:bg-gray-200 transition hover:border-l-[2px] hover:border-l-primary ${
-            pathname === "/company/dashboard/messages" &&
-            "bg-gray-200 border-l-[2px] border-l-primary"
-          }`}
-        >
-          <Image src="/message.svg" width={20} height={20} alt="logo" />
-          <p>Messages</p>
-        </Link>
-        <Link
           href="/company/dashboard/profile"
           className={`flex items-center gap-3 cursor-pointer py-2 px-3 hover:bg-gray-200 transition hover:border-l-[2px] hover:border-l-primary ${
             pathname === "/company/dashboard/profile" &&

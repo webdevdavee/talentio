@@ -1,5 +1,5 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import PasswordInput2 from "../PasswordInput2";
+import PasswordInput2 from "../ui/PasswordInput2";
 
 type ChangePasswordProps = {
   register: UseFormRegister<{

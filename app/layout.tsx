@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import AuthProvider from "@/components/AuthProvider";
-import Overlay from "@/components/Overlay";
+import AuthProvider from "@/components/authentication/AuthProvider";
+import Overlay from "@/components/layouts/Overlay";
 
 const dm_sans = DM_Sans({
   subsets: ["latin", "latin-ext"],

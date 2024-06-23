@@ -11,9 +11,9 @@ import {
 import { getJobById } from "@/database/actions/job.actions";
 import { useOverlayStore } from "@/lib/store/OverlayStore";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import DeletePopup from "@/components/DeletePopup";
+import DeletePopup from "@/components/ui/DeletePopup";
 import SeeApplication from "../../individual/_components/SeeApplication";
-import Pagination from "@/components/Pagination";
+import Pagination from "@/components/ui/Pagination";
 import ApplicantsTable from "./ApplicantsTable";
 import { createURL } from "@/lib/utils";
 import EditApplicantCard from "./EditApplicantCard";

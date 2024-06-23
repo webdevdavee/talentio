@@ -1,4 +1,4 @@
-import ResetPasswordWrapper from "@/components/ResetPasswordWrapper";
+import ResetPasswordWrapper from "@/components/others/ResetPasswordWrapper";
 
 export async function generateMetadata() {
   return {

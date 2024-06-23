@@ -1,4 +1,4 @@
-import AuthError from "@/components/AuthError";
+import AuthError from "@/components/authentication/AuthError";
 
 export async function generateMetadata() {
   return {

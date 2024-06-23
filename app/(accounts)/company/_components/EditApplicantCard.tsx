@@ -1,5 +1,5 @@
-import InputBox from "@/components/InputBox";
-import Loader2 from "@/components/Loader2";
+import InputBox from "@/components/ui/InputBox";
+import Loader2 from "@/components/ui/Loader2";
 import { hiringStages } from "@/constants";
 import { updateUserApplication } from "@/database/actions/applications.actions";
 import useClickOutside from "@/hooks/useClickOutside";

@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import SecurityQuestionsForm from "@/components/SecurityQuestionsForm";
+import SecurityQuestionsForm from "@/components/forms/SecurityQuestionsForm";
 import { findByEmail } from "@/database/actions/users.actions";
 import { redirect } from "next/navigation";
 

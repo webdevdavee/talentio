@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import ApplicationsTable from "./ApplicationsTable";
 import TableUtitlity from "./TableUtitlity";
-import Pagination from "../../../../components/Pagination";
+import Pagination from "../../../../components/ui/Pagination";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import DeletePopup from "../../../../components/DeletePopup";
+import DeletePopup from "../../../../components/ui/DeletePopup";
 import {
   deleteApplication,
   getUserApplicationById,

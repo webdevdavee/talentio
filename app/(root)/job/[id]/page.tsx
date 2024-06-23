@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import JobDetails from "@/components/JobDetails";
+import JobDetails from "@/components/others/JobDetails";
 import { getCompanyByName } from "@/database/actions/company.actions";
 import { getJobById, getJobs } from "@/database/actions/job.actions";
 import { incrementJobView } from "@/database/actions/jobview.action";
@@ -31,7 +31,7 @@ const page = async ({ params: { id } }: Params) => {
   // Increment company's jobs view count
   await incrementJobView(company.userId);
   return (
-    <section className="px-16 my-8">
+    <section className="px-16 my-8 sm:px-4">
       <JobDetails job={job} company={company} userId={session?.user.id} />
     </section>
   );

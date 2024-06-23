@@ -1,4 +1,4 @@
-import Loader from "../../../../components/Loader";
+import Loader from "../../../../components/ui/Loader";
 import ApplicantsTableBody from "./ApplicantsTableBody";
 import ApplicantsTableHead from "./ApplicantsTableHead";
 

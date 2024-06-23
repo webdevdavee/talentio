@@ -8,9 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import InputBox from "@/components/InputBox";
-import TextArea from "@/components/TextArea";
-import Loader2 from "@/components/Loader2";
+import InputBox from "@/components/ui/InputBox";
+import TextArea from "@/components/ui/TextArea";
+import Loader2 from "@/components/ui/Loader2";
 import {
   createApplicationDetails,
   updateApplicationDetails,

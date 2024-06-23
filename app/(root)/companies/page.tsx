@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
-import Companies from "@/components/Companies";
-import SubHero from "@/components/SubHero";
+import Companies from "@/components/others/Companies";
+import SubHero from "@/components/ui/SubHero";
 import {
   getCompanies,
   getArrayPropertyValuesFrequency,

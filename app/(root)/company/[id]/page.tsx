@@ -3,7 +3,7 @@ import {
   getCompanyById,
 } from "@/database/actions/company.actions";
 import { Metadata } from "next";
-import CompanyDetails from "@/components/CompanyDetails";
+import CompanyDetails from "@/components/others/CompanyDetails";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { incrementPageView } from "@/database/actions/pageview.actions";
@@ -33,7 +33,7 @@ const page = async ({ params: { id } }: Params) => {
   await incrementPageView(company.userId);
 
   return (
-    <section className="px-16 my-8">
+    <section className="px-16 my-8 sm:px-4">
       <CompanyDetails company={company} />
     </section>
   );

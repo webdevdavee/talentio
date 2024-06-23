@@ -1,4 +1,4 @@
-import CompanySignUpForm from "@/components/CompanySignUpForm";
+import CompanySignUpForm from "@/components/forms/CompanySignUpForm";
 
 export async function generateMetadata() {
   return {

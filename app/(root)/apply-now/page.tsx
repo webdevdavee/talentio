@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import JobApplicationForm from "@/components/JobApplicationForm";
+import JobApplicationForm from "@/components/forms/JobApplicationForm";
 import { findApplicationDetails } from "@/database/actions/applicationdetails.actions";
 import { findIndividualById } from "@/database/actions/individual.action";
 import { getJobById } from "@/database/actions/job.actions";
@@ -25,7 +25,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
   const applicationDetails = await findApplicationDetails(user.userId);
   return (
     <section>
-      <div className="w-full flex justify-center p-10">
+      <div className="w-full flex justify-center p-10 sm:p-4">
         <JobApplicationForm
           job={job}
           userId={userId}

@@ -4,16 +4,16 @@ import { SettingsFormSchema, TSettingsFormSchema } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import InputBox from "@/components/InputBox";
+import InputBox from "@/components/ui/InputBox";
 import ChangePassword from "@/components/dashboard/ChangePassword";
-import Loader2 from "@/components/Loader2";
+import Loader2 from "@/components/ui/Loader2";
 import ProfileImageUploader from "@/components/dashboard/ProfileImageUploader";
 import { useUploadThing } from "@/lib/utils/uploadthing";
 import { deleteAccount } from "@/database/actions/users.actions";
 import { updateCompany } from "@/database/actions/company.actions";
-import TextArea from "@/components/TextArea";
+import TextArea from "@/components/ui/TextArea";
 import { extractEmployeeCount } from "@/lib/utils";
-import DropdownListInput from "@/components/DropdownListInput";
+import DropdownListInput from "@/components/ui/DropdownListInput";
 import { industries } from "@/constants";
 
 type SettingsFormProps = {

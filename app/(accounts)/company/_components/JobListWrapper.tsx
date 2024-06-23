@@ -1,13 +1,13 @@
 "use client";
 
-import DeletePopup from "@/components/DeletePopup";
+import DeletePopup from "@/components/ui/DeletePopup";
 import { deleteJobs, getJobsByCompanyId } from "@/database/actions/job.actions";
 import { useOverlayStore } from "@/lib/store/OverlayStore";
 import { createURL } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TableUtitlity from "../../individual/_components/TableUtitlity";
-import Pagination from "@/components/Pagination";
+import Pagination from "@/components/ui/Pagination";
 import JobsTable from "./JobsTable";
 
 type JobListWrapperProps = {

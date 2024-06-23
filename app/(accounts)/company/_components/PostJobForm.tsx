@@ -1,6 +1,6 @@
 "use client";
 
-import InputBox from "@/components/InputBox";
+import InputBox from "@/components/ui/InputBox";
 import { toolbarOptions } from "@/lib/react-quill";
 import { PostJobFormSchema, TPostJobFormSchema } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,12 +8,12 @@ import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import { categories } from "@/constants";
-import RadioInput from "@/components/RadioInput";
+import RadioInput from "@/components/ui/RadioInput";
 import "react-quill/dist/quill.snow.css";
-import DropdownButton from "@/components/DropdownButton";
-import DropdownList from "@/components/DropdownList";
+import DropdownButton from "@/components/ui/DropdownButton";
+import DropdownList from "@/components/ui/DropdownList";
 import useClickOutside from "@/hooks/useClickOutside";
-import Loader2 from "@/components/Loader2";
+import Loader2 from "@/components/ui/Loader2";
 import { createJob, editAJob } from "@/database/actions/job.actions";
 import { useRouter } from "next/navigation";
 import { capitalizeFirstLetter, separateSalaryNumbers } from "@/lib/utils";

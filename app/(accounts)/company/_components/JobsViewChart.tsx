@@ -14,7 +14,7 @@ import {
 } from "chart.js";
 import { useState } from "react";
 import { week, year } from "@/constants";
-import Loader from "@/components/Loader";
+import Loader from "@/components/ui/Loader";
 
 type JobsViewChartProps = {
   selectedTimeFrame: string;

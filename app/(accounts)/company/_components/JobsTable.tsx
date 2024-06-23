@@ -1,4 +1,4 @@
-import Loader from "../../../../components/Loader";
+import Loader from "../../../../components/ui/Loader";
 import JobsTableHead from "./JobsTableHead";
 import JobsTableBody from "./JobsTableBody";
 

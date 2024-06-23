@@ -31,16 +31,6 @@ const SidebarNav = () => {
           <p>Saved jobs</p>
         </Link>
         <Link
-          href="/individual/dashboard/messages"
-          className={`flex items-center gap-3 cursor-pointer py-2 px-3 hover:bg-gray-200 transition hover:border-l-[2px] hover:border-l-primary ${
-            pathname === "/individual/dashboard/messages" &&
-            "bg-gray-200 border-l-[2px] border-l-primary"
-          }`}
-        >
-          <Image src="/message.svg" width={20} height={20} alt="logo" />
-          <p>Messages</p>
-        </Link>
-        <Link
           href="/jobs"
           className={`flex items-center gap-3 cursor-pointer py-2 px-3 hover:bg-gray-200 transition hover:border-l-[2px] hover:border-l-primary ${
             pathname === "/individual/dashboard/jobs" &&

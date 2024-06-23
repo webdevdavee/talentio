@@ -1,0 +1,58 @@
+import { footerList } from "@/constants";
+import Image from "next/image";
+import FooterForm from "../forms/FooterForm";
+
+const Footer = () => {
+  // Get current year
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="bg-[#202430] p-16 sm:px-4">
+      <div className="flex items-start justify-between sm:flex-col sm:gap-10">
+        <div className="flex flex-col gap-4">
+          <Image
+            src="/talentio-white.svg"
+            width={125}
+            height={125}
+            alt="logo"
+          />
+          <p className="text-slate-300 sm:text-sm">
+            Great platform for the job seeker that is searching for <br /> new
+            career heights and passionate about startups.
+          </p>
+        </div>
+        <div className="flex flex-col gap-4 sm:gap-2">
+          <h3 className="text-white capitalize text-lg sm:text-xl">
+            {footerList.about.title}
+          </h3>
+          <div className="flex flex-col gap-4 sm:gap-2">
+            {footerList.about.items.map((item, i) => (
+              <p key={i} className="capitalize text-slate-300">
+                {item}
+              </p>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 sm:gap-2">
+          <h3 className="text-white capitalize text-lg sm:text-xl">
+            {footerList.resources.title}
+          </h3>
+          <div className="flex flex-col gap-4">
+            {footerList.resources.items.map((item, i) => (
+              <p key={i} className="capitalize text-slate-300">
+                {item}
+              </p>
+            ))}
+          </div>
+        </div>
+        <FooterForm />
+      </div>
+      <div className="w-full border border-slate-400 mt-24 mb-8 sm:mt-12"></div>
+      <p className="text-sm text-center text-slate-300">
+        &copy; {currentYear} Talentio. All rights reserved.
+      </p>
+    </footer>
+  );
+};
+
+export default Footer;

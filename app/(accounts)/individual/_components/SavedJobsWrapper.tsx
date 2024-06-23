@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import TableUtitlity from "./TableUtitlity";
 import SavedJobsTable from "./SavedJobsTable";
-import Pagination from "../../../../components/Pagination";
+import Pagination from "../../../../components/ui/Pagination";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useOverlayStore } from "@/lib/store/OverlayStore";
 import {
   deleteSavedJobs,
   getUserSavedJobs,
 } from "@/database/actions/savedjobs.actions";
-import DeletePopup from "../../../../components/DeletePopup";
+import DeletePopup from "../../../../components/ui/DeletePopup";
 import { getJobById } from "@/database/actions/job.actions";
 import { createURL } from "@/lib/utils";
 

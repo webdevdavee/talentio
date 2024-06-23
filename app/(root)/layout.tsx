@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Footer from "@/components/layouts/Footer";
+import Header from "@/components/layouts/Header";
+import Mobilemenu from "@/components/layouts/Mobilemenu";
 
 export default async function Layout({
   children,
@@ -11,6 +12,7 @@ export default async function Layout({
 
   return (
     <main>
+      <Mobilemenu />
       <Header session={session} />
       {children}
       <Footer />

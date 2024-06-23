@@ -1,9 +1,9 @@
-import FeaturedCategories from "@/components/FeaturedCategories";
-import CompaniesHelped from "@/components/CompaniesHelped";
-import Hero from "@/components/Hero";
-import FeaturedJobs from "@/components/FeaturedJobs";
-import SignUpBanner from "@/components/SignUpBanner";
-import LatestJobs from "@/components/LatestJobs";
+import FeaturedCategories from "@/components/others/FeaturedCategories";
+import CompaniesHelped from "@/components/others/CompaniesHelped";
+import Hero from "@/components/ui/Hero";
+import FeaturedJobs from "@/components/others/FeaturedJobs";
+import SignUpBanner from "@/components/ui/SignUpBanner";
+import LatestJobs from "@/components/others/LatestJobs";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
@@ -17,7 +17,7 @@ export default async function Home() {
       <CompaniesHelped />
       <FeaturedCategories />
       {!session && (
-        <div className="px-16">
+        <div className="px-16 sm:px-4">
           <SignUpBanner />
         </div>
       )}

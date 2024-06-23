@@ -1,4 +1,4 @@
-import Onboarding from "@/components/Onboarding";
+import Onboarding from "@/components/others/Onboarding";
 
 export async function generateMetadata() {
   return {

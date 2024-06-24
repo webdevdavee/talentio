@@ -11,7 +11,7 @@ import CompaniesFilterBar from "./CompaniesFilterBar";
 import CompaniesFromFilter from "./CompaniesFromFilter";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import MobileCompaniesFilterBar from "@/components/responsiveness/MobileCompaniesFilterBar";
+import MobileCompaniesFilterBar from "@/components/mobile-responsiveness/MobileCompaniesFilterBar";
 
 type CompaniesProps = {
   companies: GetCompanies | undefined;

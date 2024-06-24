@@ -36,7 +36,7 @@ const JobDetails = ({ job, company, userId }: JobProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Check if user has saved jobs
+      // Check if the user has saved jobs
       const userSavedJobs:
         | {
             jobs: any;

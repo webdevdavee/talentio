@@ -65,10 +65,10 @@ const JobsTableHead = ({
         <th className="text-left text-gray-800 font-normal p-3">
           <div ref={sortingDateModalRef} className="w-fit text-left relative">
             <div
-              className="flex items-center justify-start gap-2 cursor-pointer w-fit"
+              className="flex items-center justify-start gap-2 cursor-pointer w-max"
               onClick={() => setOpenDateSorting((prev) => !prev)}
             >
-              <p className="text-sm text-left">Date</p>
+              <p className="w-max text-left">Date</p>
               <div className="flex flex-col">
                 <Image
                   className="font-medium"
@@ -107,10 +107,10 @@ const JobsTableHead = ({
         <th className="text-left text-gray-800 font-normal p-3">
           <div ref={sortingSalaryModalRef} className="w-fit text-left relative">
             <div
-              className="flex items-center justify-start gap-2 cursor-pointer w-fit"
+              className="flex items-center justify-start gap-2 cursor-pointer w-max"
               onClick={() => setOpenSalarySorting((prev) => !prev)}
             >
-              <p className="text-sm text-left">Salary / yr</p>
+              <p className="text-left">Salary / yr</p>
               <div className="flex flex-col">
                 <Image
                   className="font-medium"

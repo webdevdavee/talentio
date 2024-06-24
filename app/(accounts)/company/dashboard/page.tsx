@@ -56,7 +56,7 @@ const page = async () => {
   const appliedJobsByYear = await getApplicationsSumByMonth(company.userId);
 
   return (
-    <section>
+    <section className="mb-4">
       <DashboardWrapper
         company={company}
         pageViews={pageViews}

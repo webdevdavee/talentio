@@ -20,12 +20,12 @@ const page = async () => {
   const company = await getCompanyByUserId(session?.user.id as string);
 
   return (
-    <section className="px-8 mb-6">
-      <div className="border-b border-b-gray-200 pb-4">
+    <section className="px-8 mb-10 m:px-4 m:mt-4">
+      <div className="border-b border-b-gray-200 pb-4 m:w-full">
         <h1 className="text-2xl font-medium">Profile</h1>
         <p className="text-sm">Manage your profile settings</p>
       </div>
-      <div className="mt-5">
+      <div className="mt-5 m:w-full">
         <SettingsForm company={company} />
       </div>
     </section>

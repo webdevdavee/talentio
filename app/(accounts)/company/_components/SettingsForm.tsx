@@ -101,7 +101,7 @@ const SettingsForm = ({ company }: SettingsFormProps) => {
   };
 
   return (
-    <section className="w-[50%]">
+    <section className="w-[50%] m:w-full">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex flex-col gap-6">
           <div className="flex flex-col gap-4">
@@ -243,7 +243,7 @@ const SettingsForm = ({ company }: SettingsFormProps) => {
           </div>
           <button
             type="button"
-            className="w-[40%] p-3 bg-red-500 text-white mt-2"
+            className="w-[40%] p-3 bg-red-500 text-white mt-2 m:w-full"
             onClick={() => SetShowPasswordForm((prev) => !prev)}
           >
             Change password?
@@ -254,7 +254,7 @@ const SettingsForm = ({ company }: SettingsFormProps) => {
           )}
           <button
             type="submit"
-            className={`w-[40%] p-3 text-white transition duration-150 ${
+            className={`w-[40%] p-3 text-white transition duration-150 m:w-full ${
               isSubmitting
                 ? "bg-gray-200"
                 : "bg-primary transition duration-150"
@@ -267,7 +267,7 @@ const SettingsForm = ({ company }: SettingsFormProps) => {
               <p>Update profile</p>
             )}
           </button>
-          <div className="flex flex-col gap-3 mt-8">
+          <div className="flex flex-col gap-3 mt-8 m:w-full">
             <h3>
               Deleting your account clears all your data. This action is not
               reversible.

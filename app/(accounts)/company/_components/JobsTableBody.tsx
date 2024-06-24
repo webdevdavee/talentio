@@ -49,27 +49,43 @@ const JobsTableBody = ({
               onChange={handleCheckboxChange}
             />
           </td>
-          <td className="text-sm w-max p-3">
-            <p>{job.title}</p>
+          <td>
+            <p className="text-sm w-max p-3">{job.title}</p>
+          </td>
+          <td>
+            <p className="text-sm w-max p-3">{job.type}</p>
+          </td>
+          <td>
+            <p className="text-sm w-max p-3">{job.level}</p>
           </td>
           <td className="text-sm w-max p-3">
-            <p>{job.type}</p>
+            <p className="text-sm w-max p-3">
+              {convertDateFormat(job.createdAt as Date)}
+            </p>
           </td>
-          <td className="text-sm w-max p-3">
-            <p>{job.level}</p>
+          <td>
+            <p className="text-sm w-max p-3">{job.salary}</p>
           </td>
-          <td className="text-sm w-max p-3">
-            {convertDateFormat(job.createdAt as Date)}
+          <td>
+            <p className="text-sm w-max p-3">{job.capacity}</p>
           </td>
-          <td className="text-sm w-max p-3">{job.salary}</td>
-          <td className="text-sm w-max p-3">{job.capacity}</td>
-          <td className="text-sm w-max p-3">{job.applied}</td>
+          <td>
+            <p className="text-sm w-max p-3">{job.applied}</p>
+          </td>
           <td className="text-sm w-max p-3">
             <div className="flex items-center gap-5">
-              <button type="button" onClick={() => handleJobToEdit(job._id)}>
+              <button
+                type="button"
+                className="w-max"
+                onClick={() => handleJobToEdit(job._id)}
+              >
                 <Image src="/edit.svg" width={20} height={20} alt="edit" />
               </button>
-              <button type="button" onClick={() => openDeleteModal(job._id)}>
+              <button
+                type="button"
+                className="w-max"
+                onClick={() => openDeleteModal(job._id)}
+              >
                 <Image src="/trash.svg" width={20} height={20} alt="delete" />
               </button>
             </div>

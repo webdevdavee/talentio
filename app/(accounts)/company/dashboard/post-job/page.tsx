@@ -20,7 +20,7 @@ const page = async () => {
   const company = await getCompanyByUserId(session?.user.id as string);
 
   return (
-    <section className="px-8">
+    <section className="px-8 mb-6 m:px-4">
       <PostJobForm type="create" company={company} />
     </section>
   );

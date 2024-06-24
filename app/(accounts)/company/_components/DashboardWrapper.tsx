@@ -124,11 +124,11 @@ const DashboardWrapper = ({
   });
 
   return (
-    <section className="px-8 flex flex-col gap-8 mb-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-semibold text-xl">{getGreeting()}</h1>
-          <p className="text-gray-600 text-sm">
+    <section className="px-8 flex flex-col gap-8 mb-4 m:px-4">
+      <div className="flex items-center justify-between m:flex-col m:gap-4 m:items-start">
+        <div className="m:flex m:flex-col m:gap-3">
+          <h1 className="font-semibold text-xl m:text-2xl">{getGreeting()}</h1>
+          <p className="text-gray-600 text-sm m:text-lg">
             Here is your job listing statistic report from{" "}
             {selectedTimeFrame === "Year" ? (
               "Jan - Dec"
@@ -139,13 +139,13 @@ const DashboardWrapper = ({
             )}
           </p>
         </div>
-        <div ref={calendarRef} className="relative">
+        <div ref={calendarRef} className="relative m:w-full">
           <button
             type="button"
-            className="flex items-center gap-3 border border-gray-200 p-2"
+            className="flex items-center gap-3 border border-gray-200 p-2 m:w-full m:justify-between m:border-gray-300"
             onClick={() => setShowCalendar((prev) => !prev)}
           >
-            <p className="text-sm">
+            <p className="text-sm m:font-medium m:text-base">
               {startDate && endDate
                 ? `${format(startDate, "MMMM d")} - ${format(
                     endDate,
@@ -155,7 +155,7 @@ const DashboardWrapper = ({
             </p>
             <Image src="/calendar.svg" width={16} height={16} alt="calendar" />
           </button>
-          <div className="absolute right-0 w-[20rem] mt-4">
+          <div className="absolute right-0 w-[20rem] mt-4 m:w-full">
             {showCalendar && (
               <Calendar
                 startDate={startDate}

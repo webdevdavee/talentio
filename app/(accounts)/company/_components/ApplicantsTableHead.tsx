@@ -67,7 +67,11 @@ const ApplicantsTableHead = ({
             }
           />
         </th>
-        <th className="text-left text-gray-800 font-normal p-3">Full name</th>
+        <th>
+          <p className="text-left text-gray-800 font-normal p-3 w-max">
+            Full name
+          </p>
+        </th>
         <th className="text-left text-gray-800 font-normal p-3">Email</th>
         <th className="text-left text-gray-800 font-normal p-3">
           <div ref={sortingScoreModalRef} className="w-fit text-left relative">
@@ -75,7 +79,7 @@ const ApplicantsTableHead = ({
               className="flex items-center justify-start gap-2 cursor-pointer w-fit"
               onClick={() => setOpenScoreSorting((prev) => !prev)}
             >
-              <p className="text-sm text-left">Score</p>
+              <p className="text-left">Score</p>
               <div className="flex flex-col">
                 <Image
                   className="font-medium"
@@ -117,7 +121,7 @@ const ApplicantsTableHead = ({
               className="flex items-center justify-start gap-2 cursor-pointer w-fit"
               onClick={() => setOpenDateSorting((prev) => !prev)}
             >
-              <p className="text-sm text-left">Date</p>
+              <p className="text-left">Date</p>
               <div className="flex flex-col">
                 <Image
                   className="font-medium"

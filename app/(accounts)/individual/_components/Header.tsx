@@ -42,13 +42,6 @@ const Header = () => {
 
         {/* For mobile */}
         <div className="flex items-center gap-4 xl:hidden xxl:hidden xxxl:hidden ultra:hidden">
-          <button
-            type="button"
-            className="p-1 border border-red-400"
-            onClick={() => signOut({ callbackUrl: "/" })}
-          >
-            <Image src="/power.svg" width={20} height={20} alt="logout" />
-          </button>
           <Link href="/" className="p-1 border border-gray-200 font-medium">
             <Image src="/home.svg" width={20} height={20} alt="home" />
           </Link>

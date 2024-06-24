@@ -64,7 +64,7 @@ const JobsTable = ({
   };
 
   return (
-    <section>
+    <section className="w-full overflow-x-auto">
       {!isLoading ? (
         <>
           <table className="w-full">

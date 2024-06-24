@@ -43,15 +43,15 @@ const ApplicantsTableBody = ({
               onChange={handleCheckboxChange}
             />
           </td>
-          <td className="text-sm w-max p-3">
-            <p>
+          <td>
+            <p className="text-sm w-max p-3">
               {applicant.firstname} {applicant.lastname}
             </p>
           </td>
-          <td className="text-sm w-max p-3">
+          <td className="text-sm w-max p-3 overflow-hidden">
             <Link
               href={`mailto:${applicant.email}`}
-              className="flex items-center gap-1 underline text-purple-500"
+              className="flex items-center gap-1 underline text-purple-500 w-max"
             >
               <Image src="/link.svg" width={20} height={20} alt="link" />
               {applicant.email}
@@ -67,10 +67,14 @@ const ApplicantsTableBody = ({
               <p>{applicant.score}%</p>
             </div>
           </td>
-          <td className="text-sm w-max p-3">
-            {convertDateFormat(applicant.createdAt as Date)}
+          <td>
+            <p className="text-sm w-max p-3">
+              {convertDateFormat(applicant.createdAt as Date)}
+            </p>
           </td>
-          <td className="text-sm w-max p-3">{applicant.job.title}</td>
+          <td>
+            <p className="text-sm w-max p-3">{applicant.job.title}</p>
+          </td>
           <td className="text-sm w-max p-3">
             <p
               className={`flex items-center justify-center gap-1 border rounded-2xl text-center p-2 capitalize font-medium ${
@@ -91,23 +95,25 @@ const ApplicantsTableBody = ({
           <td className="text-sm w-max p-3">
             <button
               type="button"
-              className="bg-primary text-white p-2"
+              className="bg-primary text-white p-2 w-max"
               onClick={() => handleShowApplication(applicant._id)}
             >
               See application
             </button>
           </td>
-          <td className="text-sm w-max p-3">
+          <td className="text-sm p-3">
             <div className="flex items-center gap-5">
               <button
                 type="button"
                 onClick={() => handleShowEditApplicant(applicant._id)}
+                className="w-max"
               >
                 <Image src="/edit.svg" width={20} height={20} alt="edit" />
               </button>
               <button
                 type="button"
                 onClick={() => openDeleteModal(applicant._id)}
+                className="w-max"
               >
                 <Image src="/trash.svg" width={20} height={20} alt="delete" />
               </button>

@@ -24,7 +24,7 @@ const CompanyDetailsHeader = ({ company }: CompanyDetailsHeaderProps) => {
         />
         <div className="w-full flex flex-col gap-6">
           <h1 className="text-2xl font-semibold">{company.company}</h1>
-          <div className="flex items-center justify-start gap-16 m:flex-col m:items-start m:gap-8">
+          <div className="flex items-center justify-start gap-16 m:flex-col m:items-start m:gap-8 xl:flex-col xl:items-start xl:gap-8">
             <span className="flex gap-3 items-center justify-start m:items-start">
               <Image src="/people.svg" width={30} height={30} alt="people" />
               <span className="flex flex-col">

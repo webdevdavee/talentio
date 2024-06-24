@@ -107,14 +107,16 @@ const Jobs = ({
   const [showMobileFilterBar, setShowMobileFilterBar] = useState(false);
 
   return (
-    <div className="w-full flex items-start justify-start gap-8 p-16 m:flex-col m:px-4 m:py-6">
+    <div className="w-full flex items-start justify-start gap-8 p-16 m:flex-col m:px-4 m:py-6 xl:flex-col">
+      {/* Jobs filter button for mobile */}
       <button
-        className="w-full p-3 border flex items-center justify-center gap-2 drop-shadow-xl"
+        className="w-full p-3 border flex items-center justify-center gap-2 drop-shadow-xl xxl:hidden xxxl:hidden ultra:hidden"
         onClick={() => setShowMobileFilterBar((prev) => !prev)}
       >
         <Image src="filter.svg" width={18} height={18} alt="filters" />
         <p>Filters</p>
       </button>
+
       {/* Jobs filter bar for mobile */}
       {showMobileFilterBar && (
         <MobileJobsFilterBar
@@ -127,6 +129,7 @@ const Jobs = ({
           setShowLoader={setShowLoader}
         />
       )}
+
       {/* // Jobs filter bar for desktop */}
       <JobsFilterBar
         setJobsData={setJobsData}

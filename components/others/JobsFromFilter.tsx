@@ -20,7 +20,7 @@ const JobsFromFilter = ({
   const [layout, setLayout] = useState<"row" | "column">("row");
 
   return (
-    <section className="w-[80%] m:w-full">
+    <section className="w-[80%] m:w-full xl:w-full">
       <div className="flex items-center justify-between mb-12 m:mb-6">
         <div className="flex flex-col gap-2">
           <h2 className="text-3xl font-bold m:text-2xl">All jobs</h2>

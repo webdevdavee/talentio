@@ -7,7 +7,7 @@ type JobDetailsCompanyProps = {
 
 const JobDetailsCompany = ({ company }: JobDetailsCompanyProps) => {
   return (
-    <section className="w-[30%] flex flex-col items-center justify-start gap-5 p-3 border-l border-l-gray-200 pl-4 m:w-full m:border-none">
+    <section className="w-[30%] flex flex-col items-center justify-start gap-5 p-3 border-l border-l-gray-200 pl-4 m:w-full m:border-none xl:w-full xl:border-none">
       <div className="w-full flex flex-col items-center justify-start gap-4 border-b border-b-gray-200 pb-6 m:border-t m:border-t-gray-200 m:pt-6">
         <Image
           src={company.logo}

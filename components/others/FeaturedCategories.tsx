@@ -20,7 +20,7 @@ const FeaturedCategories = () => {
       <CategoryList />
       <Link
         href="/jobs"
-        className="flex items-center gap-2 text-primary font-semibold m:mt-4"
+        className="flex items-center gap-2 text-primary font-semibold m:mt-4 xl:hidden xxl:hidden xxxl:hidden ultra:hidden"
       >
         <p>Show all jobs</p>
         <Image src="/arrow-right.svg" width={25} height={25} alt="arrow" />

@@ -34,7 +34,7 @@ const JobCard = ({ job }: JobCardProps) => {
         <p className="text-left font-medium m:text-base">
           {job.company} - {job.location}
         </p>
-        <p
+        <div
           className="text-left m:text-sm"
           dangerouslySetInnerHTML={{
             __html:
@@ -42,7 +42,7 @@ const JobCard = ({ job }: JobCardProps) => {
                 ? cleanDescription.slice(0, 55) + "..."
                 : cleanDescription,
           }}
-        ></p>
+        ></div>
         <div className="w-full flex items-center justify-between m:flex-col m:justify-start m:gap-2 m:items-start">
           <span className="px-3 py-2 border border-gray-300 m:p-1 m:text-sm">
             {job.category}

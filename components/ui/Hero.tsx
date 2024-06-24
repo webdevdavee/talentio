@@ -7,8 +7,8 @@ const Hero = async () => {
   const listOfLocationsFromJobs = await getUniquePropertyValue("location");
 
   return (
-    <section className="relative flex items-start w-full max-h-[37rem] py-20 px-16 hero overflow-hidden m:block m:px-4 m:py-8">
-      <div className="w-[60%] flex flex-col gap-8 items-start m:w-full">
+    <section className="relative flex items-start w-full max-h-[37rem] py-20 px-16 hero overflow-hidden m:block m:px-4 m:py-8 xl:block">
+      <div className="w-[60%] flex flex-col gap-8 items-start m:w-full xl:w-full">
         <HeroTitle />
         <SearchForm
           data={listOfLocationsFromJobs}
@@ -20,7 +20,7 @@ const Hero = async () => {
           Popular: Data Analyst, Sales Specialist, Product manager
         </p>
       </div>
-      <div className="relative w-[40%] flex items-center justify-center m:hidden">
+      <div className="relative w-[40%] flex items-center justify-center m:hidden xl:hidden">
         <Image
           src="/images/hero-man.webp"
           width={370}

@@ -33,7 +33,7 @@ const JobsFilterBar = ({
   });
 
   return (
-    <section className="w-[20%] m:hidden">
+    <section className="w-[20%] m:hidden xl:hidden">
       <JobsFilterList
         jobsFrequency={
           newJobsPropertyCount ? newJobsPropertyCount : jobsFrequency

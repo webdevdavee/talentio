@@ -93,9 +93,9 @@ const Companies = ({ companies, page, industryFrequency }: CompaniesProps) => {
   return (
     <>
       {industry.length > 0 || search.length > 0 ? (
-        <div className="w-full flex items-start justify-start gap-8 p-16 m:flex-col m:px-4 m:py-6">
+        <div className="w-full flex items-start justify-start gap-8 p-16 m:flex-col m:px-4 m:py-6 xl:flex-col">
           <button
-            className="w-full p-3 border flex items-center justify-center gap-2 drop-shadow-xl"
+            className="w-full p-3 border flex items-center justify-center gap-2 drop-shadow-xl xxl:hidden xxxl:hidden ultra:hidden"
             onClick={() => setShowMobileFilterBar((prev) => !prev)}
           >
             <Image src="filter.svg" width={18} height={18} alt="filters" />

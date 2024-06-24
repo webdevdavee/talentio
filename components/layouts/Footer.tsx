@@ -8,7 +8,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#202430] p-16 m:px-4">
-      <div className="flex items-start justify-between m:flex-col m:gap-10">
+      <div className="flex items-start justify-between m:flex-col m:gap-10 xl:grid xl:grid-cols-2 xl:gap-20">
         <div className="flex flex-col gap-4">
           <Image
             src="/talentio-white.svg"

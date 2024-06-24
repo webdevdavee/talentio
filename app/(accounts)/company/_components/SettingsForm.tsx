@@ -274,7 +274,7 @@ const SettingsForm = ({ company }: SettingsFormProps) => {
             </h3>
             <button
               type="button"
-              className="w-[40%] p-3 bg-red-600 text-white"
+              className="w-[40%] p-3 bg-red-600 text-white m:w-full"
               onClick={deleteUserAccount}
             >
               Delete account

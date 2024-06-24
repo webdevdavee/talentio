@@ -8,7 +8,7 @@ type ListLayoutProps = {
 
 const ListLayout = ({ layout, setLayout }: ListLayoutProps) => {
   return (
-    <section className="m:hidden">
+    <section className="m:hidden xl:hidden">
       <div
         className={`p-2 rounded cursor-pointer ${
           layout === "column" && "bg-[#d5efd6]"

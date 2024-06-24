@@ -7,7 +7,7 @@ import { handleJobFilter } from "@/database/actions/job.actions";
 import { useSearchParams } from "next/navigation";
 import { countPropertyValues, handleError } from "@/lib/utils";
 import Image from "next/image";
-import MobileJobsFilterBar from "../responsiveness/MobileJobsFilterBar";
+import MobileJobsFilterBar from "@/components/responsiveness/MobileJobsFilterBar";
 
 type JobsProps = {
   page: number;

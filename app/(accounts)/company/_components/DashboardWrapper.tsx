@@ -127,8 +127,8 @@ const DashboardWrapper = ({
     <section className="px-8 flex flex-col gap-8 mb-4 m:px-4">
       <div className="flex items-center justify-between m:flex-col m:gap-4 m:items-start">
         <div className="m:flex m:flex-col m:gap-3">
-          <h1 className="font-semibold text-xl m:text-2xl">{getGreeting()}</h1>
-          <p className="text-gray-600 text-sm m:text-lg">
+          <h1 className="font-semibold text-xl">{getGreeting()}</h1>
+          <p className="text-gray-600 text-sm m:text-base">
             Here is your job listing statistic report from{" "}
             {selectedTimeFrame === "Year" ? (
               "Jan - Dec"

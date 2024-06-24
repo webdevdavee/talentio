@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import Header from "../_components/Header";
 import Sidebar from "../_components/Sidebar";
 import { getCompanyByUserId } from "@/database/actions/company.actions";
+import MobileMenu from "../_components/MobileMenu";
 
 export default async function Layout({
   children,
@@ -13,7 +14,8 @@ export default async function Layout({
 
   return (
     <main>
-      <section className="flex">
+      <section className="flex m:block">
+        <MobileMenu />
         <Sidebar />
         <div className="flex flex-col w-[83%] m:w-full">
           <Header company={company} />

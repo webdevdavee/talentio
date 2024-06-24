@@ -41,8 +41,10 @@ const PasswordInput = ({
       <div className="w-full flex items-center justify-between border-b-[1px] border-b-gray-400">
         <input
           {...inputRegister}
-          type={isPasswordVisible ? "text" : "password"}
-          className={`w-full py-3 text-sm transition focus:transition focus:outline-none ${style}`}
+          type="password"
+          className={`w-full py-3 text-sm transition focus:transition focus:outline-none ${
+            isPasswordVisible ? "text-security-none" : ""
+          } ${style}`}
           id={htmlFor}
           placeholder={placeholder}
           inputMode={inputMode}
@@ -64,7 +66,7 @@ const PasswordInput = ({
               src="/eye-no-slash.svg"
               width={20}
               height={20}
-              alt="hide-password"
+              alt="show-password"
             />
           )}
         </button>

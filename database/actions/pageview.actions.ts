@@ -9,20 +9,21 @@ export const getPageViews = async (companyId: string) => {
     await connectToDatabase();
 
     const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 8); // Ensures capture of full 7 days plus the current day
 
     const companyPage = await Pageview.findOne({ companyId });
     if (companyPage) {
       const weeklyViews = companyPage.views.filter(
-        (view: any) => view.date >= oneWeekAgo
+        (view: any) => view.date > oneWeekAgo
       );
       console.log(weeklyViews.length, oneWeekAgo);
-      return weeklyViews.length || 0; // This is the number of views in the last week
+      return weeklyViews.length; // This is the number of views in the last week
     } else {
       return 0;
     }
   } catch (error: any) {
     handleError(error);
+    return 0;
   }
 };
 

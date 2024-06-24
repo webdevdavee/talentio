@@ -45,7 +45,7 @@ export const getJobViews = async (companyId: string) => {
             );
 
       return {
-        thisWeekViews: thisWeekViews.length || 0,
+        thisWeekViews: thisWeekViews.length,
         percentageChange: percentageChange > 100 ? 100 : percentageChange,
       };
     } else {
@@ -191,5 +191,6 @@ export const getJobViewsByWeekDays = async (
     }
   } catch (error: any) {
     handleError(error);
+    return [];
   }
 };

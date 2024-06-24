@@ -294,7 +294,7 @@ const PostJobForm = ({ type, job, company }: PostJobFormProps) => {
         <p className="font-light mb-3">
           Salary range (USD / yr) <span className="text-red-500">*</span>
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 m:flex-col xl:flex-col">
           <InputBox
             inputRegister={register("salary.from")}
             label="From"

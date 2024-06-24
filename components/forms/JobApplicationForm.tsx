@@ -183,19 +183,25 @@ const JobApplicationForm = ({
             )
           }
         />
-        <Controller
-          name="resume"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <FileUploader
-              files={files}
-              onFieldChange={field.onChange}
-              fileUrl={field.value}
-              setFiles={setFiles}
-            />
-          )}
-        />
+        <div>
+          <span className="text-base font-light flex gap-1">
+            Resume
+            <p className="text-red-400">*</p>
+          </span>
+          <Controller
+            name="resume"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <FileUploader
+                files={files}
+                onFieldChange={field.onChange}
+                fileUrl={field.value}
+                setFiles={setFiles}
+              />
+            )}
+          />
+        </div>
         <button
           type="submit"
           className={`w-full p-3 text-white transition duration-150 ${

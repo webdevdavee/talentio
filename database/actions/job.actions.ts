@@ -441,7 +441,6 @@ export const getCompanyJobsAppliedCountForCurrentWeek = async (
             ).toFixed(2)
           );
 
-    console.log({ totalAppliedThisWeek, percentageChange });
     return { totalAppliedThisWeek, percentageChange };
   } catch (error: any) {
     handleError(error);

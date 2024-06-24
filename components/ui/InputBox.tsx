@@ -29,15 +29,17 @@ const InputBox = ({
           {required ? "*" : "(Optional)"}
         </p>
       </label>
-      <input
-        {...inputRegister}
-        className={`p-3 transition border-[1px] border-gray-400 text-sm focus:border-[#272829] focus:transition focus:outline-none ${style}`}
-        type={inputType}
-        id={htmlFor}
-        placeholder={placeholder}
-        inputMode={inputMode}
-      />
-      {error}
+      <div className="border-[1px] border-gray-400">
+        <input
+          {...inputRegister}
+          className={`w-full py-3 px-2 text-sm transition focus:transition focus:outline-none ${style}`}
+          type={inputType}
+          id={htmlFor}
+          placeholder={placeholder}
+          inputMode={inputMode}
+        />
+        {error}
+      </div>
     </section>
   );
 };

@@ -14,8 +14,9 @@ export const getPageViews = async (companyId: string) => {
     const companyPage = await Pageview.findOne({ companyId });
     if (companyPage) {
       const weeklyViews = companyPage.views.filter(
-        (view: any) => view.date > oneWeekAgo
+        (view: any) => view.date >= oneWeekAgo
       );
+      console.log(weeklyViews.length, oneWeekAgo);
       return weeklyViews.length || 0; // This is the number of views in the last week
     } else {
       return 0;

@@ -5,11 +5,11 @@ import {
   saveJob,
 } from "@/database/actions/savedjobs.actions";
 import { createURL } from "@/lib/utils";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import SaveJobBtn from "../ui/SaveJobBtn";
+import { Session } from "next-auth";
 
 type JobDetailHeaderProps = {
   job: Job;
@@ -20,15 +20,15 @@ type JobDetailHeaderProps = {
       }[]
     | undefined;
   userJobApplications: UserApplication[];
+  session: Session | null;
 };
 
 const JobDetailHeader = ({
   job,
   userSavedJobs,
   userJobApplications,
+  session,
 }: JobDetailHeaderProps) => {
-  const { data: session } = useSession();
-
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();

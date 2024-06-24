@@ -32,7 +32,7 @@ const page = async ({ params: { id } }: Params) => {
   await incrementJobView(company.userId);
   return (
     <section className="px-16 my-8 m:px-4">
-      <JobDetails job={job} company={company} userId={session?.user.id} />
+      <JobDetails job={job} company={company} session={session} />
     </section>
   );
 };

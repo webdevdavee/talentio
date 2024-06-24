@@ -7,14 +7,15 @@ import { getUserSavedJobs } from "@/database/actions/savedjobs.actions";
 import { getUserApplications } from "@/database/actions/applications.actions";
 import { useEffect, useState } from "react";
 import Loader from "../ui/Loader";
+import { Session } from "next-auth";
 
 type JobProps = {
   job: Job;
   company: Company;
-  userId: string | undefined;
+  session: Session | null;
 };
 
-const JobDetails = ({ job, company, userId }: JobProps) => {
+const JobDetails = ({ job, company, session }: JobProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const cleanDescription = DOMPurify.sanitize(
     job.description ? job.description : ""
@@ -42,17 +43,19 @@ const JobDetails = ({ job, company, userId }: JobProps) => {
             jobs: any;
             totalPages: number;
           }
-        | undefined = await getUserSavedJobs(userId);
+        | undefined = await getUserSavedJobs(session?.user.id);
 
       setUserSavedJobs(userSavedJobs);
 
-      const getUserJobApplications = await getUserApplications(userId);
+      const getUserJobApplications = await getUserApplications(
+        session?.user.id
+      );
       setGetUserJobApplications(getUserJobApplications);
 
       if (job) setIsLoading(false);
     };
     fetchData();
-  }, [job, userId]);
+  }, [job, session?.user.id]);
 
   return (
     <section>
@@ -68,6 +71,7 @@ const JobDetails = ({ job, company, userId }: JobProps) => {
                     ? getUserJobApplications.applications
                     : undefined
                 }
+                session={session}
               />
               <div
                 className="mt-4"

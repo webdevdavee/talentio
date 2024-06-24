@@ -9,7 +9,7 @@ type MetricCardsProps = {
 const MetricCards = ({ pageViews, newCandidatesCount }: MetricCardsProps) => {
   return (
     <section className="w-full">
-      <div className="grid grid-cols-3 gap-5 m:grid-cols-1">
+      <div className="grid grid-cols-3 gap-5 m:grid-cols-1 xl:grid-cols-1">
         <MetricCard
           colour="bg-[#219C90]"
           data={

@@ -157,7 +157,7 @@ const PostJobForm = ({ type, job, company }: PostJobFormProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-[80%] flex flex-col gap-8 mb-4 m:w-full m:mt-4"
+      className="w-[80%] flex flex-col gap-8 mb-4 m:w-full m:mt-4 xl:w-full"
     >
       {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
       <InputBox
@@ -338,7 +338,7 @@ const PostJobForm = ({ type, job, company }: PostJobFormProps) => {
       />
       <button
         type="submit"
-        className={`w-[20%] p-3 text-white transition duration-150 m:w-full ${
+        className={`w-[20%] p-3 text-white transition duration-150 m:w-full xl:w-full ${
           isSubmitting ? "bg-gray-200" : "bg-primary transition duration-150"
         }`}
         disabled={isSubmitting}

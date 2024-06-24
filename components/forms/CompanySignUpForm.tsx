@@ -45,7 +45,7 @@ const CompanySignUpForm = () => {
   };
   return (
     <section className="w-full h-screen flex items-center justify-center overflow-hidden">
-      <div className="w-[50%] flex flex-col gap-6 items-center justify-center py-12 px-24 m:w-full m:p-4">
+      <div className="w-[50%] flex flex-col gap-6 items-center justify-center py-12 px-24 m:w-full m:p-4 xl:p-10">
         {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
         <h1
           className="text-2xl font-medium mb-4 m:text-center"

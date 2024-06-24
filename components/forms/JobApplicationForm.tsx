@@ -106,7 +106,7 @@ const JobApplicationForm = ({
       )}
 
       <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-4 m:flex-col">
+        <div className="flex items-center gap-4 m:flex-col xl:flex-col">
           <InputBox
             inputRegister={register("firstname")}
             label="First Name"

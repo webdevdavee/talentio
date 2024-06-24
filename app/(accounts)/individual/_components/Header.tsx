@@ -26,7 +26,7 @@ const Header = () => {
           className="xl:hidden xxl:hidden xxxl:hidden ultra:hidden"
           onClick={handleShowMobileMenu}
         />
-        <h1 className="text-2xl font-semibold sm:text-xl">
+        <h1 className="text-2xl font-semibold m:text-xl xl:text-xl">
           {pathname === "/individual/dashboard"
             ? "My applications"
             : pathname === "/individual/dashboard/saved-jobs"
@@ -51,12 +51,15 @@ const Header = () => {
         <div className="flex items-center gap-4 m:hidden">
           <button
             type="button"
-            className="p-2 border border-red-200 font-medium text-red-400"
+            className="p-2 border border-red-200 font-medium text-red-400 xl:text-sm xl:p-1"
             onClick={() => signOut({ callbackUrl: "/" })}
           >
             Sign out
           </button>
-          <Link href="/" className="p-2 border border-gray-200 font-medium">
+          <Link
+            href="/"
+            className="p-2 border border-gray-200 font-medium xl:text-sm xl:p-1"
+          >
             Back to homepage
           </Link>
         </div>

@@ -34,7 +34,7 @@ const CompaniesFromIndustryInput = ({
         {companiesFromIndustry.length > 0 ? companiesFromIndustry.length : 0}{" "}
         {companiesFromIndustry.length !== 1 ? "Results" : "Result"}
       </h1>
-      <div className="w-full grid grid-cols-4 gap-4 m:grid-cols-1">
+      <div className="w-full grid grid-cols-4 gap-4 m:grid-cols-1 xl:grid-cols-2">
         {companiesFromIndustry.length > 0 ? (
           companiesFromIndustry
             .slice(0, 8)

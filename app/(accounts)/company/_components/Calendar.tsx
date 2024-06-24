@@ -93,7 +93,7 @@ const Calendar = ({
   const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
-    <div className="w-full bg-white drop-shadow-2xl p-4">
+    <div className="w-full bg-white drop-shadow-2xl p-4 border border-gray-300">
       <Toaster richColors />
       <div className="flex justify-between items-center mb-4">
         <button onClick={prevMonth} className="p-2 border">

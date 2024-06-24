@@ -28,7 +28,7 @@ const SeeApplication = ({
       {showMyApplication && applicationToShow && (
         <section
           ref={seeApplicationRef}
-          className="w-[30%] max-h-[60%] modal z-[36] border-[1px] border-gray-300 p-6 bg-white overflow-y-auto custom-scrollbar m:w-[90%]"
+          className="w-[30%] max-h-[60%] modal z-[36] border-[1px] border-gray-300 p-6 bg-white overflow-y-auto custom-scrollbar m:w-[90%] xl:w-[60%]"
         >
           <div className="flex flex-col gap-4">
             <p className="text-sm">

@@ -25,7 +25,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
   const company: Company = await getCompanyByUserId(session?.user.id as string);
 
   return (
-    <section className="px-8 m:px-4">
+    <section className="px-8 m:px-4 xl:px-4">
       <ApplicantsWrapper company={company} page={page} perPage={perPage} />
     </section>
   );

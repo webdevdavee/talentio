@@ -74,7 +74,7 @@ const EditApplicantCard = ({
         <section ref={seeApplicationRef}>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="w-[30%] max-h-[55%] modal z-[36] border-[1px] border-gray-300 p-6 bg-white overflow-y-auto custom-scrollbar flex flex-col justify-between gap-6"
+            className="w-[30%] max-h-[55%] modal z-[36] border-[1px] border-gray-300 p-6 bg-white overflow-y-auto custom-scrollbar flex flex-col justify-between gap-6 m:w-[80%] xl:w-[60%] xl:max-h-fit"
           >
             <h2 className="font-medium">Edit applicant details</h2>
             <div className="w-full">

@@ -9,7 +9,7 @@ const Sidebar = async () => {
   const individual: User = await findIndividualById(session?.user.id as string);
 
   return (
-    <aside className="sticky top-0 w-[17%] h-screen bg-[#F5F5F5] flex flex-col justify-between py-6 px-4 overflow-hidden m:hidden">
+    <aside className="sticky top-0 w-[17%] h-screen bg-[#F5F5F5] flex flex-col justify-between py-6 px-4 overflow-hidden m:hidden xl:w-[30%]">
       <section>
         <Link href="/">
           <Image

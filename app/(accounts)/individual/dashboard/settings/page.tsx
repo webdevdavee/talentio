@@ -27,7 +27,7 @@ const page = async () => {
         <h1 className="text-2xl font-medium">Profile</h1>
         <p className="text-sm">Manage your profile settings</p>
       </div>
-      <div className="flex gap-24 mt-5 m:flex-col m:gap-10">
+      <div className="flex gap-24 mt-5 m:flex-col m:gap-10 xl:flex-col xl:gap-10">
         <SettingsForm user={user} />
         <ApplicationDetailsForm
           user={user}

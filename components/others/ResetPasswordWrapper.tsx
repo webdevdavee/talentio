@@ -15,7 +15,7 @@ const ResetPasswordWrapper = () => {
 
   return (
     <section className="w-full h-screen flex items-center justify-center overflow-hidden">
-      <div className="w-[50%] py-12 px-24 m:w-full m:p-4">
+      <div className="w-[50%] py-12 px-24 m:w-full m:p-4 xl:p-8">
         {error && (
           <p className="w-full p-2 bg-red-200 text-red-500 mb-6 m:text-center">
             {error}

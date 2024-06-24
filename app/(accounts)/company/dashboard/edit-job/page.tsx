@@ -29,7 +29,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
   const company = await getCompanyByUserId(session?.user.id as string);
 
   return (
-    <section className="px-8">
+    <section className="px-8 m:px-4 xl:px-4">
       <PostJobForm type="edit" job={job} company={company} />
     </section>
   );

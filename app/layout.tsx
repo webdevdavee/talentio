@@ -23,8 +23,10 @@ export default function RootLayout({
     <html lang="en">
       <AuthProvider>
         <body className={dm_sans.className}>
-          <Overlay />
-          {children}
+          <section className="ultra:max-w-[1300px] ultra:mx-auto">
+            <Overlay />
+            {children}
+          </section>
         </body>
       </AuthProvider>
     </html>

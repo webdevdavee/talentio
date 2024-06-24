@@ -23,7 +23,7 @@ const CompaniesList = ({
   return (
     <>
       {companies && companies.length > 0 && type === "recommended" && (
-        <section className="w-full grid grid-cols-4 gap-6 m:grid-cols-1">
+        <section className="w-full grid grid-cols-4 gap-6 m:grid-cols-1 xl:grid-cols-2">
           {companies.slice(0, 8).map((company) => (
             <CompanyCard
               key={company._id}
@@ -37,7 +37,7 @@ const CompaniesList = ({
         industries &&
         industries.length > 0 &&
         type === "from_industry" && (
-          <div className="w-full grid grid-cols-4 items-center gap-6 mt-16 m:flex m:gap-4 sm:overflow-x-scroll m:overflow-y-hidden m:mt-6">
+          <div className="w-full grid grid-cols-4 items-center gap-6 mt-16 m:flex m:gap-4 m:overflow-x-scroll m:overflow-y-hidden m:mt-6 xl:grid-cols-2">
             {industries.slice(sliceStart, sliceEnd).map((industry, index) => (
               <IndustryCard
                 key={index}

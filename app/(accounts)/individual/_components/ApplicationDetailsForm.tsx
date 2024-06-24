@@ -7,7 +7,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import InputBox from "@/components/ui/InputBox";
 import TextArea from "@/components/ui/TextArea";
 import Loader2 from "@/components/ui/Loader2";
@@ -70,7 +69,7 @@ const ApplicationDetailsForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-[50%] bg-white m:w-full"
+      className="w-[50%] bg-white m:w-full xl:w-full"
     >
       {error && <p className="w-full p-2 bg-red-200 text-red-500">{error}</p>}
       <h2>

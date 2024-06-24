@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Sidebar = async () => {
   return (
-    <aside className="sticky top-0 w-[17%] h-screen bg-[#F5F5F5] flex flex-col justify-between py-6 px-4 m:hidden">
+    <aside className="sticky top-0 w-[17%] h-screen bg-[#F5F5F5] flex flex-col justify-between py-6 px-4 m:hidden xl:w-[30%]">
       <section>
         <Link href="/">
           <Image

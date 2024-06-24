@@ -44,16 +44,16 @@ const TableUtitlity = ({
   };
 
   return (
-    <div className="flex items-center justify-between m:flex-col m:items-start m:gap-4">
-      <h2 className="text-xl font-semibold m:text-lg">
+    <div className="flex items-center justify-between m:flex-col m:items-start m:gap-4 xl:flex-col xl:items-start xl:gap-4">
+      <h2 className="text-xl font-semibold m:text-lg xl:text-lg">
         {title} {filteredSearch?.length}
       </h2>
-      <div className="flex items-center gap-8 m:flex-col m:gap-5 m:w-full">
-        <div className="flex items-center justify-center gap-3 m:flex-col m:w-full">
-          <div className="flex justify-between gap-2 m:w-full ">
+      <div className="flex items-center gap-8 m:flex-col m:gap-5 m:w-full xl:w-full xl:flex-col xl:gap-4">
+        <div className="flex items-center justify-center gap-3 m:flex-col m:w-full xl:w-full">
+          <div className="flex justify-between gap-2 m:w-full xl:w-full">
             <button
               type="button"
-              className="py-2 px-3 border-[1px] border-gray-400 text-sm m:w-full"
+              className="py-2 px-3 border-[1px] border-gray-400 text-sm m:w-full xl:w-full"
               onClick={deleteFunction}
             >
               {deleteBtnText}

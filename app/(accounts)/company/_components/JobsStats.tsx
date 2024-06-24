@@ -85,7 +85,7 @@ const JobsStats = ({
         </div>
         <StatsOption statOption={statOption} setStatOption={setStatOption} />
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-10 m:grid-cols-1 m:w-full m:flex m:flex-col m:gap-8">
+      <div className="grid grid-cols-3 gap-4 mt-10 m:grid-cols-1 m:w-full m:flex m:flex-col m:gap-8 xl:w-full xl:flex xl:flex-col xl:gap-8">
         {statOption === "Overview" ? (
           <JobStatsChart
             selectedTimeFrame={selectedTimeFrame}
@@ -113,7 +113,7 @@ const JobsStats = ({
             showLoader={showLoader}
           />
         )}
-        <div className="flex flex-col gap-4 m:w-full">
+        <div className="flex flex-col gap-4 m:w-full xl:w-full">
           <JobViews
             jobViews={jobViews}
             jobViewsPercentageChange={jobViewsPercentageChange}

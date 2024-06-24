@@ -77,7 +77,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
   };
 
   return (
-    <section className="w-[50%] m:w-full">
+    <section className="w-[50%] m:w-full xl:w-full">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex flex-col gap-6">
           <div className="flex flex-col gap-4">

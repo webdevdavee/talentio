@@ -19,6 +19,11 @@ const MobileMenu = () => {
     useOverlayStore.setState({ overlay: false });
   });
 
+  const closeMobileMenu = () => {
+    useMobileMenuStore.setState({ menu: false });
+    useOverlayStore.setState({ overlay: false });
+  };
+
   return (
     <aside
       ref={menuRef}
@@ -26,7 +31,7 @@ const MobileMenu = () => {
       style={{ display: menu ? "block" : "none" }}
     >
       <div className="flex items-center justify-between gap-4 overflow-hidden border-b border-b-gray-300 pb-4 mb-6">
-        <Link href="/">
+        <Link href="/" onClick={closeMobileMenu}>
           <Image src="/talentio.svg" width={125} height={125} alt="logo" />
         </Link>
         <button

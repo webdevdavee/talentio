@@ -124,9 +124,9 @@ const DashboardWrapper = ({
   });
 
   return (
-    <section className="px-8 flex flex-col gap-8 mb-4 m:px-4">
-      <div className="flex items-center justify-between m:flex-col m:gap-4 m:items-start">
-        <div className="m:flex m:flex-col m:gap-3">
+    <section className="px-8 flex flex-col gap-8 mb-4 m:px-4 xl:px-4">
+      <div className="flex items-center justify-between m:flex-col m:gap-4 m:items-start xl:flex-col xl:gap-6 xl:items-start">
+        <div className="m:flex m:flex-col m:gap-3 xl:flex xl:flex-col xl:gap-4">
           <h1 className="font-semibold text-xl">{getGreeting()}</h1>
           <p className="text-gray-600 text-sm m:text-base">
             Here is your job listing statistic report from{" "}
@@ -139,7 +139,10 @@ const DashboardWrapper = ({
             )}
           </p>
         </div>
-        <div ref={calendarRef} className="relative m:w-full">
+        <div
+          ref={calendarRef}
+          className="relative m:w-full xl:w-full xl:flex xl:justify-end"
+        >
           <button
             type="button"
             className="flex items-center gap-3 border border-gray-200 p-2 m:w-full m:justify-between m:border-gray-300"
@@ -155,7 +158,7 @@ const DashboardWrapper = ({
             </p>
             <Image src="/calendar.svg" width={16} height={16} alt="calendar" />
           </button>
-          <div className="absolute right-0 w-[20rem] mt-4 m:w-full">
+          <div className="absolute right-0 w-[20rem] mt-4 m:w-full xl:mt-12">
             {showCalendar && (
               <Calendar
                 startDate={startDate}

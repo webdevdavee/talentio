@@ -17,7 +17,7 @@ export default async function Layout({
       <section className="flex m:block">
         <MobileMenu />
         <Sidebar />
-        <div className="flex flex-col w-[83%] m:w-full">
+        <div className="flex flex-col w-[83%] m:w-full xl:w-[70%]">
           <Header company={company} />
           {children}
         </div>

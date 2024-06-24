@@ -17,7 +17,7 @@ const Header = ({ company }: HeaderProps) => {
   };
 
   return (
-    <header className="w-full bg-white py-6 px-8 border-b border-b-gray-200 mb-3 m:p-4 m:sticky m:top-0 m:z-30 m:drop-shadow">
+    <header className="w-full bg-white py-6 px-8 border-b border-b-gray-200 mb-3 m:p-4 m:sticky m:top-0 m:z-30 m:drop-shadow xl:p-4">
       <div className="flex items-center justify-between">
         <Image
           src="/menu2.svg"
@@ -46,14 +46,14 @@ const Header = ({ company }: HeaderProps) => {
         <div className="flex items-center gap-4 m:hidden">
           <button
             type="button"
-            className="p-2 border border-red-200 font-medium text-red-400"
+            className="p-2 border border-red-200 font-medium text-red-400 xl:text-sm xl:p-2"
             onClick={() => signOut({ callbackUrl: "/" })}
           >
             Sign out
           </button>
           <Link
             href="/company/dashboard/post-job"
-            className="flex gap-1 items-center p-2 bg-primary text-white font-medium"
+            className="flex gap-1 items-center p-2 bg-primary text-white font-medium xl:text-sm xl:p-2"
           >
             <Image src="/plus.svg" width={25} height={25} alt="post-a-job" />
             <p>Post a job</p>

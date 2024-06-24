@@ -43,10 +43,8 @@ const PasswordInput2 = ({
       >
         <input
           {...inputRegister}
-          type="password"
-          className={`w-full py-3 text-sm transition focus:transition focus:outline-none ${
-            isPasswordVisible ? "text-security-none" : ""
-          }`}
+          type={isPasswordVisible ? "text" : "password"}
+          className="w-full py-3 text-sm transition focus:transition focus:outline-none"
           id={htmlFor}
           placeholder={placeholder}
           inputMode={inputMode}
@@ -68,7 +66,7 @@ const PasswordInput2 = ({
               src="/eye-no-slash.svg"
               width={20}
               height={20}
-              alt="show-password"
+              alt="hide-password"
             />
           )}
         </button>

@@ -46,6 +46,10 @@ const PasswordInput = ({
           id={htmlFor}
           placeholder={placeholder}
           inputMode={inputMode}
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck="false"
+          data-lpignore="true"
         />
         <button
           type="button"

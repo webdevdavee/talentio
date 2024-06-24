@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 type InputType = {
   inputRegister?: any;
@@ -13,6 +13,11 @@ type InputType = {
   style?: string;
 };
 
+// Define a custom type for the style object including webkitTextSecurity
+interface CustomCSSProperties extends React.CSSProperties {
+  webkitTextSecurity?: "none" | "disc" | "circle" | "square";
+}
+
 const PasswordInput = ({
   inputRegister,
   label,
@@ -25,10 +30,20 @@ const PasswordInput = ({
   style,
 }: InputType) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.setAttribute("autocomplete", "new-password");
+      // Use the custom type here
+      (inputRef.current.style as CustomCSSProperties).webkitTextSecurity =
+        isPasswordVisible ? "none" : "disc";
+    }
+  }, [isPasswordVisible]);
 
   return (
     <section className="relative w-full flex flex-col">
@@ -41,11 +56,16 @@ const PasswordInput = ({
       <div className="w-full flex items-center justify-between border-b-[1px] border-b-gray-400">
         <input
           {...inputRegister}
-          type={isPasswordVisible ? "text" : "password"}
+          ref={inputRef}
+          type="text"
           className={`w-full py-3 text-sm transition focus:transition focus:outline-none ${style}`}
           id={htmlFor}
           placeholder={placeholder}
           inputMode={inputMode}
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck="false"
+          data-lpignore="true"
         />
         <button
           type="button"

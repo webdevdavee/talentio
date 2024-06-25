@@ -32,7 +32,9 @@ const Sidebar = async () => {
         />
         <span>
           <p className="font-medium">{individual.name}</p>
-          <p className="text-gray-600 font-light text-xs">{individual.email}</p>
+          <p className="text-gray-600 font-light text-xs break-all">
+            {individual.email}
+          </p>
         </span>
       </div>
     </aside>

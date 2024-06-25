@@ -70,7 +70,7 @@ export const {
       return session;
     },
     async signIn({ user, account }) {
-      // Sign in Oauth and set email verification to true
+      // Sign in Oauth
       if (account?.provider === "google") {
         try {
           await OauthUserLogin({ ...user, provider: account.provider });

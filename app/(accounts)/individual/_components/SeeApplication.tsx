@@ -17,7 +17,7 @@ const SeeApplication = ({
 }: seeApplicationProps) => {
   const seeApplicationRef = useRef<HTMLDivElement>(null);
 
-  // Handle clicks outside profile dialog
+  // Handle clicks outside see application card
   useClickOutside(seeApplicationRef, () => {
     setShowMyApplication(false);
     useOverlayStore.setState({ overlay: false });

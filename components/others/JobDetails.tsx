@@ -16,7 +16,7 @@ type JobProps = {
 };
 
 const JobDetails = ({ job, company, session }: JobProps) => {
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const cleanDescription = DOMPurify.sanitize(
     job.description ? job.description : ""
   );
@@ -51,43 +51,35 @@ const JobDetails = ({ job, company, session }: JobProps) => {
         session?.user.id
       );
       setGetUserJobApplications(getUserJobApplications);
-
-      if (job) setIsLoading(false);
     };
     fetchData();
   }, [job, session?.user.id]);
 
   return (
     <section>
-      {!isLoading ? (
-        <>
-          <div className="flex gap-4 m:flex-col xl:flex-col">
-            <div className="w-[70%] m:w-full xl:w-full">
-              <JobDetailHeader
-                job={job}
-                userSavedJobs={userSavedJobs ? userSavedJobs.jobs : undefined}
-                userJobApplications={
-                  getUserJobApplications
-                    ? getUserJobApplications.applications
-                    : undefined
-                }
-                session={session}
-              />
-              <div
-                className="mt-4"
-                dangerouslySetInnerHTML={{
-                  __html: cleanDescription,
-                }}
-              />
-            </div>
-            <JobDetailsCompany company={company} />
+      <>
+        <div className="flex gap-4 m:flex-col xl:flex-col">
+          <div className="w-[70%] m:w-full xl:w-full">
+            <JobDetailHeader
+              job={job}
+              userSavedJobs={userSavedJobs ? userSavedJobs.jobs : undefined}
+              userJobApplications={
+                getUserJobApplications
+                  ? getUserJobApplications.applications
+                  : undefined
+              }
+              session={session}
+            />
+            <div
+              className="mt-4"
+              dangerouslySetInnerHTML={{
+                __html: cleanDescription,
+              }}
+            />
           </div>
-        </>
-      ) : (
-        <section className="h-[70%] flex items-center justify-center py-16">
-          <Loader className="loader" />
-        </section>
-      )}
+          <JobDetailsCompany company={company} />
+        </div>
+      </>
     </section>
   );
 };

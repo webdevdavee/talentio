@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import MobileMenuNav from "./MobileMenuNav";
-import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useRef } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -26,9 +25,7 @@ const MobileMenu = () => {
       style={{ display: menu ? "block" : "none" }}
     >
       <div className="flex items-center justify-between gap-4 overflow-hidden border-b border-b-gray-300 pb-4 mb-6">
-        <Link href="/">
-          <Image src="/talentio.svg" width={125} height={125} alt="logo" />
-        </Link>
+        <Image src="/talentio.svg" width={125} height={125} alt="logo" />
         <button
           type="button"
           className="text-red-500"

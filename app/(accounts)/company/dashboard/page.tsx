@@ -26,7 +26,6 @@ export async function generateMetadata() {
 
 const page = async () => {
   const session = await auth();
-  if (!session) redirect("/sign-in");
   if (session?.user.accountType === "individual")
     redirect("/individual/dashboard");
 

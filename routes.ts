@@ -45,4 +45,4 @@ export const dynamicPublicRoutes = [/^\/job\/.*/, /^\/company\/.*/];
  * It needed to be declared and made a private route due to /^\/company\/.* in dynamicPublicRoutes making it public.
  * @types {string}
  */
-export const companyDashboardRoute = "/company";
+export const companyDashboardRoute = "/company/dashboard";

@@ -23,7 +23,7 @@ const SearchTitleInput = ({
             {...inputRegister}
             type="text"
             placeholder={placeholderText}
-            className={`w-44 py-3 focus:transition focus:outline-none m:text-sm m:w-full ${
+            className={`w-44 pb-3 focus:transition focus:outline-none m:text-sm m:w-full ${
               type === "companies" && "w-[20rem]"
             }`}
           />

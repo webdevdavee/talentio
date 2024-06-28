@@ -18,7 +18,7 @@ const SearchTitleInput = ({
     <div className="flex items-start gap-4 m:w-full">
       <Image src="/search.svg" width={18} height={18} alt="search" />
       <div className="flex flex-col gap-2 m:w-full">
-        <div className="border-b-[1px] border-b-gray-400">
+        <div className="border-b-[1px] border-b-zinc-300">
           <input
             {...inputRegister}
             type="text"

@@ -6,6 +6,7 @@ import {
   apiAuthPrefix,
   DEFAULT_LOGIN_REDIRECT,
   dynamicPublicRoutes,
+  companyDashboardRoute,
 } from "@/routes";
 
 const { auth } = NextAuth(authConfig);
@@ -17,6 +18,9 @@ export default auth((req) => {
 
   // Checks the state of the url
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isCompanyDashboardRoute = nextUrl.pathname.startsWith(
+    companyDashboardRoute
+  );
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   const isDynamicPublicRoute = dynamicPublicRoutes.some((pattern) =>
@@ -37,7 +41,12 @@ export default auth((req) => {
   }
 
   // If a user is not logged in but requests a page that is not public, redirect them to the sign-in page
-  if (!isLoggedIn && !isPublicRoute && !isDynamicPublicRoute) {
+  if (
+    !isLoggedIn &&
+    !isPublicRoute &&
+    !isDynamicPublicRoute &&
+    isCompanyDashboardRoute
+  ) {
     return Response.redirect(new URL("/sign-in", nextUrl));
   }
 

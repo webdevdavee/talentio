@@ -38,11 +38,3 @@ export const DEFAULT_LOGIN_REDIRECT = "/security-questions";
  * @types {string}
  */
 export const dynamicPublicRoutes = [/^\/job\/.*/, /^\/company\/.*/];
-
-/**
- * This route is for the company dashboard.
- * It requires authentication.
- * It needed to be declared and made a private route due to /^\/company\/.* in dynamicPublicRoutes making it public.
- * @types {string}
- */
-export const companyDashboardRoute = "/company/dashboard";

@@ -18,6 +18,7 @@ const page = async ({ searchParams }: SearchParamProps) => {
   perPage = !perPage || perPage < 1 ? 10 : perPage;
 
   const session = await auth();
+  if (!session) redirect("/sign-in");
   if (session?.user.accountType === "company") redirect("/company/dashboard");
 
   return (

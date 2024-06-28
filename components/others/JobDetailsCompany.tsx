@@ -17,7 +17,7 @@ const JobDetailsCompany = ({ company }: JobDetailsCompanyProps) => {
         />
         <p className="font-semibold">{company.company}</p>
         <Link
-          href={`/company/${company._id}`}
+          href={`/company/details/${company._id}`}
           className="px-4 py-3 text-white text-sm bg-primary font-medium"
         >
           View company profile

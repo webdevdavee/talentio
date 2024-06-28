@@ -26,10 +26,7 @@ const UserProfileBtn = ({ session, className }: UserProfileBtnProps) => {
           <Link href="/sign-in" className="px-4 py-3">
             Login
           </Link>
-          <Link
-            href="/onboarding"
-            className="px-4 py-2 rounded bg-primary text-white"
-          >
+          <Link href="/onboarding" className="px-4 py-2 bg-primary text-white">
             Sign Up
           </Link>
         </div>

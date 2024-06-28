@@ -37,4 +37,4 @@ export const DEFAULT_LOGIN_REDIRECT = "/security-questions";
  * They do not require authentication.
  * @types {string}
  */
-export const dynamicPublicRoutes = [/^\/job\/.*/, /^\/company\/.*/];
+export const dynamicPublicRoutes = [/^\/job\/.*/, /^\/company\/details\/.*/];

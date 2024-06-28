@@ -10,7 +10,7 @@ type CompanyCardProps = {
 const CompanyCard = ({ company, type, layout }: CompanyCardProps) => {
   return (
     <Link
-      href={`/company/${company._id}`}
+      href={`/company/details/${company._id}`}
       className="border border-zinc-300 p-5 duration-200 transition cursor-pointer hover:scale-105"
     >
       <div className="flex flex-col items-start justify-between h-full gap-3">

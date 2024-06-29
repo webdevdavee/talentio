@@ -26,7 +26,7 @@ const DropdownList = ({
           <button
             type="button"
             key={index}
-            className="w-full text-left border-b border-b-gray-300 py-4 px-2 hover:bg-gray-100 transition"
+            className="w-full text-left border-b border-b-gray-300 py-4 px-2 hover:bg-gray-100"
             onClick={(e) => selectItem(e)}
           >
             {item}

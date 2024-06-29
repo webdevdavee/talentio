@@ -5,7 +5,7 @@ import { handleError } from "@/lib/utils";
 import { z } from "zod";
 import Users from "../models/users.model";
 import { AuthSignInFormSchema } from "@/lib/zod/authZod";
-import { signIn, signOut } from "@/auth";
+import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import Individual from "../models/individual.model";
@@ -95,30 +95,26 @@ export const addNewUserField = async ({
 };
 
 export const deleteAccount = async (userId: string, accountType: string) => {
-  const updateOperations = [];
   try {
     await connectToDatabase();
 
-    // Determine the collection based on account type
     const collectionToUpdate =
       accountType === "individual" ? Individual : Companies;
 
-    // Prepare the update operations for both collections
-    updateOperations.push(
+    const updateOperations = [
       collectionToUpdate.deleteOne({ userId }),
-      Users.deleteOne({ userId })
-    );
+      Users.deleteOne({ userId }),
+    ];
 
-    // Execute all update operations concurrently
     const results = await Promise.all(updateOperations);
 
-    // Check if all updates were acknowledged
     if (results.some((result) => !result.acknowledged)) {
-      return { error: "An error occurred!." };
+      return { error: "An error occurred during deletion." };
     }
 
-    await signOut({ redirectTo: "/" });
+    return { success: true, message: "Account deleted successfully" };
   } catch (error: any) {
-    handleError(error);
+    console.error("Error in deleteAccount:", error);
+    return { error: "An unexpected error occurred. Please try again." };
   }
 };

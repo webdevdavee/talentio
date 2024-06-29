@@ -11,6 +11,7 @@ import ProfileImageUploader from "./ProfileImageUploader";
 import { updateIndividual } from "@/database/actions/individual.action";
 import { useUploadThing } from "@/lib/utils/uploadthing";
 import { deleteAccount } from "@/database/actions/users.actions";
+import { signOut } from "next-auth/react";
 
 type SettingsFormProps = {
   user: User;
@@ -74,6 +75,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
     if (response?.error) {
       setError(response.error);
     }
+    signOut({ callbackUrl: "/" });
   };
 
   return (

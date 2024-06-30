@@ -75,7 +75,7 @@ const DropdownListInput = ({
         )}
       </button>
       <ul
-        className="w-full absolute mt-2 custom-scrollbar h-48 bg-white border border-gray-400 drop-shadow-lg overflow-y-scroll"
+        className="w-full absolute mt-2 custom-scrollbar h-48 bg-white border border-gray-400 overflow-y-scroll"
         style={{ display: showDropdown ? "block" : "none" }}
       >
         {dropdownData.map((item, index) => (

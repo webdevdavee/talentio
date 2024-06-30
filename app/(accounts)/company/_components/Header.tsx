@@ -36,7 +36,7 @@ const Header = ({ company }: HeaderProps) => {
             alt="company-logo"
             className="m:hidden"
           />
-          <span className="flex flex-col gap-2 items-center justify-center">
+          <span className="flex flex-col items-center justify-center">
             <p className="text-sm text-gray-600 m:text-base">Company</p>
             <p className="font-semibold m:text-lg">{company.company}</p>
           </span>

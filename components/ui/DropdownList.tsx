@@ -11,9 +11,7 @@ const DropdownList = ({
   setSelectedListItem,
   listData,
 }: DropdownListProps) => {
-  const selectItem = (
-    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  ) => {
+  const selectItem = (e: MouseEvent<HTMLLIElement, globalThis.MouseEvent>) => {
     const item = e.currentTarget.textContent;
     setSelectedListItem(item ? item : "");
     setShowListItems(false);
@@ -21,18 +19,17 @@ const DropdownList = ({
 
   return (
     <section className="absolute custom-scrollbar h-48 bg-white border border-gray-400 drop-shadow-lg overflow-y-scroll">
-      <div>
+      <ul>
         {listData.map((item, index) => (
-          <button
-            type="button"
+          <li
             key={index}
             className="w-full text-left border-b border-b-gray-300 py-4 px-2 hover:bg-gray-100"
             onClick={(e) => selectItem(e)}
           >
             {item}
-          </button>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 };

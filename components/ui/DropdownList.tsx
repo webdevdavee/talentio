@@ -18,19 +18,17 @@ const DropdownList = ({
   };
 
   return (
-    <section className="absolute custom-scrollbar h-48 bg-white border border-gray-400 drop-shadow-lg overflow-y-scroll">
-      <ul>
-        {listData.map((item, index) => (
-          <li
-            key={index}
-            className="w-full text-left border-b border-b-gray-300 py-4 px-2 hover:bg-gray-100"
-            onClick={(e) => selectItem(e)}
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-    </section>
+    <ul className="absolute custom-scrollbar h-48 bg-white border border-gray-400 overflow-y-scroll">
+      {listData.map((item, index) => (
+        <li
+          key={index}
+          className="w-full text-left border-b border-b-gray-300 py-4 px-2 hover:bg-gray-100"
+          onClick={(e) => selectItem(e)}
+        >
+          {item}
+        </li>
+      ))}
+    </ul>
   );
 };
 

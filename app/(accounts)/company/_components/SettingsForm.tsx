@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import InputBox from "@/components/ui/InputBox";
-import ChangePassword from "@/components/dashboard/ChangePassword";
+import ChangePassword from "./ChangePassword";
 import Loader2 from "@/components/ui/Loader2";
 import ProfileImageUploader from "@/components/dashboard/ProfileImageUploader";
 import { useUploadThing } from "@/lib/utils/uploadthing";

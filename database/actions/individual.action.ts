@@ -8,7 +8,7 @@ import { AuthSignUpFormSchema } from "@/lib/zod/authZod";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
-import { SettingsFormSchema } from "@/lib/zod";
+import { SettingsFormSchema, individualSettingsForm } from "@/lib/zod";
 
 export const createUser = async (
   data: z.infer<typeof AuthSignUpFormSchema>
@@ -119,10 +119,10 @@ export const updateUserField = async ({
 };
 
 export const updateIndividual = async (
-  data: z.infer<typeof SettingsFormSchema>,
+  data: z.infer<typeof individualSettingsForm>,
   user: User
 ) => {
-  const validatedFields = SettingsFormSchema.safeParse(data);
+  const validatedFields = individualSettingsForm.safeParse(data);
   if (!validatedFields.success) {
     return { error: "Invalid credentials." };
   }

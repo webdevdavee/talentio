@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import SettingsForm from "@/components/dashboard/SettingsForm";
+import SettingsForm from "@/app/(accounts)/individual/_components/SettingsForm";
 import { findIndividualById } from "@/database/actions/individual.action";
 import { redirect } from "next/navigation";
 import ApplicationDetailsForm from "../../_components/ApplicationDetailsForm";

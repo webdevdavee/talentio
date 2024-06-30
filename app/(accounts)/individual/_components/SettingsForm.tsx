@@ -1,13 +1,13 @@
 "use client";
 
-import { TSettingsFormSchema, SettingsFormSchema } from "@/lib/zod";
+import { TIndividualSettingsForm, individualSettingsForm } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import InputBox from "../ui/InputBox";
-import ChangePassword from "./ChangePassword";
-import Loader2 from "../ui/Loader2";
-import ProfileImageUploader from "./ProfileImageUploader";
+import InputBox from "../../../../components/ui/InputBox";
+import ChangePassword from "@/app/(accounts)/individual/_components/ChangePassword";
+import Loader2 from "../../../../components/ui/Loader2";
+import ProfileImageUploader from "../../../../components/dashboard/ProfileImageUploader";
 import { updateIndividual } from "@/database/actions/individual.action";
 import { useUploadThing } from "@/lib/utils/uploadthing";
 import { deleteAccount } from "@/database/actions/users.actions";
@@ -31,14 +31,14 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<TSettingsFormSchema>({
-    resolver: zodResolver(SettingsFormSchema),
+  } = useForm<TIndividualSettingsForm>({
+    resolver: zodResolver(individualSettingsForm),
     defaultValues: initialValues,
   });
 
   const { startUpload } = useUploadThing("imageUploader");
 
-  const onSubmit = async (data: TSettingsFormSchema) => {
+  const onSubmit = async (data: TIndividualSettingsForm) => {
     setError("");
     // Initialize the URL for the resume.
     let uploadedFileUrl = data.image;

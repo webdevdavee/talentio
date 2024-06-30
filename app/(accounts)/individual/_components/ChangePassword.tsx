@@ -1,16 +1,10 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import PasswordInput2 from "../ui/PasswordInput2";
+import PasswordInput2 from "../../../../components/ui/PasswordInput2";
 
 type ChangePasswordProps = {
   register: UseFormRegister<{
     name: string;
     email: string;
-    about: string;
-    company_size: string;
-    twitter: string;
-    facebook: string;
-    linkedin: string;
-    mail: string;
     image: string;
     currentPassword?: string | undefined;
     newPassord?: string | undefined;
@@ -19,12 +13,6 @@ type ChangePasswordProps = {
   errors: FieldErrors<{
     name: string;
     email: string;
-    about: string;
-    company_size: string;
-    twitter: string;
-    facebook: string;
-    linkedin: string;
-    mail: string;
     image: string;
     currentPassword?: string | undefined;
     newPassord?: string | undefined;

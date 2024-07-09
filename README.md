@@ -19,7 +19,7 @@ Talentio is a modern job board application built with Next.js, TypeScript, Mongo
 ## Tech Stack
 
 - **Frontend**: Next.js, TypeScript
-- **Backend**: Next.js API Routes
+- **Backend**: Next.js Server Actions
 - **Database**: MongoDB
 - **Authentication**: Auth.js
 

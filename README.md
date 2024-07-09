@@ -1,16 +1,16 @@
-# Talentio 🚀
+# Talentio
 
 Talentio is a modern job board application built with Next.js, TypeScript, MongoDB, and Auth.js. It provides a seamless experience for both job seekers and hiring teams.
 
 ## Features
 
-### For Job Seekers 👨‍💼👩‍💼
+### For Job Seekers
 
 - **Job Application**: Easily apply to open positions
 - **Application Tracking**: View and manage your previous applications
 - **User Profiles**: Create and maintain your professional profile
 
-### For Hiring Teams 👥
+### For Hiring Teams
 
 - **Job Listings**: Post and manage job openings
 - **Applicant Management**: Review and track applicants for each position

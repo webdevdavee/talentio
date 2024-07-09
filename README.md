@@ -46,5 +46,3 @@ git clone https://github.com/yourusername/talentio.git
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application
-
-- Built with Next.js, TypeScript, MongoDB, and Auth.js

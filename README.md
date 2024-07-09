@@ -28,17 +28,22 @@ Talentio is a modern job board application built with Next.js, TypeScript, Mongo
 1. Clone the repository
 ```bash
 git clone https://github.com/yourusername/talentio.git
+```
 
 2. Install dependencies
+```bash
 - cd talentio
 - npm install
+```
 
 3. Set up environment variables
 - Create a `.env.local` file in the root directory
 - Add necessary environment variables (MongoDB URI, Auth.js secret, etc.)
 
 4. Run the development server
+```bash
 - npm run dev
+```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application
 

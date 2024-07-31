@@ -40,8 +40,6 @@ export default auth((req) => {
   if (!isLoggedIn && !isPublicRoute && !isDynamicPublicRoute) {
     return Response.redirect(new URL("/sign-in", nextUrl));
   }
-
-  return;
 });
 
 export const config = {

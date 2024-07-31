@@ -281,8 +281,8 @@ export const updateCompany = async (
 
   if (data.currentPassword && data.newPassord && data.confirmPassword) {
     const passwordMatch = await bcrypt.compare(
-      data.currentPassword as string,
-      company.password as string
+      data.currentPassword,
+      company.password
     );
 
     if (!passwordMatch)
@@ -290,7 +290,7 @@ export const updateCompany = async (
 
     if (data.newPassord === data.confirmPassword) {
       // Hash new password
-      hashedPassword = await bcrypt.hash(data.confirmPassword as string, 7);
+      hashedPassword = await bcrypt.hash(data.confirmPassword, 7);
     } else {
       return { error: "Passwords do not match." };
     }
@@ -315,7 +315,7 @@ export const updateCompany = async (
     } = {
       company: data.name,
       email: data.email,
-      password: hashedPassword ? hashedPassword : company.password,
+      password: hashedPassword ?? company.password,
       logo: data.image,
       company_size: `${formattedSize}+ employees`,
       about: data.about,

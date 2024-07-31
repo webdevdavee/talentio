@@ -7,7 +7,7 @@ type SearchListProps = {
   setShowList: Dispatch<SetStateAction<boolean>>;
   setValue: UseFormSetValue<{
     title: string;
-    list?: string | undefined;
+    list?: string;
   }>;
 };
 
@@ -32,7 +32,7 @@ const SearchList = ({
       {data.length > 0 ? (
         data.map((key, i) => (
           <button
-            key={i}
+            key={`${key}-${i}`}
             type="button"
             className="w-full text-left text-sm hover:bg-gray-100 transition p-3"
             onClick={(e) => selectList(e)}

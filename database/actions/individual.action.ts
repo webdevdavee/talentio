@@ -8,7 +8,7 @@ import { AuthSignUpFormSchema } from "@/lib/zod/authZod";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
-import { SettingsFormSchema, individualSettingsForm } from "@/lib/zod";
+import { individualSettingsForm } from "@/lib/zod";
 
 export const createUser = async (
   data: z.infer<typeof AuthSignUpFormSchema>
@@ -158,7 +158,7 @@ export const updateIndividual = async (
     } = {
       name: data.name,
       email: data.email,
-      password: hashedPassword ? hashedPassword : user.password,
+      password: hashedPassword ?? user.password,
       image: data.image,
     };
 

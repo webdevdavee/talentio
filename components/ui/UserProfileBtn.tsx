@@ -38,6 +38,13 @@ const UserProfileBtn = ({ session, className }: UserProfileBtnProps) => {
           ref={profileDialogRef}
           className="flex items-center gap-3 cursor-pointer"
           onClick={() => setShowProfileDialogBox((prev) => !prev)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              setShowProfileDialogBox((prev) => !prev);
+            }
+          }}
+          role="button"
+          tabIndex={0}
         >
           <Image
             src={session.user.image as string}

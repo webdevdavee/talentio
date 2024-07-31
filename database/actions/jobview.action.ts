@@ -164,9 +164,7 @@ export const getJobViewsByWeekDays = async (
 
       // Initialize views count for each day
       for (let i = 0; i < 7; i++) {
-        const currentDate = new Date(
-          customStartDate ? customStartDate : startOfWeek
-        );
+        const currentDate = new Date(customStartDate ?? startOfWeek);
         currentDate.setDate(currentDate.getDate() + i);
         viewsByDay.set(currentDate.toISOString().slice(0, 10), 0);
       }

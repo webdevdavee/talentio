@@ -40,7 +40,7 @@ export const individualSettingsForm = z.object({
     .string()
     .min(8, "Should be at least 8 characters long.")
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(
@@ -51,7 +51,7 @@ export const individualSettingsForm = z.object({
   newPassord: z
     .string()
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(
@@ -62,7 +62,7 @@ export const individualSettingsForm = z.object({
   confirmPassword: z
     .string()
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(
@@ -109,7 +109,7 @@ export const SettingsFormSchema = z.object({
     .string()
     .min(8, "Should be at least 8 characters long.")
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(
@@ -120,7 +120,7 @@ export const SettingsFormSchema = z.object({
   newPassord: z
     .string()
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(
@@ -131,7 +131,7 @@ export const SettingsFormSchema = z.object({
   confirmPassword: z
     .string()
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(

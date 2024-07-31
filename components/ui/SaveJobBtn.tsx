@@ -18,9 +18,9 @@ const SaveJobBtn = ({
   saveAJob,
   className,
 }: SaveJobBtnProps) => {
-  return (
-    <section className={className}>
-      {isLoading ? (
+  const renderContent = () => {
+    if (isLoading) {
+      return (
         <Image
           className="animate-spin"
           width={25}
@@ -28,27 +28,24 @@ const SaveJobBtn = ({
           src="/loading-spinner.svg"
           alt="wishlist"
         />
-      ) : savedJob ? (
-        <Image
-          src="/love-filled.svg"
-          width={25}
-          height={25}
-          alt="save-job"
-          onClick={saveAJob}
-          className="cursor-pointer"
-        />
-      ) : (
-        <Image
-          src="/love.svg"
-          width={25}
-          height={25}
-          alt="save-job"
-          onClick={saveAJob}
-          className="cursor-pointer"
-        />
-      )}
-    </section>
-  );
+      );
+    }
+
+    const imageSrc = savedJob ? "/love-filled.svg" : "/love.svg";
+
+    return (
+      <Image
+        src={imageSrc}
+        width={25}
+        height={25}
+        alt="save-job"
+        onClick={saveAJob}
+        className="cursor-pointer"
+      />
+    );
+  };
+
+  return <section className={className}>{renderContent()}</section>;
 };
 
 export default SaveJobBtn;

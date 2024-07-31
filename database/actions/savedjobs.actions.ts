@@ -79,7 +79,7 @@ export const deleteSavedJobs = async (jobs: { id: string }[], path: string) => {
       jobId: { $in: idsToDelete },
     });
 
-    revalidatePath(path ? path : "");
+    revalidatePath(path ?? "");
   } catch (error) {
     handleError(error);
   }

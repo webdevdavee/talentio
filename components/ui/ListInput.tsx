@@ -26,7 +26,7 @@ const ListInput = ({
       if (inputValue.trim() !== "") {
         setData([...data, inputValue.trim()]);
         setInputValue("");
-        setError && setError("");
+        setError?.("");
       }
     }
   };
@@ -42,12 +42,13 @@ const ListInput = ({
         <ul className="flex flex-wrap items-center justify-start gap-2">
           {data.map((d, index) => (
             <li
-              key={index}
+              key={`${d}-${index}`}
               className="bg-primary text-white text-sm rounded p-2 flex items-center justify-center gap-2"
             >
               {d}
-              <span
-                className="text-base cursor-pointer"
+              <button
+                type="button"
+                className="text-base"
                 onClick={() => removeItem(index)}
               >
                 <Image
@@ -56,7 +57,7 @@ const ListInput = ({
                   height={17}
                   alt="remove-tag"
                 />
-              </span>
+              </button>
             </li>
           ))}
         </ul>
@@ -70,7 +71,7 @@ const ListInput = ({
           onKeyDown={(e) => addItem(e)}
         />
       </div>
-      <p className="text-red-500">{error && error}</p>
+      <p className="text-red-500">{error}</p>
     </section>
   );
 };

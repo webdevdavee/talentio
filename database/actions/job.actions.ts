@@ -427,19 +427,24 @@ export const getCompanyJobsAppliedCountForCurrentWeek = async (
     const totalAppliedThisWeek = thisWeekResult > 0 ? thisWeekResult || 0 : 0;
     const totalAppliedLastWeek = lastWeekResult > 0 ? lastWeekResult || 0 : 0;
 
-    // Calculate percentage change (handle division by zero)
-    const percentageChange =
-      totalAppliedLastWeek === 0 && totalAppliedThisWeek === 0
-        ? 0 // Handle division by zero
-        : totalAppliedLastWeek === 0
-        ? 100
-        : Number(
-            (
-              ((totalAppliedThisWeek - totalAppliedLastWeek) /
-                totalAppliedLastWeek) *
-              100
-            ).toFixed(2)
-          );
+    const calculatePercentageChange = (
+      currentValue: number,
+      previousValue: number
+    ) => {
+      if (previousValue === 0 && currentValue === 0) {
+        return 0; // No change when both values are zero
+      }
+      if (previousValue === 0) {
+        return 100; // 100% increase when previous value was zero
+      }
+      const change = ((currentValue - previousValue) / previousValue) * 100;
+      return Number(change.toFixed(2));
+    };
+
+    const percentageChange = calculatePercentageChange(
+      totalAppliedThisWeek,
+      totalAppliedLastWeek
+    );
 
     return { totalAppliedThisWeek, percentageChange };
   } catch (error: any) {
@@ -524,8 +529,8 @@ export const getAppliedCountByDayOfWeek = async (
     const thisWeekApplications = await Applications.find({
       companyId: companyId,
       createdAt: {
-        $gte: customStartDate ? customStartDate : startOfWeek,
-        $lte: customEndDate ? customEndDate : currentDate,
+        $gte: customStartDate ?? startOfWeek,
+        $lte: customEndDate ?? currentDate,
       },
     });
 

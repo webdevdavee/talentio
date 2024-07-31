@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isValidUrl, validatePassword } from "../utils";
+import { isValidUrl } from "../utils";
 
 // SIGN UP FORM SCHEMA
 export const AuthSignUpFormSchema = z.object({
@@ -16,17 +16,13 @@ export const AuthSignUpFormSchema = z.object({
     .string()
     .min(8, "Should be at least 8 characters long.")
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(
       (s) => !s.includes(" "),
       "Only letters, numbers and special characters allowed. No spacing."
     ),
-  // password: z.string().trim().refine(validatePassword, {
-  //   message:
-  //     "Invalid password. Password must include at least 8 characters, have an uppercase character, have a lowercase character, have a number, and have a special character.",
-  // }),
 });
 
 export type TAuthSignUpFormSchema = z.infer<typeof AuthSignUpFormSchema>;
@@ -61,7 +57,7 @@ export const ResetPasswordSchema = z.object({
     .string()
     .min(8, "Should be at least 8 characters long.")
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(
@@ -72,7 +68,7 @@ export const ResetPasswordSchema = z.object({
     .string()
     .min(8, "Should be at least 8 characters long.")
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(
@@ -91,7 +87,7 @@ export const CompanySignUpFormSchema1 = z.object({
     .string()
     .min(8, "Should be at least 8 characters long.")
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(
@@ -156,7 +152,7 @@ export const CompanySignUpFormSchema = z.object({
     .string()
     .min(8, "Should be at least 8 characters long.")
     .regex(/[a-zA-Z]/, "Should have at least one letter")
-    .regex(/[0-9]/, "Should have at least one number")
+    .regex(/\d/, "Should have at least one number")
     .regex(/[^a-zA-Z0-9]/, "Should have at least one special character")
     .trim()
     .refine(

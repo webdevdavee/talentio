@@ -121,7 +121,7 @@ const ApplicantsWrapper = ({
       (applicants.length <= 1 ||
         applicantsToDelete.length === applicants.length)
     ) {
-      totalPages - 1;
+      setTotalPages((prev) => prev! - 1);
       const newPage = Math.max(page - 1, 1);
       pageParam.set("page", newPage.toString());
 

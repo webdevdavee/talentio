@@ -12,9 +12,9 @@ type ChangePasswordProps = {
     linkedin: string;
     mail: string;
     image: string;
-    currentPassword?: string | undefined;
-    newPassord?: string | undefined;
-    confirmPassword?: string | undefined;
+    currentPassword?: string;
+    newPassord?: string;
+    confirmPassword?: string;
   }>;
   errors: FieldErrors<{
     name: string;
@@ -26,9 +26,9 @@ type ChangePasswordProps = {
     linkedin: string;
     mail: string;
     image: string;
-    currentPassword?: string | undefined;
-    newPassord?: string | undefined;
-    confirmPassword?: string | undefined;
+    currentPassword?: string;
+    newPassord?: string;
+    confirmPassword?: string;
   }>;
 };
 

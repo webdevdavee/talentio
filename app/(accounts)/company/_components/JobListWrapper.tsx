@@ -95,7 +95,7 @@ const JobListWrapper = ({ company, page, perPage }: JobListWrapperProps) => {
       page === totalPages &&
       (jobs.length <= 1 || jobsToDelete.length === jobs.length)
     ) {
-      totalPages - 1;
+      setTotalPages((prev) => prev! - 1);
       const newPage = Math.max(page - 1, 1);
       pageParam.set("page", newPage.toString());
 

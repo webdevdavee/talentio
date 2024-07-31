@@ -23,7 +23,7 @@ const ApplicationsTableHead = ({
 
   const filterDateByOrder = (order: string) => {
     const sortedApplications = sortArray(
-      applications ? applications : [],
+      applications ?? [],
       "createdAt",
       order
     );
@@ -33,7 +33,7 @@ const ApplicationsTableHead = ({
 
   const filterSalaryByOrder = (order: string) => {
     const sortedApplications = sortSalaryRanges(
-      applications ? applications : [],
+      applications ?? [],
       "job.salary",
       order
     );

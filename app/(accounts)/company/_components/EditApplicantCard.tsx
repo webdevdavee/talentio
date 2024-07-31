@@ -101,13 +101,19 @@ const EditApplicantCard = ({
               {showStages && (
                 <div className="mt-4 bg-white w-full border">
                   {hiringStages.map((stage, index) => (
-                    <p
-                      key={index}
-                      className="p-2 hover:bg-gray-100 capitalize cursor-pointer"
+                    <button
+                      key={`${stage}-${index}`}
+                      className="p-2 hover:bg-gray-100 capitalize cursor-pointer w-full text-left"
                       onClick={() => handleSelectStage(stage)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          handleSelectStage(stage);
+                        }
+                      }}
                     >
                       {stage}
-                    </p>
+                    </button>
                   ))}
                 </div>
               )}

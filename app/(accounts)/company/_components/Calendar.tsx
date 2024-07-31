@@ -106,13 +106,13 @@ const Calendar = ({
       </div>
       <div className="grid grid-cols-7 gap-4">
         {dayLabels.map((label, index) => (
-          <div key={index} className="text-center font-bold">
+          <div key={`${label}-${index}`} className="text-center font-bold">
             {label}
           </div>
         ))}
         {calendarDays.map((day, index) => (
           <button
-            key={index}
+            key={`${day}-${index}`}
             onClick={() => handleDateSelect(day)}
             className={`flex items-center justify-center py-2 px-4 border text-sm ${
               !isSameMonth(day, currentMonth) ? "text-gray-300" : ""

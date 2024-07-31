@@ -22,21 +22,13 @@ const ApplicantsTableHead = ({
   const sortingScoreModalRef = useRef<HTMLDivElement>(null);
 
   const filterDateByOrder = (order: string) => {
-    const sortedApplicants = sortArray(
-      applicants ? applicants : [],
-      "createdAt",
-      order
-    );
+    const sortedApplicants = sortArray(applicants ?? [], "createdAt", order);
     setApplicants(sortedApplicants);
     setOpenDateSorting(false);
   };
 
   const filterScoreByOrder = (order: string) => {
-    const sortedApplicants = sortArray(
-      applicants ? applicants : [],
-      "score",
-      order
-    );
+    const sortedApplicants = sortArray(applicants ?? [], "score", order);
     setApplicants(sortedApplicants);
     setOpenScoreSorting(false);
   };
@@ -78,6 +70,15 @@ const ApplicantsTableHead = ({
             <div
               className="flex items-center justify-start gap-2 cursor-pointer w-fit"
               onClick={() => setOpenScoreSorting((prev) => !prev)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setOpenScoreSorting((prev) => !prev);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-expanded={openScoreSorting}
             >
               <p className="text-left">Score</p>
               <div className="flex flex-col">
@@ -99,18 +100,19 @@ const ApplicantsTableHead = ({
             </div>
             {openScoreSorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer w-full text-left hover:bg-gray-200"
                   onClick={() => filterScoreByOrder("asc")}
                 >
-                  acending
-                </p>
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                  ascending
+                </button>
+
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer w-full text-left hover:bg-gray-200"
                   onClick={() => filterScoreByOrder("desc")}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>
@@ -120,6 +122,15 @@ const ApplicantsTableHead = ({
             <div
               className="flex items-center justify-start gap-2 cursor-pointer w-fit"
               onClick={() => setOpenDateSorting((prev) => !prev)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setOpenDateSorting((prev) => !prev);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-expanded={openDateSorting}
             >
               <p className="text-left">Date</p>
               <div className="flex flex-col">
@@ -141,18 +152,19 @@ const ApplicantsTableHead = ({
             </div>
             {openDateSorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer w-full text-left hover:bg-gray-200"
                   onClick={() => filterDateByOrder("asc")}
                 >
-                  acending
-                </p>
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                  ascending
+                </button>
+
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer w-full text-left hover:bg-gray-200"
                   onClick={() => filterDateByOrder("desc")}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>

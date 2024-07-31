@@ -30,6 +30,24 @@ const ApplicantsTableBody = ({
     setSingleApplicantToBeDeleted(applicantId);
   };
 
+  const getApplicantStageClasses = (stage: string) => {
+    const baseClasses =
+      "flex items-center justify-center gap-1 border rounded-2xl text-center p-2 capitalize font-medium";
+
+    switch (stage) {
+      case "in review":
+        return `${baseClasses} border-[#FEBC43] text-[#FEBC43]`;
+      case "shortlisted":
+        return `${baseClasses} border-[#6C67E5] text-[#6C67E5]`;
+      case "interviewed":
+        return `${baseClasses} border-[#3BACFF] text-[#3BACFF]`;
+      case "hired":
+        return `${baseClasses} border-green-500 text-green-500`;
+      default:
+        return `${baseClasses} border-[#FF6550] text-[#FF6550]`;
+    }
+  };
+
   return (
     <tbody className="border border-gray-300">
       {applicants.map((applicant) => (
@@ -69,26 +87,14 @@ const ApplicantsTableBody = ({
           </td>
           <td>
             <p className="text-sm w-max p-3">
-              {convertDateFormat(applicant.createdAt as Date)}
+              {convertDateFormat(applicant.createdAt)}
             </p>
           </td>
           <td>
             <p className="text-sm w-max p-3">{applicant.job.title}</p>
           </td>
           <td className="text-sm w-max p-3">
-            <p
-              className={`flex items-center justify-center gap-1 border rounded-2xl text-center p-2 capitalize font-medium ${
-                applicant.stage === "in review"
-                  ? "border-[#FEBC43] text-[#FEBC43]"
-                  : applicant.stage === "shortlisted"
-                  ? "border-[#6C67E5] text-[#6C67E5]"
-                  : applicant.stage === "interviewed"
-                  ? "border-[#3BACFF] text-[#3BACFF]"
-                  : applicant.stage === "hired"
-                  ? "border-green-500 text-green-500"
-                  : "border-[#FF6550] text-[#FF6550]"
-              }`}
-            >
+            <p className={getApplicantStageClasses(applicant.stage)}>
               {applicant.stage}
             </p>
           </td>

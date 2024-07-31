@@ -123,20 +123,23 @@ const DashboardWrapper = ({
     setShowCalendar(false);
   });
 
+  const getDateRangeText = () => {
+    if (selectedTimeFrame === "Year") {
+      return "Jan - Dec";
+    } else if (startDate && endDate) {
+      return `${format(startDate, "MMMM d")} - ${format(endDate, "MMMM d")}`;
+    } else {
+      return <span className="font-semibold">Select Date Range</span>;
+    }
+  };
+
   return (
     <section className="px-8 flex flex-col gap-8 mb-4 m:px-4 xl:px-4">
       <div className="flex items-center justify-between m:flex-col m:gap-4 m:items-start xl:flex-col xl:gap-6 xl:items-start">
         <div className="m:flex m:flex-col m:gap-3 xl:flex xl:flex-col xl:gap-4">
           <h1 className="font-semibold text-xl">{getGreeting()}</h1>
           <p className="text-gray-600 text-sm m:text-base">
-            Here is your job listing statistic report from{" "}
-            {selectedTimeFrame === "Year" ? (
-              "Jan - Dec"
-            ) : startDate && endDate ? (
-              `${format(startDate, "MMMM d")} - ${format(endDate, "MMMM d")}`
-            ) : (
-              <span className="font-semibold">Select Date Range</span>
-            )}
+            Here is your job listing statistic report from {getDateRangeText()}
           </p>
         </div>
         <div

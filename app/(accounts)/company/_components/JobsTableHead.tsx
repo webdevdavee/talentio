@@ -22,13 +22,13 @@ const JobsTableHead = ({
   const sortingSalaryModalRef = useRef<HTMLDivElement>(null);
 
   const filterDateByOrder = (order: string) => {
-    const sortedJobs = sortArray(jobs ? jobs : [], "createdAt", order);
+    const sortedJobs = sortArray(jobs ?? [], "createdAt", order);
     setJobs(sortedJobs);
     setOpenDateSorting(false);
   };
 
   const filterSalaryByOrder = (order: string) => {
-    const sortedJobs = sortSalaryRanges(jobs ? jobs : [], "job.salary", order);
+    const sortedJobs = sortSalaryRanges(jobs ?? [], "job.salary", order);
     setJobs(sortedJobs);
     setOpenSalarySorting(false);
   };
@@ -42,6 +42,13 @@ const JobsTableHead = ({
   useClickOutside(sortingSalaryModalRef, () => {
     setOpenSalarySorting(false);
   });
+
+  const handleKeyDown = (e: React.KeyboardEvent, action: () => void) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      action();
+    }
+  };
 
   return (
     <thead className="border border-gray-300">
@@ -67,6 +74,13 @@ const JobsTableHead = ({
             <div
               className="flex items-center justify-start gap-2 cursor-pointer w-max"
               onClick={() => setOpenDateSorting((prev) => !prev)}
+              onKeyDown={(e) =>
+                handleKeyDown(e, () => setOpenDateSorting((prev) => !prev))
+              }
+              tabIndex={0}
+              role="button"
+              aria-haspopup="true"
+              aria-expanded={openDateSorting}
             >
               <p className="w-max text-left">Date</p>
               <div className="flex flex-col">
@@ -88,18 +102,18 @@ const JobsTableHead = ({
             </div>
             {openDateSorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer text-left hover:bg-gray-200"
                   onClick={() => filterDateByOrder("asc")}
                 >
-                  acending
-                </p>
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                  ascending
+                </button>
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer text-left hover:bg-gray-200"
                   onClick={() => filterDateByOrder("desc")}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>
@@ -109,6 +123,13 @@ const JobsTableHead = ({
             <div
               className="flex items-center justify-start gap-2 cursor-pointer w-max"
               onClick={() => setOpenSalarySorting((prev) => !prev)}
+              onKeyDown={(e) =>
+                handleKeyDown(e, () => setOpenSalarySorting((prev) => !prev))
+              }
+              tabIndex={0}
+              role="button"
+              aria-haspopup="true"
+              aria-expanded={openSalarySorting}
             >
               <p className="text-left">Salary / yr</p>
               <div className="flex flex-col">
@@ -130,18 +151,18 @@ const JobsTableHead = ({
             </div>
             {openSalarySorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer text-left hover:bg-gray-200"
                   onClick={() => filterSalaryByOrder("asc")}
                 >
-                  acending
-                </p>
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                  ascending
+                </button>
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer text-left hover:bg-gray-200"
                   onClick={() => filterSalaryByOrder("desc")}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>

@@ -24,7 +24,7 @@ const Sidebar = async () => {
       </section>
       <div className="flex gap-4 items-center overflow-hidden">
         <Image
-          src={individual.image as string}
+          src={individual.image}
           width={40}
           height={40}
           alt="user-img"

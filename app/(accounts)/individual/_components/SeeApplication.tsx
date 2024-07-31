@@ -32,8 +32,7 @@ const SeeApplication = ({
         >
           <div className="flex flex-col gap-4">
             <p className="text-sm">
-              Date submitted:{" "}
-              {convertDateFormat(applicationToShow.createdAt as Date)}
+              Date submitted: {convertDateFormat(applicationToShow.createdAt)}
             </p>
             <span className="flex flex-col">
               <h4 className="font-medium">Name</h4>

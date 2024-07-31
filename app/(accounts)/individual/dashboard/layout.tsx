@@ -2,7 +2,11 @@ import Header from "../_components/Header";
 import MobileMenu from "../_components/MobileMenu";
 import Sidebar from "../_components/Sidebar";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   return (
     <main>
       <section className="flex m:block">

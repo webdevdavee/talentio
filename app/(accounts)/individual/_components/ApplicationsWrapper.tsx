@@ -38,7 +38,7 @@ const ApplicationsWrapper = ({
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
   const [isLoading, setIsLoading] = useState(true);
   const [applicationToShow, setApplicationToShow] = useState<UserApplication>();
-  const [checkedApplications, setCheckedApplication] = useState<
+  const [checkedApplications, setCheckedApplications] = useState<
     {
       id: string;
     }[]
@@ -80,7 +80,7 @@ const ApplicationsWrapper = ({
     const newCheckedApplications = Object.keys(checkedItems).map((key) => ({
       id: key,
     }));
-    setCheckedApplication(newCheckedApplications);
+    setCheckedApplications(newCheckedApplications);
   }, [checkedItems]);
 
   // Create an array based on the search input
@@ -117,7 +117,7 @@ const ApplicationsWrapper = ({
       (applications.length <= 1 ||
         applicationsToDelete.length === applications.length)
     ) {
-      totalPages - 1;
+      setTotalPages((prev) => prev! - 1);
       const newPage = Math.max(page - 1, 1);
       pageParam.set("page", newPage.toString());
 

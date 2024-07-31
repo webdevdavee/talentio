@@ -31,6 +31,14 @@ const CategoryCard = ({
     <div
       className="border border-zinc-300 p-8 hover:scale-105 duration-200 transition cursor-pointer m:p-3"
       onClick={() => viewJobsByCategory(category.category)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          viewJobsByCategory(category.category);
+        }
+      }}
+      role="button"
+      tabIndex={0}
     >
       <div className="flex flex-col items-start justify-center gap-3 m:flex-row m:items-center m:justify-start">
         <Image

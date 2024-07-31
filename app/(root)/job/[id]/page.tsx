@@ -40,9 +40,7 @@ const page = async ({ params: { id } }: Params) => {
 export async function generateStaticParams() {
   const fetchedJobs = await getJobs();
   let jobs = [];
-  if (fetchedJobs && fetchedJobs.jobsNoLimit) {
-    jobs = fetchedJobs.jobsNoLimit;
-  }
+  jobs = fetchedJobs?.jobsNoLimit ?? [];
   return jobs.map((job: Job) => ({ id: job._id }));
 }
 

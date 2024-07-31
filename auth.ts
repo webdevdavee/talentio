@@ -32,7 +32,7 @@ export const {
 
           // Find if a user in the database has the same email with the email in the validateCredentials email
           const user = await findByEmail(email);
-          if (!user || !user.password) return null;
+          if (!user?.password) return null;
           // Then match the passwords
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (passwordMatch) {

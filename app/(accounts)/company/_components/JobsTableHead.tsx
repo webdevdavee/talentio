@@ -28,7 +28,7 @@ const JobsTableHead = ({
   };
 
   const filterSalaryByOrder = (order: string) => {
-    const sortedJobs = sortSalaryRanges(jobs ?? [], "job.salary", order);
+    const sortedJobs = sortSalaryRanges(jobs ?? [], "salary", order);
     setJobs(sortedJobs);
     setOpenSalarySorting(false);
   };

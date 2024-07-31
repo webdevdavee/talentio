@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { auth } from "@/auth";
 import SidebarNav from "./SidebarNav";
 import Link from "next/link";
 

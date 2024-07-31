@@ -15,6 +15,23 @@ const Header = () => {
     useOverlayStore.setState({ overlay: true });
   };
 
+  const getHeaderText = (pathname: string) => {
+    switch (pathname) {
+      case "/individual/dashboard":
+        return "My applications";
+      case "/individual/dashboard/saved-jobs":
+        return "Saved jobs";
+      case "/individual/dashboard/messages":
+        return "Messages";
+      case "/individual/dashboard/jobs":
+        return "Jobs";
+      case "/individual/dashboard/companies":
+        return "Companies";
+      default:
+        return "Settings";
+    }
+  };
+
   return (
     <header className="w-full bg-white py-6 px-8 border-b border-b-gray-200 mb-3 m:px-4">
       <div className="flex items-center justify-between">
@@ -27,17 +44,7 @@ const Header = () => {
           onClick={handleShowMobileMenu}
         />
         <h1 className="text-2xl font-semibold m:text-xl xl:text-xl">
-          {pathname === "/individual/dashboard"
-            ? "My applications"
-            : pathname === "/individual/dashboard/saved-jobs"
-            ? "Saved jobs"
-            : pathname === "/individual/dashboard/messages"
-            ? "Messages"
-            : pathname === "/individual/dashboard/jobs"
-            ? "Jobs"
-            : pathname === "/individual/dashboard/companies"
-            ? "Companies"
-            : "Settings"}
+          {getHeaderText(pathname)}
         </h1>
 
         {/* For mobile */}

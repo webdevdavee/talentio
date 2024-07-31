@@ -19,8 +19,6 @@ const page = async ({ searchParams }: SearchParamProps) => {
   let page = parseInt(searchParams.page as string, 10);
   page = !page || page < 1 ? 1 : page;
 
-  // const fetchedJobs: GetJob | undefined = await getJobs(page);
-
   // Create an array of promises
   const promises = [
     getJobsPropertyValueCount("type"),

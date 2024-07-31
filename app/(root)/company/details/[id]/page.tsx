@@ -42,9 +42,7 @@ const page = async ({ params: { id } }: Params) => {
 export async function generateStaticParams() {
   const fetchedCompanies = await getCompanies();
   let companies = [];
-  if (fetchedCompanies && fetchedCompanies.companiesNoLimit) {
-    companies = fetchedCompanies.companiesNoLimit;
-  }
+  companies = fetchedCompanies?.companiesNoLimit ?? [];
   return companies.map((company: Company) => ({
     id: company._id,
   }));

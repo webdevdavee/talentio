@@ -22,13 +22,13 @@ const SavedJobsTableHead = ({
   const sortingSalaryModalRef = useRef<HTMLDivElement>(null);
 
   const filterTitleByOrder = (order: string) => {
-    const sortedJobs = sortArray(jobs ? jobs : [], "title", order);
+    const sortedJobs = sortArray(jobs ?? [], "title", order);
     setJobs(sortedJobs);
     setOpenTitleSorting(false);
   };
 
   const filterSalaryByOrder = (order: string) => {
-    const sortedJobs = sortSalaryRanges(jobs ? jobs : [], "salary", order);
+    const sortedJobs = sortSalaryRanges(jobs ?? [], "salary", order);
     setJobs(sortedJobs);
     setOpenSalarySorting(false);
   };
@@ -42,6 +42,16 @@ const SavedJobsTableHead = ({
   useClickOutside(sortingSalaryModalRef, () => {
     setOpenSalarySorting(false);
   });
+
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    action: () => void
+  ) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      action();
+    }
+  };
 
   return (
     <thead className="border border-gray-300">
@@ -64,6 +74,13 @@ const SavedJobsTableHead = ({
             <div
               className="flex items-center justify-start gap-2 cursor-pointer w-fit"
               onClick={() => setOpenTitleSorting((prev) => !prev)}
+              onKeyDown={(e) =>
+                handleKeyDown(e, () => setOpenTitleSorting((prev) => !prev))
+              }
+              tabIndex={0}
+              role="button"
+              aria-haspopup="true"
+              aria-expanded={openTitleSorting}
             >
               <p className="w-max text-left">Title</p>
               <div className="flex flex-col">
@@ -85,18 +102,18 @@ const SavedJobsTableHead = ({
             </div>
             {openTitleSorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer text-left hover:bg-gray-200"
                   onClick={() => filterTitleByOrder("asc")}
                 >
-                  acending
-                </p>
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                  ascending
+                </button>
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer text-left hover:bg-gray-200"
                   onClick={() => filterTitleByOrder("desc")}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>
@@ -114,6 +131,13 @@ const SavedJobsTableHead = ({
             <div
               className="flex items-center justify-start gap-2 cursor-pointer w-max"
               onClick={() => setOpenSalarySorting((prev) => !prev)}
+              onKeyDown={(e) =>
+                handleKeyDown(e, () => setOpenSalarySorting((prev) => !prev))
+              }
+              tabIndex={0}
+              role="button"
+              aria-haspopup="true"
+              aria-expanded={openSalarySorting}
             >
               <p className="w-max text-left">Salary / yr</p>
               <div className="flex flex-col">
@@ -135,18 +159,18 @@ const SavedJobsTableHead = ({
             </div>
             {openSalarySorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer text-left hover:bg-gray-200"
                   onClick={() => filterSalaryByOrder("asc")}
                 >
-                  acending
-                </p>
-                <p
-                  className="text-sm font-light py-1 px-1 cursor-pointer"
+                  ascending
+                </button>
+                <button
+                  className="text-sm font-light py-1 px-1 cursor-pointer text-left hover:bg-gray-200"
                   onClick={() => filterSalaryByOrder("desc")}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>

@@ -6,7 +6,7 @@ import Mobilemenu from "@/components/layouts/Mobilemenu";
 export default async function Layout({
   children,
 }: {
-  children: React.ReactNode;
+  readonly children: React.ReactNode;
 }) {
   const session = await auth();
 

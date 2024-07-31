@@ -43,6 +43,38 @@ const CompanySignUpForm = () => {
       ...newData,
     }));
   };
+
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <CompanySignupStep1
+            nextStep={nextStep}
+            updateFormData={updateFormData}
+          />
+        );
+      case 2:
+        return (
+          <CompanySignupStep2
+            nextStep={nextStep}
+            prevStep={prevStep}
+            updateFormData={updateFormData}
+            setError={setError}
+          />
+        );
+      case 3:
+      default:
+        return (
+          <CompanySignupStep3
+            prevStep={prevStep}
+            updateFormData={updateFormData}
+            formData={formData}
+            setError={setError}
+          />
+        );
+    }
+  };
+
   return (
     <section className="w-full h-screen flex items-center justify-center overflow-hidden">
       <div className="w-[50%] flex flex-col gap-6 items-center justify-center py-12 px-24 m:w-full m:p-4 xl:p-10">
@@ -53,26 +85,7 @@ const CompanySignUpForm = () => {
         >
           Create company account
         </h1>
-        {step === 1 ? (
-          <CompanySignupStep1
-            nextStep={nextStep}
-            updateFormData={updateFormData}
-          />
-        ) : step === 2 ? (
-          <CompanySignupStep2
-            nextStep={nextStep}
-            prevStep={prevStep}
-            updateFormData={updateFormData}
-            setError={setError}
-          />
-        ) : (
-          <CompanySignupStep3
-            prevStep={prevStep}
-            updateFormData={updateFormData}
-            formData={formData}
-            setError={setError}
-          />
-        )}
+        {renderStep()}
       </div>
       <picture className="w-[50%] h-screen comp-sign-up m:hidden"></picture>
     </section>

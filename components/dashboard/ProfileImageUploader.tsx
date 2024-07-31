@@ -7,10 +7,10 @@ import { convertFileToUrl } from "@/lib/utils";
 import Image from "next/image";
 
 type ProfileImageUploaderProps = {
-  type: string;
-  onFieldChange: (url: string) => void;
-  imageUrl: string;
-  setFiles: Dispatch<SetStateAction<File[]>>;
+  readonly type: string;
+  readonly onFieldChange: (url: string) => void;
+  readonly imageUrl: string;
+  readonly setFiles: Dispatch<SetStateAction<File[]>>;
 };
 
 export default function ProfileImageUploader({
@@ -18,7 +18,7 @@ export default function ProfileImageUploader({
   imageUrl,
   onFieldChange,
   setFiles,
-}: ProfileImageUploaderProps) {
+}: Readonly<ProfileImageUploaderProps>) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
     onFieldChange(convertFileToUrl(acceptedFiles[0]));

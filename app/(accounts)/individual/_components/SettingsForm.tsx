@@ -23,7 +23,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
 
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState<string | undefined>("");
-  const [showChangePasswordForm, SetShowPasswordForm] = useState(false);
+  const [showChangePasswordForm, setShowPasswordForm] = useState(false);
 
   const {
     control,
@@ -133,7 +133,7 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
               <button
                 type="button"
                 className="w-[40%] p-3 bg-red-500 text-white mt-2 m:w-full"
-                onClick={() => SetShowPasswordForm((prev) => !prev)}
+                onClick={() => setShowPasswordForm((prev) => !prev)}
               >
                 Change password?
               </button>
